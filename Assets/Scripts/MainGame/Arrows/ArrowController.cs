@@ -3,10 +3,11 @@ using MainGame.Arrows;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace MainGame
 {
-    public class ArrowController : MonoBehaviour
+    public class ArrowController : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler,IPointerExitHandler
     {
         public static event System.Action<Direction> OnArrowClicked = delegate { };
 
@@ -19,29 +20,6 @@ namespace MainGame
         protected virtual void Start()
         {
             isMovable = true;
-        }
-
-        private void OnMouseOver()
-        {
-            if (isMovable)
-            {
-                arrow.arrowSprite.gameObject.SetActive(true);
-            }
-        }
-
-        private void OnMouseExit()
-        {
-            arrow.arrowSprite.gameObject.SetActive(false);
-        }
-
-        private void OnMouseDown()
-        {
-            if (isMovable)
-            {
-                arrow.arrowSprite.gameObject.SetActive(false);
-                this.PostEvent(ObserverEventID.OnArrowDirectionClicked, arrow.direction);
-                OnArrowClicked(arrow.direction);
-            }
         }
 
         private void OnTriggerEnter2D(Collider2D other)
@@ -71,6 +49,30 @@ namespace MainGame
         {
             //To prevent when the arrow is deactive, some how the on trigger exit cant call, then we reset the arrow
             isMovable = true;
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            
+            if (isMovable)
+            {
+                arrow.arrowSprite.gameObject.SetActive(false);
+                this.PostEvent(ObserverEventID.OnArrowDirectionClicked, arrow.direction);
+                OnArrowClicked(arrow.direction);
+            }
+        }
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            if (isMovable)
+            {
+                arrow.arrowSprite.gameObject.SetActive(true);
+            }
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            arrow.arrowSprite.gameObject.SetActive(false);
         }
     }
 }

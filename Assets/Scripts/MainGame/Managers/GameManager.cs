@@ -24,6 +24,9 @@ namespace SevenSeas
         [SerializeField]
         private GameState _gameState = GameState.Prepare;
 
+        [SerializeField]
+        private int targetFrameRate = 60;
+
         public GameState GameState
         {
             get
@@ -59,6 +62,11 @@ namespace SevenSeas
                 DestroyImmediate(gameObject);
             }
                
+        }
+
+        void Start()
+        {
+            Application.targetFrameRate = targetFrameRate;
         }
 
 

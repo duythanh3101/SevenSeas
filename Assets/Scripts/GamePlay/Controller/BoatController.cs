@@ -46,6 +46,7 @@ namespace SevenSeas
 
         //Vector
         private Vector2 targetPosition;
+        private Vector3 modelUp;
 
         //Coroutine
         protected Coroutine moveAndRotateCR;
@@ -70,9 +71,14 @@ namespace SevenSeas
 
         }
 
+        protected virtual void Start()
+        {
+            modelUp = isometricModel.transform.up;
+        }
+       
         IEnumerator CR_MoveAndRotate(Vector2 targetPos, Direction toDirection)
         {
-            //Start moving and rotating
+            //Start moving and rotating the model
             BoatState = BoatState.MoveAndRotate;
 
             Vector2 startPos = transform.position;
@@ -81,7 +87,7 @@ namespace SevenSeas
 
             Quaternion startRot = isometricModel.transform.localRotation;
             //NOTE: must multiply by the its rotation to create a local space rotation
-            Quaternion endRot = Quaternion.AngleAxis(-deltaAngle, isometricModel.transform.up) * isometricModel.transform.localRotation;
+            Quaternion endRot = Quaternion.AngleAxis(-deltaAngle, modelUp) * isometricModel.transform.localRotation;
 
             float t = 0;
             while (t < moveAndRotateTime)
