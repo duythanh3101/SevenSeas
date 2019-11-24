@@ -50,9 +50,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Player
+    uniqueID: 56120075
+    locked: 0
+  - name: Background
+    uniqueID: 2417593735
+    locked: 0
   - name: Map
     uniqueID: 2896578539
     locked: 0
-  - name: Player
-    uniqueID: 56120075
+  - name: Foreground
+    uniqueID: 847925135
     locked: 0

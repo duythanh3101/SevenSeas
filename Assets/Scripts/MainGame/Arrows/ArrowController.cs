@@ -8,6 +8,8 @@ namespace MainGame
 {
     public class ArrowController : MonoBehaviour
     {
+        public static event System.Action<Direction> OnArrowClicked = delegate { };
+
         [SerializeField]
         private Arrow arrow = null;
 
@@ -38,6 +40,7 @@ namespace MainGame
             {
                 arrow.arrowSprite.gameObject.SetActive(false);
                 this.PostEvent(ObserverEventID.OnArrowDirectionClicked, arrow.direction);
+                OnArrowClicked(arrow.direction);
             }
         }
 
