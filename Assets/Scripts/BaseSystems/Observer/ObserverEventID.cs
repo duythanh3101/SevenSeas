@@ -44,6 +44,10 @@
         OnArrowDirectionClicked,
         #endregion
 
+        #region Treasure Finder events
+        OnFindTreasureGameOver,
+        #endregion
+
         #region Player Events
         OnPlayerMoving,
         OnPlayerFiring,

@@ -31,5 +31,26 @@ public class CommonConstants
     public static Vector2 NORTH_WEST_VECTOR = new Vector2(-1, 1);
     public static Vector2 SOUTH_WEST_VECTOR = new Vector2(-1, -1);
 
+    public class Instruction
+    {
+        public static string WRONG_DIRECTION = "WRONG DIRECTION";
+        public static string NEAR_YOU = "YOU ARE VERY CLOSE TO THE TREASURE";
+        public static string IN_DIRECTION = "THE TREASURE IS TO THE ";
+        public static string WIN = "YOU WIN";
+    }
 
+    public class SceneName
+    {
+        public static string MapMovementScene = "MapMovementScene";
+        public static string MainScene = "MainScene";
+        public static string TreasureMapScene = "TreasureMapScene";
+    }
+
+    public class DirectionName
+    {
+        public static string SOUTH_NAME = "SOUTH";
+        public static string WEST_NAME = "WEST";
+        public static string NORTH_NAME = "NORTH";
+        public static string EAST_NAME = "EAST";
+    }
 }

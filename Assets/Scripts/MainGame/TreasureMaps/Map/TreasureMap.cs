@@ -1,8 +1,10 @@
-﻿using System;
+﻿using BaseSystems.Observer;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 namespace MainGame
@@ -27,12 +29,16 @@ namespace MainGame
         [SerializeField]
         private int skullCount = 10;
 
+        [SerializeField]
+        private Text instructionText;
+
         private GameObject treasure;
 
         private Vector3 currentTreasurePosition;
 
         private List<XSign> XSignList;
         private List<GameObject> SkullList;
+        private TreasureInstruction treasureInstruction;
 
         private static List<Vector3> allPositions;
 
@@ -43,6 +49,13 @@ namespace MainGame
             SpawnTreasureRandom();
             SpawnSkull();
             XSignList = new List<XSign>();
+            treasureInstruction = new TreasureInstruction();
+
+            // Set text instruction is empty
+            if (instructionText != null)
+            {
+                instructionText.text = string.Empty;
+            }
         }
 
         protected virtual void Update()
@@ -64,7 +77,6 @@ namespace MainGame
             if (IsExistingTreasure(posClick))
             {
                 treasure.SetActive(true);
-                Debug.Log("Trung roi");
                 return;
             }
 
@@ -74,7 +86,7 @@ namespace MainGame
                 if (obj != null)
                 {
                     obj.SetActive(true);
-                    Debug.Log("HAHAHAH");
+                    this.PostEvent(ObserverEventID.OnFindTreasureGameOver);
                     return;
                 }
             }
@@ -93,6 +105,7 @@ namespace MainGame
                 XSign xSign = Instantiate(xSignPrefab, new Vector3(col, row, 0), Quaternion.identity, tileHolder);
                 
                 XSignList.Add(xSign);
+                instructionText.text = treasureInstruction.GetInstruction(currentTreasurePosition, posClick);
             }
         }
 
