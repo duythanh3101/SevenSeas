@@ -11,7 +11,7 @@ public class MapConstantProvider : MonoBehaviour
     private GameObject backgroundMap;
 
     //Properties
-    public Vector2 CellSize { get; private set; }
+    public Vector2 TileSize { get; private set; }
     public Vector2 BackgroundSize { get; private set; }
 
 
@@ -35,7 +35,7 @@ public class MapConstantProvider : MonoBehaviour
     void Start()
     {
         BackgroundSize = UtilMapHelpers.CalculateBackgroundSize(backgroundSR, backgroundMap.transform.lossyScale);
-        CellSize = UtilMapHelpers.CalculateCellSize(BackgroundSize);
+        TileSize = UtilMapHelpers.CalculateCellSize(BackgroundSize);
     }
 
 }

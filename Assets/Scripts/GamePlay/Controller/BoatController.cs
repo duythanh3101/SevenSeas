@@ -33,7 +33,7 @@ namespace SevenSeas
             {
                 return boatState;
             }
-            private set
+            protected set
             {
                 boatState = value;
             }
@@ -42,7 +42,6 @@ namespace SevenSeas
         #region Cache Value
 
         //float
-        private float currentAngle = 0;
 
         //Vector
         private Vector2 targetPosition;
@@ -63,7 +62,7 @@ namespace SevenSeas
 
             //Get input: target position, target direction
             targetDirection = dir;
-            targetPosition = (Vector2)transform.position + MapConstantProvider.Instance.CellSize * UtilMapHelpers.GetDirectionVector(targetDirection);
+            targetPosition = (Vector2)transform.position + MapConstantProvider.Instance.TileSize * UtilMapHelpers.GetDirectionVector(targetDirection);
 
             if (moveAndRotateCR != null)
                 StopCoroutine(moveAndRotateCR);
@@ -96,12 +95,8 @@ namespace SevenSeas
                 float fraction = t / moveAndRotateTime;
                 transform.position = Vector2.Lerp(startPos, targetPos, fraction);
                 isometricModel.transform.localRotation = Quaternion.Lerp(startRot, endRot, fraction);
-
                 yield return null;
             }
-
-            //Debug.Log("current angle: " + currentAngle);
-            currentAngle = 0;
 
             //Update the current Direction
             currentDirection = toDirection;

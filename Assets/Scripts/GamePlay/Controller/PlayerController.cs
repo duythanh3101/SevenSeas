@@ -9,8 +9,6 @@ namespace SevenSeas
     public class PlayerController : BoatController
     {
 
-        
-
         void Awake()
         {
             ArrowController.OnArrowClicked += ArrowController_OnArrowClicked;
@@ -27,7 +25,9 @@ namespace SevenSeas
             MoveAndRotate(dir);
         }
 
+      
 
+       
         
         
     }

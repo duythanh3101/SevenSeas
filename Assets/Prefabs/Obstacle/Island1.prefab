@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 4236238002437762354}
   - component: {fileID: 4236238002416980378}
   - component: {fileID: 4236238002433175952}
-  m_Layer: 8
-  m_Name: Island (1)
+  m_Layer: 10
+  m_Name: Island1
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
