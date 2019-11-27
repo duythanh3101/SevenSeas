@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6075846875433843098}
   - component: {fileID: 6075846875432583030}
   - component: {fileID: 6075846875431563310}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: cannon_right 1 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 6075846875433840220}
   - component: {fileID: 6075846875432567966}
   - component: {fileID: 6075846875431611606}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: cannon_left 1 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -166,7 +166,7 @@ GameObject:
   - component: {fileID: 6075846875433827842}
   - component: {fileID: 6075846875432512182}
   - component: {fileID: 6075846875431564502}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: ship_light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -255,7 +255,7 @@ GameObject:
   - component: {fileID: 6075846875433804758}
   - component: {fileID: 6075846875432607188}
   - component: {fileID: 6075846875431627336}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: cannon_right 1 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -332,7 +332,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6075846875433817276}
   - component: {fileID: 5647315321460447328}
-  m_Layer: 10
+  - component: {fileID: 4757178384015137145}
+  m_Layer: 0
   m_Name: NormalEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -367,6 +368,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc9dadbfa97ac35408a4f077bb4ac81f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isometricModel: {fileID: 6075846875433486122}
+  moveAndRotateTime: 0.3
+  boatState: 0
+  currentDirection: 1
+--- !u!50 &4757178384015137145
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6075846875433479232}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 1
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &6075846875433481894
 GameObject:
   m_ObjectHideFlags: 0
@@ -378,7 +404,7 @@ GameObject:
   - component: {fileID: 6075846875433839292}
   - component: {fileID: 6075846875432590606}
   - component: {fileID: 6075846875431550974}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: sail_back 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -456,7 +482,7 @@ GameObject:
   - component: {fileID: 6075846875433819576}
   - component: {fileID: 6075846875432596748}
   - component: {fileID: 6075846875431538050}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: cannon_left 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -538,7 +564,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6075846875433893204}
   - component: {fileID: 6075846875412654694}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: NW_Arrow_Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -617,7 +643,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6075846875433906628}
   - component: {fileID: 6075846875426229564}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -667,7 +693,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6075846875433848828}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: ArrowCollection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -707,7 +733,7 @@ GameObject:
   - component: {fileID: 6075846875433857704}
   - component: {fileID: 6075846875432490454}
   - component: {fileID: 6075846875431600422}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: cannon_left 1 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -783,7 +809,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6075846875433918728}
   - component: {fileID: 6075846875412655500}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: W_Arrow_Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -863,7 +889,7 @@ GameObject:
   - component: {fileID: 6075846875433839496}
   - component: {fileID: 6075846875432506766}
   - component: {fileID: 6075846875431544606}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: cannon_right 1 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -940,7 +966,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6075846875433817372}
   - component: {fileID: 6075846875431218100}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: N_Arrow
   m_TagString: Arrow
   m_Icon: {fileID: 0}
@@ -999,7 +1025,7 @@ GameObject:
   - component: {fileID: 6075846875433905244}
   - component: {fileID: 6075846875415552648}
   - component: {fileID: 6075846875415694064}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: WaterPond
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5688,7 +5714,7 @@ GameObject:
   - component: {fileID: 6075846875433849704}
   - component: {fileID: 6075846875432562400}
   - component: {fileID: 6075846875431543578}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: sail_front 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5766,7 +5792,7 @@ GameObject:
   - component: {fileID: 6075846875433924462}
   - component: {fileID: 6075846875432585270}
   - component: {fileID: 6075846875431523558}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: steering 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5843,7 +5869,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6075846875433802724}
   - component: {fileID: 6075846875412706822}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: S_Arrow_Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5923,7 +5949,7 @@ GameObject:
   - component: {fileID: 6075846875433890372}
   - component: {fileID: 6075846875432518474}
   - component: {fileID: 6075846875431519192}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: cannon_front 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6001,7 +6027,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6075846875433915232}
   - component: {fileID: 6075846875431228280}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: SE_Arrow
   m_TagString: Arrow
   m_Icon: {fileID: 0}
@@ -6060,7 +6086,7 @@ GameObject:
   - component: {fileID: 6075846875433838964}
   - component: {fileID: 6075846875432608014}
   - component: {fileID: 6075846875431547812}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: cannon_right 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6142,7 +6168,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6075846875433802586}
   - component: {fileID: 6075846875431135640}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: E_Arrow
   m_TagString: Arrow
   m_Icon: {fileID: 0}
@@ -6200,7 +6226,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6075846875433925436}
   - component: {fileID: 6075846875431118690}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: S_Arrow
   m_TagString: Arrow
   m_Icon: {fileID: 0}
@@ -6259,7 +6285,7 @@ GameObject:
   - component: {fileID: 6075846875433817986}
   - component: {fileID: 6075846875432563662}
   - component: {fileID: 6075846875431545544}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: cannon_left 1 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6336,7 +6362,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6075846875433837204}
   - component: {fileID: 6075846875431202378}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: NW_Arrow
   m_TagString: Arrow
   m_Icon: {fileID: 0}
@@ -6393,7 +6419,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6075846875433799106}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Isometric
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6427,7 +6453,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6075846875433903492}
   - component: {fileID: 6075846875412751990}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: SW_Arrow_Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6507,7 +6533,7 @@ GameObject:
   - component: {fileID: 6075846875433896628}
   - component: {fileID: 6075846875432578980}
   - component: {fileID: 6075846875431564280}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: cannon_front 1 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6585,7 +6611,7 @@ GameObject:
   - component: {fileID: 6075846875431220272}
   m_Layer: 10
   m_Name: Boat2D
-  m_TagString: PlayerShip
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6615,7 +6641,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -6641,7 +6667,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6075846875433926010}
   - component: {fileID: 6075846875431162810}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: SW_Arrow
   m_TagString: Arrow
   m_Icon: {fileID: 0}
@@ -6699,7 +6725,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6075846875433834168}
   - component: {fileID: 6075846875431237684}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: NE_Arrow
   m_TagString: Arrow
   m_Icon: {fileID: 0}
@@ -6757,7 +6783,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6075846875433834726}
   - component: {fileID: 6075846875412653828}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: NE_Arrow_Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6836,7 +6862,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6075846875433848538}
   - component: {fileID: 6075846875412728192}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: E_Arrow_Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6916,7 +6942,7 @@ GameObject:
   - component: {fileID: 6075846875433921676}
   - component: {fileID: 6075846875432505344}
   - component: {fileID: 6075846875431610306}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: sail_middle 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6994,7 +7020,7 @@ GameObject:
   - component: {fileID: 6075846875433890836}
   - component: {fileID: 6075846875432579524}
   - component: {fileID: 6075846875431523942}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: cannon_right 1 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7072,7 +7098,7 @@ GameObject:
   - component: {fileID: 6075846875433906262}
   - component: {fileID: 6075846875432564954}
   - component: {fileID: 6075846875431530650}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: cannon_right 1 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7150,7 +7176,7 @@ GameObject:
   - component: {fileID: 6075846875433925282}
   - component: {fileID: 6075846875432598848}
   - component: {fileID: 6075846875431547420}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: cannon_left 1 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7227,7 +7253,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6075846875433800384}
   - component: {fileID: 6075846875412755774}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: N_Arrow_Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7307,7 +7333,7 @@ GameObject:
   - component: {fileID: 6075846875433809072}
   - component: {fileID: 6075846875432575502}
   - component: {fileID: 6075846875431623790}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: cannon_left 1 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7384,7 +7410,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6075846875433801248}
   - component: {fileID: 6075846875412749442}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: SE_Arrow_Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7464,7 +7490,7 @@ GameObject:
   - component: {fileID: 6075846875433902048}
   - component: {fileID: 6075846875415496980}
   - component: {fileID: 6075846875415703482}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: WaterTrail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12152,7 +12178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6075846875433831462}
   - component: {fileID: 6075846875431119434}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: W_Arrow
   m_TagString: Arrow
   m_Icon: {fileID: 0}

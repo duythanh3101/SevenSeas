@@ -11,6 +11,7 @@ namespace SevenSeas
     {
         Idle,
         MoveAndRotate,
+        Firing,
         Destroyed
     }
 
@@ -41,7 +42,7 @@ namespace SevenSeas
 
         #region Cache Value
 
-        //float
+        protected Rigidbody2D rb2D;
 
         //Vector
         private Vector2 targetPosition;
@@ -73,6 +74,7 @@ namespace SevenSeas
         protected virtual void Start()
         {
             modelUp = isometricModel.transform.up;
+            rb2D = GetComponent<Rigidbody2D>();
         }
        
         IEnumerator CR_MoveAndRotate(Vector2 targetPos, Direction toDirection)
@@ -93,7 +95,7 @@ namespace SevenSeas
             {
                 t += Time.deltaTime;
                 float fraction = t / moveAndRotateTime;
-                transform.position = Vector2.Lerp(startPos, targetPos, fraction);
+                rb2D.MovePosition(Vector2.Lerp(startPos, targetPos, fraction));
                 isometricModel.transform.localRotation = Quaternion.Lerp(startRot, endRot, fraction);
                 yield return null;
             }
@@ -139,7 +141,13 @@ namespace SevenSeas
             return deltaAngle;
         }
 
-
+        protected virtual void GetDestroy()
+        {
+            BoatState = BoatState.Destroyed;
+            EffectManager.Instance.SpawnEffect(EffectManager.Instance.explosion, transform.position, Quaternion.identity);
+            SoundManager.Instance.PlayDestroyShipSound();
+            Destroy(gameObject);
+        }
     }
 }
 

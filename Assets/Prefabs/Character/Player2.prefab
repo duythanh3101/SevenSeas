@@ -351,12 +351,12 @@ Transform:
   m_LocalPosition: {x: -2, y: -0.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 6075846875433832158}
+  - {fileID: 6075846875433796892}
   - {fileID: 6075846875433798794}
   - {fileID: 6075846875433848828}
   - {fileID: 6075846875433839900}
   - {fileID: 6075846875433797868}
-  - {fileID: 6075846875433832158}
-  - {fileID: 6075846875433796892}
   - {fileID: 6075846875433906628}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -377,6 +377,9 @@ MonoBehaviour:
   moveAndRotateTime: 0.25
   boatState: 0
   currentDirection: 1
+  arrowCollection: {fileID: 6075846875433487724}
+  firingSystem: {fileID: 910804244076948277}
+  playerDetecter: {fileID: 5794988342134403239}
 --- !u!50 &80865155
 Rigidbody2D:
   serializedVersion: 4
@@ -725,7 +728,7 @@ Transform:
   - {fileID: 6075846875433817372}
   - {fileID: 6075846875433834168}
   m_Father: {fileID: 6075846875433817276}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6075846875433487910
 GameObject:
@@ -5753,7 +5756,7 @@ Transform:
   m_LocalScale: {x: 0.2, y: 0.2, z: 1}
   m_Children: []
   m_Father: {fileID: 6075846875433817276}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6075846875412654070
 SpriteRenderer:
@@ -6794,7 +6797,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6075846875433817276}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &6075846875431220272
 BoxCollider2D:
@@ -6846,7 +6849,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57e9834d5eb555648bbaf1c68441a9a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canonBall: {fileID: 0}
+  canonBall: {fileID: 144260, guid: 7de47324224f1294f85eb19872ebedb6, type: 3}
+  leftCanonTrans: {fileID: 6075846875433832158}
+  rightCanonTrans: {fileID: 6075846875433796892}
   drawTargetLine: 0
   playerInteraction:
     serializedVersion: 2
@@ -7013,7 +7018,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6075846875433832158}
   m_Layer: 0
-  m_Name: RightCanon
+  m_Name: LeftCanon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7026,12 +7031,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6075846875433579678}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.4, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0.27059805, y: -0.6532815, z: 0.27059805, w: 0.6532815}
+  m_LocalPosition: {x: 0, y: -0.15, z: -0.08}
+  m_LocalScale: {x: 0.01275, y: 0.013731983, z: 0.012708859}
   m_Children: []
   m_Father: {fileID: 6075846875433817276}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6075846875433582708
 GameObject:
@@ -7689,7 +7694,7 @@ Transform:
   m_LocalScale: {x: 0.2, y: 0.2, z: 1}
   m_Children: []
   m_Father: {fileID: 6075846875433817276}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6075846875412655118
 SpriteRenderer:
@@ -12517,7 +12522,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6075846875433796892}
   m_Layer: 0
-  m_Name: LeftCanon
+  m_Name: RightCanon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12530,12 +12535,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6075846875433658112}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.4, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0.27059805, y: -0.6532815, z: 0.27059805, w: 0.6532815}
+  m_LocalPosition: {x: 0, y: -0.15, z: -0.08}
+  m_LocalScale: {x: 0.01275, y: 0.013731983, z: 0.012708859}
   m_Children: []
   m_Father: {fileID: 6075846875433817276}
-  m_RootOrder: 5
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6075846875433658894
 GameObject:

@@ -10,9 +10,14 @@ public class MapConstantProvider : MonoBehaviour
     [SerializeField]
     private GameObject backgroundMap;
 
+    [SerializeField]
+    private List<string> objectTag;
+
     //Properties
     public Vector2 TileSize { get; private set; }
     public Vector2 BackgroundSize { get; private set; }
+
+    private Dictionary<Vector2, GameObject> objectInfoDictionary = new Dictionary<Vector2, GameObject>();
 
 
     //Cache value
@@ -34,8 +39,39 @@ public class MapConstantProvider : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        InitValues();
+        InitObjectDictionary();
+
+    }
+    void InitValues()
+    {
         BackgroundSize = UtilMapHelpers.CalculateBackgroundSize(backgroundSR, backgroundMap.transform.lossyScale);
         TileSize = UtilMapHelpers.CalculateCellSize(BackgroundSize);
+    }
+
+    void InitObjectDictionary()
+    {
+        int count = objectTag.Count;
+
+        for  (int i = 0; i < count; i++)
+        {
+            var objectsFound = GameObject.FindGameObjectsWithTag(objectTag[i]);
+            if (objectsFound.Length > 0)
+            {
+                foreach (var obj in objectsFound)
+                {
+                    objectInfoDictionary.Add(obj.transform.position, obj);
+                }
+            }
+        }
+    }
+
+
+
+
+    public void LayoutUnitAtRandom()
+    {
+
     }
 
 }

@@ -16,6 +16,10 @@ namespace SevenSeas
         [Header("Object references")]
         [SerializeField]
         private GameObject canonBall;
+        [SerializeField]
+        private Transform leftCanonTrans;
+        [SerializeField]
+        private Transform rightCanonTrans;
 
         [Header("Debug")]
         [SerializeField]
@@ -44,13 +48,14 @@ namespace SevenSeas
         protected Vector2 currentPosition;
         protected Vector2 leftTargetPosition;
         protected Vector2 rightTargetPosition;
+
         private Vector2 endRight;
         private Vector2 endLeft;
 
         #endregion 
 
         // Start is called before the first frame update
-        protected   virtual void Start()
+        protected virtual void Start()
         {
             boxCollider2D = GetComponent<BoxCollider2D>();
         }
@@ -65,9 +70,25 @@ namespace SevenSeas
             }
         }
 
-        public void FireCanonball(Direction toDirection)
+        public void FireCanonballs(Direction toDirection, bool doneTarget)
         {
-            CanonTargeting(toDirection);
+            //Check if we have not targeted 
+            if (!doneTarget)
+                CanonTargeting(toDirection);
+
+            FireCanonball(transform.position, leftTargetPosition);
+            FireCanonball(transform.position,rightTargetPosition);
+        }
+
+        void FireCanonball(Vector2 startPos, Vector2 endPos)
+        {
+            if (endPos != currentPosition)
+            {
+                var canonballIns = Instantiate(canonBall, startPos, Quaternion.identity);
+                EffectManager.Instance.SpawnEffect(EffectManager.Instance.canonFiring, startPos, Quaternion.identity);
+                SoundManager.Instance.PlayFiringSound();
+                canonballIns.GetComponent<CanonballController>().Launch(endPos);
+            }
         }
 
         public virtual void ResetData()
