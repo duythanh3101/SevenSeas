@@ -12,6 +12,7 @@ namespace SevenSeas
         Idle,
         MoveAndRotate,
         Firing,
+        Teleporting,
         Destroyed
     }
 
