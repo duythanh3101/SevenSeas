@@ -13,6 +13,7 @@ TagManager:
   - Enemy
   - Projectile
   - ModelPlayer
+  - ColliderDetector
   layers:
   - Default
   - TransparentFX
@@ -64,4 +65,7 @@ TagManager:
     locked: 0
   - name: Effect
     uniqueID: 4236191357
+    locked: 0
+  - name: UIInput
+    uniqueID: 2447801429
     locked: 0

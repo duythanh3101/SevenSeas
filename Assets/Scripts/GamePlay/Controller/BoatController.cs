@@ -20,7 +20,7 @@ namespace SevenSeas
     {
         [Header("Object References")]
         [SerializeField]
-        private GameObject isometricModel;
+        protected GameObject isometricModel;
 
         [Header("Values Configuration")]
         [SerializeField]
@@ -44,6 +44,7 @@ namespace SevenSeas
         #region Cache Value
 
         protected Rigidbody2D rb2D;
+        protected Animator animator;
 
         //Vector
         private Vector2 targetPosition;
@@ -75,9 +76,15 @@ namespace SevenSeas
         protected virtual void Start()
         {
             modelUp = isometricModel.transform.up;
-            rb2D = GetComponent<Rigidbody2D>();
+            GetComponentValues();
         }
        
+        void GetComponentValues()
+        {
+            rb2D = GetComponent<Rigidbody2D>();
+            animator = isometricModel.transform.parent.GetComponent<Animator>();
+        }
+
         IEnumerator CR_MoveAndRotate(Vector2 targetPos, Direction toDirection)
         {
             //Start moving and rotating the model

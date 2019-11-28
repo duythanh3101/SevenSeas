@@ -145,6 +145,7 @@ namespace SevenSeas
                {
                    //Because when we change the z position, the speed will decrease, so we must recalculate the speed
                    target = hit.transform.position;
+                   //Debug.Log(hit.transform.position);
                }
            }
 

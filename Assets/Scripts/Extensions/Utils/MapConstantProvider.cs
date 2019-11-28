@@ -52,7 +52,7 @@ public class MapConstantProvider : MonoBehaviour
         BackgroundSize = UtilMapHelpers.CalculateBackgroundSize(backgroundSR, backgroundMap.transform.lossyScale);
         TileSize = UtilMapHelpers.CalculateCellSize(BackgroundSize);
 
-        centerNumber = (int)Mathf.Sqrt(CommonConstants.NUMBER_OF_CELLS);
+        centerNumber = (int)Mathf.Sqrt(CommonConstants.NUMBER_OF_CELLS) / 2;
         centerPosition = backgroundMap.transform.position;
     }
 
@@ -63,6 +63,7 @@ public class MapConstantProvider : MonoBehaviour
         for  (int i = 0; i < count; i++)
         {
             var objectsFound = GameObject.FindGameObjectsWithTag(objectTag[i]);
+            
             if (objectsFound.Length > 0)
             {
                 foreach (var obj in objectsFound)

@@ -5,7 +5,6 @@ using UnityEngine.EventSystems;
 
 namespace SevenSeas
 {
-    [RequireComponent(typeof(AimFireCanonballWithCrosshair))]
     public class PlayerTriggerDetection : MonoBehaviour,IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
 
@@ -16,10 +15,16 @@ namespace SevenSeas
             void OnPlayerPointerEnter();
             void OnPlayerPointerExit();
             void OnPlayerDestroyed();
+            void OnPlayerTeleporting();
         }
 
 
         private IPlayerTriggerDectecter detectionHandler;
+
+        public void RegisterHandler(IPlayerTriggerDectecter playerHandler)
+        {
+            this.detectionHandler = playerHandler;
+        }
 
 
         public void OnPointerEnter(PointerEventData eventData)
@@ -43,12 +48,13 @@ namespace SevenSeas
             {
                 detectionHandler.OnPlayerDestroyed();
             }
+            else if (other.CompareTag("Whirlpool"))
+            {
+                detectionHandler.OnPlayerTeleporting();
+            }
         }
 
-        public void RegisterHandler(IPlayerTriggerDectecter playerHandler)
-        {
-            this.detectionHandler = playerHandler;
-        }
+        
     }
 }
 

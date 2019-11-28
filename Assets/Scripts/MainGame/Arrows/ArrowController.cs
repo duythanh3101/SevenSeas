@@ -54,7 +54,7 @@ namespace MainGame
         public void OnPointerClick(PointerEventData eventData)
         {
             
-            if (isMovable)
+            if (isMovable && arrow.arrowSprite.gameObject.activeSelf)
             {
                 arrow.arrowSprite.gameObject.SetActive(false);
                 this.PostEvent(ObserverEventID.OnArrowDirectionClicked, arrow.direction);

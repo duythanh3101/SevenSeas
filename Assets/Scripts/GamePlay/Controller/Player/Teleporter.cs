@@ -6,16 +6,11 @@ namespace SevenSeas
 {
     public class Teleporter : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
+        
+
+        public void Teleport(GameObject teleUnit, bool isRecycle)
         {
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
+            MapConstantProvider.Instance.LayoutUnitAtRandomPosition(teleUnit, isRecycle);
         }
     }
 }
