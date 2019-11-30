@@ -37,6 +37,7 @@ public class CommonConstants
         public static string NEAR_YOU = "YOU ARE VERY CLOSE TO THE TREASURE";
         public static string IN_DIRECTION = "THE TREASURE IS TO THE ";
         public static string WIN = "YOU WIN";
+        public static string CLICK_TO_CONTINUE = "CLICK TO CONTINUE";
     }
 
     public class SceneName
@@ -52,5 +53,9 @@ public class CommonConstants
         public static string WEST_NAME = "WEST";
         public static string NORTH_NAME = "NORTH";
         public static string EAST_NAME = "EAST";
+        public static string NORTH_EAST_NAME = "NORTH EAST";
+        public static string SOUTH_EAST_NAME = "SOUTH EAST";
+        public static string NORTH_WEST_NAME = "NORTH WEST";
+        public static string SOUTH_WEST_NAME = "SOUTH WEST";
     }
 }

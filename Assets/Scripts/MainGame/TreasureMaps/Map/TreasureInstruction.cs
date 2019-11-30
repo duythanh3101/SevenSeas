@@ -7,28 +7,60 @@ public class TreasureInstruction : MonoBehaviour
     public string GetInstruction(Vector3 currentTreasurePosition, Vector3 xSignPosition)
     {
         var distance = (xSignPosition - currentTreasurePosition).magnitude;
-        if (distance > 7)
+        Debug.Log(xSignPosition + " - " + currentTreasurePosition + " - " + distance);
+        if (distance >= 3)
         {
-            return CommonConstants.Instruction.WRONG_DIRECTION;
+            return CommonConstants.Instruction.IN_DIRECTION + GetDirectionName(currentTreasurePosition, xSignPosition);
         }
-        else if (distance > 5)
-        {
-            return CommonConstants.Instruction.IN_DIRECTION + CommonConstants.DirectionName.EAST_NAME;
-        }
-        else if (distance > 1)
+        else if (distance >= 1)
         {
             return CommonConstants.Instruction.NEAR_YOU;
         }
         return string.Empty;
     }
 
-    public string GetDirectionName(Vector3 currentTreasurePosition)
+    public string GetDirectionName(Vector3 currentTreasurePosition, Vector3 xSignPosition)
     {
-        switch (currentTreasurePosition)
+        float x  =currentTreasurePosition.x;
+        float y = currentTreasurePosition.y;
+        float xSignPos = xSignPosition.x;
+        float ySignPos = xSignPosition.y;
+
+        string directionName = string.Empty;
+
+        if (x > xSignPos && y > ySignPos)
         {
-            default:
-                break;
+            directionName = CommonConstants.DirectionName.NORTH_EAST_NAME;
         }
-        return string.Empty;
+        else if (x > xSignPos && y < ySignPos)
+        {
+            directionName = CommonConstants.DirectionName.SOUTH_EAST_NAME;
+        }
+        else if (x < xSignPos && y > ySignPos)
+        {
+            directionName = CommonConstants.DirectionName.NORTH_WEST_NAME;
+        }
+        else if (x < xSignPos && y < ySignPos)
+        {
+            directionName = CommonConstants.DirectionName.SOUTH_WEST_NAME;
+        }
+        else if (x == xSignPos && y > ySignPos)
+        {
+            directionName = CommonConstants.DirectionName.NORTH_NAME;
+        }
+        else if (x == xSignPos && y < ySignPos)
+        {
+            directionName = CommonConstants.DirectionName.SOUTH_WEST_NAME;
+        }
+        else if (x > xSignPos && y == ySignPos)
+        {
+            directionName = CommonConstants.DirectionName.EAST_NAME;
+        }
+        else if (x < xSignPos && y == ySignPos)
+        {
+            directionName = CommonConstants.DirectionName.WEST_NAME;
+        }
+
+        return directionName;
     }
 }

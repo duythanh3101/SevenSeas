@@ -11,37 +11,26 @@ namespace MainGame
 {
     public class TreasureMap: MonoBehaviour
     {
-        [SerializeField]
-        private Vector2Int MapSize = new Vector2Int(10, 10);
-
-        [SerializeField]
-        private Transform tileHolder;
-
-        [SerializeField]
-        private XSign xSignPrefab;
-
-        [SerializeField]
-        private GameObject treasurePrefab;
-
-        [SerializeField]
-        private GameObject skullPrefab;
-
-        [SerializeField]
-        private int skullCount = 10;
-
-        [SerializeField]
-        private Text instructionText;
+        #region Private Properties
+        [SerializeField] private Vector2Int MapSize = new Vector2Int(10, 10);
+        [SerializeField] private Transform tileHolder;
+        [SerializeField] private XSign xSignPrefab;
+        [SerializeField] private GameObject treasurePrefab;
+        [SerializeField] private GameObject skullPrefab;
+        [SerializeField] private int skullCount = 10;
+        [SerializeField] private Text instructionText;
 
         private GameObject treasure;
-
         private Vector3 currentTreasurePosition;
-
         private List<XSign> XSignList;
         private List<GameObject> SkullList;
         private TreasureInstruction treasureInstruction;
+        private bool isEndGame = false;
 
         private static List<Vector3> allPositions;
+        #endregion Private Properties
 
+        #region Mono Behaviour
         protected virtual void Awake()
         {
             InitMap();
@@ -62,38 +51,57 @@ namespace MainGame
         {
             if (Input.GetMouseButtonDown(0))
             {
+                if (isEndGame)
+                {
+                    this.PostEvent(ObserverEventID.OnFindTreasureGameOver);
+                    return;
+                }
                 Interact();
             }
         }
+        #endregion Mono Behaviour
 
+        #region Private Methods
+
+        /// <summary>
+        /// Handle interaction
+        /// </summary>
         private void Interact()
-        {
+        {   //Get position
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
             int col = Mathf.RoundToInt(mousePosition.x);
             int row = Mathf.RoundToInt(mousePosition.y);
 
             Vector3 posClick = new Vector3(col, row, 0);
-            if (IsExistingTreasure(posClick))
+            // Check valid of position click
+            if (!IsClickPositionValidAt(posClick))
+            {
+                return;
+            }
+            if (IsExistingTreasureAt(posClick))
             {
                 treasure.SetActive(true);
+                isEndGame = true;
+                instructionText.text = CommonConstants.Instruction.CLICK_TO_CONTINUE;
                 return;
             }
 
-            if (IsExistingSkull(posClick))
+            if (IsExistingSkullAt(posClick))
             {
                 GameObject obj = SkullList.Where(x => x.transform.position == posClick).FirstOrDefault();
                 if (obj != null)
                 {
                     obj.SetActive(true);
-                    this.PostEvent(ObserverEventID.OnFindTreasureGameOver);
+                    isEndGame = true;
+                    instructionText.text = CommonConstants.Instruction.CLICK_TO_CONTINUE;
                     return;
                 }
             }
 
-            if (!IsExistingXSignObjectAt(posClick) && !IsExistingTreasure(posClick))
+            if (!IsExistingXSignObjectAt(posClick) && !IsExistingTreasureAt(posClick))
             {
-                int numberOfSkulls = GetAroundNumberOfSkulls(posClick);
+                int numberOfSkulls = GetNumberOfSkullsAroundAt(posClick);
                 if (numberOfSkulls == 0)
                 {
                     xSignPrefab.SetText(string.Empty);
@@ -109,7 +117,12 @@ namespace MainGame
             }
         }
 
-        private int GetAroundNumberOfSkulls(Vector3 currentXSignPosition)
+        /// <summary>
+        /// Get number skull around position
+        /// </summary>
+        /// <param name="currentXSignPosition"></param>
+        /// <returns></returns>
+        private int GetNumberOfSkullsAroundAt(Vector3 currentXSignPosition)
         {
             int count = 0;
             for (int i = -1; i <= 1; i++)
@@ -126,21 +139,51 @@ namespace MainGame
             return count;
         }
 
-        private bool IsExistingSkull(Vector3 posClick)
+        #region Check condition
+        /// <summary>
+        /// is click position in map validation
+        /// </summary>
+        /// <param name="posClick"></param>
+        /// <returns></returns>
+        private bool IsClickPositionValidAt(Vector3 posClick)
+        {
+            return posClick.x < 5 && posClick.y < 5 && posClick.x > -5 && posClick.y > -5;
+        }
+
+        /// <summary>
+        /// Is exist skull at position
+        /// </summary>
+        /// <param name="posClick"></param>
+        /// <returns></returns>
+        private bool IsExistingSkullAt(Vector3 posClick)
         {
             return SkullList.Any(x => x.transform.position == posClick);
         }
 
-        private bool IsExistingTreasure(Vector3 posClick)
+        /// <summary>
+        /// Is exist treasure at position
+        /// </summary>
+        /// <param name="posClick"></param>
+        /// <returns></returns>
+        private bool IsExistingTreasureAt(Vector3 posClick)
         {
             return currentTreasurePosition == posClick;
         }
 
+        /// <summary>
+        /// Is exist XSign at position
+        /// </summary>
+        /// <param name="posClick"></param>
+        /// <returns></returns>
         private bool IsExistingXSignObjectAt(Vector3 posClick)
         {
             return XSignList.Any(x => x.transform.position == posClick);
         }
+        #endregion Check condition
 
+        /// <summary>
+        /// Init map, add vector to all tile of map
+        /// </summary>
         private void InitMap()
         {
             allPositions = new List<Vector3>();
@@ -154,6 +197,9 @@ namespace MainGame
             }
         }
 
+        /// <summary>
+        /// Spawn treasure random on map
+        /// </summary>
         private void SpawnTreasureRandom()
         {
             currentTreasurePosition = RandomPosition();
@@ -161,6 +207,9 @@ namespace MainGame
             treasure.SetActive(false);
         }
 
+        /// <summary>
+        /// Spawn skull in map
+        /// </summary>
         private void SpawnSkull()
         {
             SkullList = new List<GameObject>();
@@ -188,5 +237,6 @@ namespace MainGame
 
             return randomPosition;
         }
+        #endregion Private Methods
     }
 }
