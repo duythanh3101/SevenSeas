@@ -126,7 +126,7 @@ namespace MainGame
             {
                 //new WaitForSeconds(10);
                 //Debug.Log("hehehe" + transform.position);
-                playerTargetDetection.CannonTargeting(toDirection);
+                playerTargetDetection.CanonTargeting(toDirection);
                 
             }
         }

@@ -4,13 +4,10 @@ namespace Assets.Scripts.Extensions.Utils
 {
     public class UtilMapHelpers
     {
-        public static Vector2 CalculateCellSize(SpriteRenderer backgroundSprite, GameObject backgroundMap)
+        public static Vector2 CalculateCellSize(SpriteRenderer backgroundSprite, Vector3 backgroundScale)
         {
             //Calculate the acttual size of the background
-            var backgroundSize = new Vector2(
-                (backgroundSprite.sprite.rect.size.x / backgroundSprite.sprite.pixelsPerUnit) * backgroundMap.transform.lossyScale.x,
-                (backgroundSprite.sprite.rect.size.y / backgroundSprite.sprite.pixelsPerUnit) * backgroundMap.transform.lossyScale.y
-                );
+            var backgroundSize = CalculateBackgroundSize(backgroundSprite, backgroundScale);
 
             //Calculate the size of the cell
             return new Vector2(
@@ -19,6 +16,21 @@ namespace Assets.Scripts.Extensions.Utils
                 );
         }
 
+        public static Vector2 CalculateCellSize(Vector2 backgroundSize)
+        {
+            return new Vector2(
+               backgroundSize.x / Mathf.Sqrt(CommonConstants.NUMBER_OF_CELLS),
+               backgroundSize.y / Mathf.Sqrt(CommonConstants.NUMBER_OF_CELLS)
+               );
+        }
+
+        public static Vector2 CalculateBackgroundSize(SpriteRenderer backgroundSprite, Vector3 backgroundScale)
+        {
+            return new Vector2(
+                  (backgroundSprite.sprite.rect.size.x / backgroundSprite.sprite.pixelsPerUnit) * backgroundScale.x,
+                  (backgroundSprite.sprite.rect.size.y / backgroundSprite.sprite.pixelsPerUnit) * backgroundScale.y);
+                 
+        }
         public static int GetHorizontalSign(int col,int centerNumber)
         {
             return (col <= (centerNumber - 1) ? -1 : 1);
