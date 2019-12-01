@@ -8,6 +8,10 @@ namespace SevenSeas
 {
     public class PlayerController : BoatController, PlayerTriggerDetection.IPlayerTriggerDectecter
     {
+        [Header("Health")]
+        [Range(1, 3)]
+        public int playerHealth = 3;
+
         [Header("Aim and fire canonball")]
         [SerializeField]
         private GameObject arrowCollection;
@@ -23,16 +27,19 @@ namespace SevenSeas
         #region Cache values
         //Structs, 
         private Coroutine teleCR;
+        private Coroutine respawnCR;
         private AnimationClip[] animClips;
 
         //bool
         private bool isTargeting = false;
+        private bool doneEffect = false;    
 
         //Float
         private float sinkTime;
         private float riseUpTime;
 
         //Int
+        public int currentPlayerHealth;
         private static readonly int SINK_TRIGGER = Animator.StringToHash("isSink");
         private static readonly int RISEUP_TRIGGER = Animator.StringToHash("isRiseUp");
 
@@ -60,6 +67,7 @@ namespace SevenSeas
 
         void InitValues()
         {
+            currentPlayerHealth = playerHealth;
             animClips = animator.runtimeAnimatorController.animationClips;
             //Init data for animation
             foreach (var clip in animClips)
@@ -72,10 +80,45 @@ namespace SevenSeas
             }
         }
 
+        #region Input dectection callback event
+
+        public void OnPlayerPointerClick()
+        {
+            FiringCanonballs();
+        }
+
+        public void OnPlayerPointerEnter()
+        {
+            CanonTargeting();
+        }
+
+        public void OnPlayerPointerExit()
+        {
+            ResetCrosshair();
+        }
+
+        public void OnPlayerDestroyed()
+        {
+            GetDestroy();
+        }
+
+        public void OnPlayerTeleporting()
+        {
+            Teleport();
+
+        }
+
+        #endregion
+
         void EffectManager_OnAllEffectCompleted()
         {
-            BoatState = BoatState.Idle;
+            if (BoatState == BoatState.Destroyed)
+                return;
+
             arrowCollection.SetActive(true);
+            BoatState = BoatState.Idle;
+
+            doneEffect = true;
         }
 
         void ArrowController_OnArrowClicked(Direction dir)
@@ -90,7 +133,7 @@ namespace SevenSeas
                 isTargeting = true;
                 firingSystem.CanonTargeting(currentDirection);
             }
-               
+
         }
 
         void ResetCrosshair()
@@ -122,12 +165,11 @@ namespace SevenSeas
             if (teleCR != null)
                 StopCoroutine(teleCR);
             teleCR = StartCoroutine(CR_Teleport());
-           
+
         }
 
         IEnumerator CR_Teleport()
         {
-          
             //Sink time
             arrowCollection.SetActive(false); //Disable input
             animator.SetTrigger(SINK_TRIGGER);
@@ -135,45 +177,90 @@ namespace SevenSeas
 
             //Really teleport
             isometricModel.SetActive(false);
-            teleporter.Teleport(gameObject,true);
+            teleporter.Teleport(gameObject, true);
 
             //Wait some amount of time before rising up
             yield return new WaitForSeconds(1);
 
             //Show the gameobject
             isometricModel.SetActive(true);
-            
+
             //Riseup time
             animator.SetTrigger(RISEUP_TRIGGER);
             yield return new WaitForSeconds(riseUpTime);
-            arrowCollection.SetActive(true); //enable the input
 
+            arrowCollection.SetActive(true); //enable the input
             BoatState = BoatState.Idle;
         }
 
-        public void OnPlayerPointerClick()
+        private void Respawn()
         {
-            FiringCanonballs();
+            BoatState = BoatState.Respawning;
+
+            if (respawnCR != null)
+                StopCoroutine(respawnCR);
+               
+            respawnCR = StartCoroutine(CR_Respawn());
+
         }
 
-        public void OnPlayerPointerEnter()
+
+        private WaitForSeconds respawnIntervalWait = new WaitForSeconds(0.5f);
+        private IEnumerator CR_Respawn()
         {
-            CanonTargeting();
+
+            //Disable input
+            arrowCollection.SetActive(false);
+            //Layout another position
+            isometricModel.SetActive(false);
+
+            while (!doneEffect)
+            {
+                yield return null;
+            }
+
+          
+            MapConstantProvider.Instance.LayoutUnitAtRandomPosition(gameObject, true);
+            for (int i = 0; i < 2; i++ )
+            {
+                isometricModel.SetActive(true);
+                yield return respawnIntervalWait;
+                isometricModel.SetActive(false);
+                yield return respawnIntervalWait;
+            }
+
+            isometricModel.SetActive(true);
+            //Enable input
+            arrowCollection.SetActive(true);
+            BoatState = BoatState.Idle;
+            doneEffect = false;
+            
         }
 
-        public void OnPlayerPointerExit()
+        protected override void GetDestroy()
         {
-            ResetCrosshair();
-        }
+            BoatState = BoatState.Destroyed;
 
-        public void OnPlayerDestroyed()
-        {
-            GetDestroy();
-        }
+            //Effect and sound
+            EffectManager.Instance.SpawnEffect(EffectManager.Instance.explosion, transform.position, Quaternion.identity);
+            SoundManager.Instance.PlayDestroyShipSound();
 
-        public void OnPlayerTeleporting()
-        {
-            Teleport();
+            currentPlayerHealth--;
+            //UI
+            UIManager.Instance.DecreaseHealth(currentPlayerHealth);
+
+            if (currentPlayerHealth > 0)
+            {
+                Respawn();
+            }
+            else
+            {
+                //Instantiate a skull represent the boat grave
+                Instantiate(skullPrefab, transform.position, Quaternion.identity);
+                arrowCollection.SetActive(false);
+                isometricModel.SetActive(false);
+                //Destroy(gameObject);
+            }
         }
     }
 }

@@ -22,9 +22,14 @@ namespace MainGame
             isMovable = true;
         }
 
+        private bool CheckMovable(Collider2D other)
+        {
+            return other.CompareTag("Obstacle") || other.CompareTag("Edge") || other.CompareTag("Enemy");
+        }
+
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.tag == "Obstacle" || other.tag == "Edge")
+            if (CheckMovable(other))
             {
                 isMovable = false;
             }
@@ -32,7 +37,7 @@ namespace MainGame
 
         private void OnTriggerExit2D(Collider2D other)
         {
-            if (other.tag == "Obstacle" || other.tag == "Edge")
+            if (CheckMovable(other))
             {
                 isMovable = true;
             }
@@ -40,7 +45,7 @@ namespace MainGame
 
         private void OnTriggerStay2D(Collider2D other)
         {
-            if (other.tag == "Obstacle" || other.tag == "Edge")
+            if (CheckMovable(other))
             {
                 isMovable = false;
             }

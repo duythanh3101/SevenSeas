@@ -369,6 +369,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isometricModel: {fileID: 6075846875433486122}
+  skullPrefab: {fileID: 5620171592396521548, guid: ec8e928a322a56d43adfc5525bc839d2,
+    type: 3}
   moveAndRotateTime: 0.3
   boatState: 0
   currentDirection: 1
@@ -6644,7 +6646,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.041003168, y: -0.037275553}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -6655,7 +6657,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 0.5}
+  m_Size: {x: 0.41799366, y: 0.32107687}
   m_EdgeRadius: 0
 --- !u!1 &6075846875433569168
 GameObject:

@@ -17,8 +17,10 @@ public class MapConstantProvider : MonoBehaviour
     public Vector2 TileSize { get; private set; }
     public Vector2 BackgroundSize { get; private set; }
 
-    private Dictionary<Vector2, GameObject> objectInfoDictionary = new Dictionary<Vector2, GameObject>();
-    private List<Vector2>  staticAvailablePositions = new List<Vector2>(); // The available position from the first creating level
+    private Dictionary<GameObject, Vector2> staticObjectDicts = new Dictionary<GameObject,Vector2>();
+    private Dictionary<GameObject, Vector2> dynamicObjectDicts = new Dictionary<GameObject, Vector2>();
+
+    private List<Vector2>  possiblePositions = new List<Vector2>(); // The available position from the first creating level
 
     //Cache value
     private SpriteRenderer backgroundSR;
@@ -26,7 +28,6 @@ public class MapConstantProvider : MonoBehaviour
     private Vector2 centerPosition;
 
     private int centerNumber;
-
 
     void Awake()
     {
@@ -56,6 +57,11 @@ public class MapConstantProvider : MonoBehaviour
         centerPosition = backgroundMap.transform.position;
     }
 
+    bool IsStaticObject(string tag)
+    {
+        return (tag == "Whirlpool" || tag == "Obstacle");
+    }
+
     void InitObjectDictionary()
     {
         int count = objectTag.Count;
@@ -66,9 +72,19 @@ public class MapConstantProvider : MonoBehaviour
             
             if (objectsFound.Length > 0)
             {
-                foreach (var obj in objectsFound)
+                if (IsStaticObject(objectTag[i]))
                 {
-                    objectInfoDictionary.Add(obj.transform.position, obj);
+                    foreach (var obj in objectsFound)
+                    {
+                        staticObjectDicts.Add(obj,obj.transform.position);
+                    }
+                }
+                else
+                {
+                    foreach (var obj in objectsFound)
+                    {
+                        dynamicObjectDicts.Add(obj, obj.transform.position);
+                    }
                 }
             }
         }
@@ -89,17 +105,16 @@ public class MapConstantProvider : MonoBehaviour
               (centerPosition.x + UtilMapHelpers.GetHorizontalSign(icol,centerNumber) * (TileSize.x * (Mathf.Abs(centerNumber - icol)))) + TileSize.x / 2,
               (centerPosition.y + UtilMapHelpers.GetVerticalSign(irow,centerNumber) * (TileSize.y * Mathf.Abs((centerNumber - irow)))) - TileSize.y / 2);
 
-                if (!objectInfoDictionary.ContainsKey(pos))
-                {
-                    staticAvailablePositions.Add(pos);
-                }
+                if (staticObjectDicts.ContainsValue(pos) || dynamicObjectDicts.ContainsValue(pos))
+                    continue;
+                possiblePositions.Add(pos);
             }
         }
     }
 
     public void LayoutUnitAtRandomPosition(GameObject unit, bool recycle)
     {
-        Vector2 randomPos = staticAvailablePositions[Random.Range(0, staticAvailablePositions.Count)];
+        Vector2 randomPos = possiblePositions[Random.Range(0, possiblePositions.Count)];
         if (recycle) //reuse the game object, just update the position
         {
             unit.transform.position = randomPos;
@@ -109,8 +124,19 @@ public class MapConstantProvider : MonoBehaviour
         else // Create the new unit instance
             Instantiate(unit, randomPos, Quaternion.identity);
 
-        //Make sure to remove this position
-        //staticAvailablePositions.Remove(randomPos);
+        //Make sure to update all the position
+
     }
+
+    public void RemoveAvailablePosition(Vector2 pos)
+    {
+        
+    }
+
+    void UpdatePossiblePosition()
+    {
+
+    }
+
 
 }

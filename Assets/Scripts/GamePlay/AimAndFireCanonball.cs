@@ -122,6 +122,7 @@ namespace SevenSeas
 
         private Vector2 GetTargetPosition(RaycastHit2D hit, Vector2 endPos,  Vector2 direction)
        {
+          
            Vector2 target = Vector2.zero;
            if (hit.transform == null) //If there's nothing was hit
            {
@@ -129,21 +130,21 @@ namespace SevenSeas
            }
            else
            {
+              
                //if this is obstacle
-               if (hit.transform.CompareTag("Obstacle") || hit.transform.CompareTag("Whirlpool"))
+               if (hit.collider.CompareTag("Obstacle") || hit.transform.CompareTag("Whirlpool"))
                {
                    //Return the previouse position base on the shoot direction
                    target = (Vector2)hit.transform.position - direction * MapConstantProvider.Instance.TileSize;
                }
-               else if (hit.transform.CompareTag("Edge"))
+               else if (hit.collider.CompareTag("Edge"))
                {
                    //If hit the edge
                    target = (Vector2)hit.point - direction * MapConstantProvider.Instance.TileSize;
 
                }
-               else if (hit.transform.CompareTag("Enemy")) // Make the z crosshair above on the enemy
+               else if (hit.collider.CompareTag("Enemy"))
                {
-                   //Because when we change the z position, the speed will decrease, so we must recalculate the speed
                    target = hit.transform.position;
                    //Debug.Log(hit.transform.position);
                }

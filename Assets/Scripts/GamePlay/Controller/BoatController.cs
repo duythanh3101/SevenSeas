@@ -13,14 +13,20 @@ namespace SevenSeas
         MoveAndRotate,
         Firing,
         Teleporting,
+        Respawning,
         Destroyed
     }
 
     public class BoatController : MonoBehaviour
     {
+        public static System.Action<GameObject,Vector2> OnBoatMovedPosition;
+
+
         [Header("Object References")]
         [SerializeField]
         protected GameObject isometricModel;
+        [SerializeField]
+        protected GameObject skullPrefab;
 
         [Header("Values Configuration")]
         [SerializeField]
@@ -93,9 +99,8 @@ namespace SevenSeas
             Vector2 startPos = transform.position;
             float deltaAngle = GetDeltaAngle(currentDirection, toDirection);
 
-
             Quaternion startRot = isometricModel.transform.localRotation;
-            //NOTE: must multiply by the its rotation to create a local space rotation
+            //NOTE: must multiply by the rotation to create a local space rotation
             Quaternion endRot = Quaternion.AngleAxis(-deltaAngle, modelUp) * isometricModel.transform.localRotation;
 
             float t = 0;
@@ -113,6 +118,10 @@ namespace SevenSeas
 
             //Update boat state to idle after finishing moving and rotating
             BoatState = BoatState.Idle;
+
+            //Fire the moved position event
+            if (OnBoatMovedPosition != null)
+                OnBoatMovedPosition(gameObject, transform.position);
         }
 
         private float GetDeltaAngle(Direction currentDirection, Direction toDirection)
@@ -152,8 +161,14 @@ namespace SevenSeas
         protected virtual void GetDestroy()
         {
             BoatState = BoatState.Destroyed;
+
+            //Effect and sound
             EffectManager.Instance.SpawnEffect(EffectManager.Instance.explosion, transform.position, Quaternion.identity);
             SoundManager.Instance.PlayDestroyShipSound();
+
+            //Instantiate a skull represent the boat grave
+            Instantiate(skullPrefab, transform.position, Quaternion.identity);
+
             Destroy(gameObject);
         }
     }

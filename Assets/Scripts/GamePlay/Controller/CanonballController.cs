@@ -32,7 +32,7 @@ public class CanonballController : MonoBehaviour {
     {
        if (other.tag != "Arrow")
        {
-           if (other.tag == "Enemy")
+           if (other.transform.parent.CompareTag("Enemy"))
            {
                Destroy(gameObject);
            }
@@ -51,6 +51,7 @@ public class CanonballController : MonoBehaviour {
 
         if (((Vector2)transform.position - endPosition).sqrMagnitude < float.Epsilon)
         {
+            //Debug.Log("Reach far");
             var waterSplash = EffectManager.Instance.waterSplash;
             EffectManager.Instance.SpawnEffect(waterSplash, endPosition,waterSplash.transform.rotation );
             Destroy(gameObject);

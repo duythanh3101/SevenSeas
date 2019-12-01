@@ -33,7 +33,8 @@ public class EffectManager : MonoBehaviour
         {
             throw new UnityException("The effect you're trying to spawn has not been assigned!");
         }
-        
+
+        Debug.Log("Spawn effect" + effect.name);
         AutoStopEffect stopEffect = Instantiate(effect,position,rotation).GetComponent<AutoStopEffect>();
         stopEffect.OnEffectStoped += AutoStopEffect_OnEffectStoped;
         AddNewEffectHandler(stopEffect.gameObject,stopEffect.OnEffectStoped);
