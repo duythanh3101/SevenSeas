@@ -132,7 +132,7 @@ namespace SevenSeas
            {
               
                //if this is obstacle
-               if (hit.collider.CompareTag("Obstacle") || hit.transform.CompareTag("Whirlpool"))
+               if (hit.collider.CompareTag("Obstacle") || hit.collider.CompareTag("Teleporter"))
                {
                    //Return the previouse position base on the shoot direction
                    target = (Vector2)hit.transform.position - direction * MapConstantProvider.Instance.TileSize;

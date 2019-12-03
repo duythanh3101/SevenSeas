@@ -48,7 +48,7 @@ namespace SevenSeas
             {
                 detectionHandler.OnPlayerDestroyed();
             }
-            else if (other.CompareTag("Whirlpool"))
+            else if (other.CompareTag("Teleporter"))
             {
                 detectionHandler.OnPlayerTeleporting();
             }

@@ -20,6 +20,7 @@ namespace SevenSeas
     public class BoatController : MonoBehaviour
     {
         public static System.Action<GameObject,Vector2> OnBoatMovedPosition;
+        public static System.Action<GameObject, Vector2> OnSpawnSkull;
 
 
         [Header("Object References")]
@@ -77,6 +78,7 @@ namespace SevenSeas
                 StopCoroutine(moveAndRotateCR);
             moveAndRotateCR = StartCoroutine(CR_MoveAndRotate(targetPosition, targetDirection));
 
+            
         }
 
         protected virtual void Start()
@@ -95,6 +97,10 @@ namespace SevenSeas
         {
             //Start moving and rotating the model
             BoatState = BoatState.MoveAndRotate;
+
+            //Fire the moved position event
+            if (OnBoatMovedPosition != null)
+                OnBoatMovedPosition(gameObject, targetPos);
 
             Vector2 startPos = transform.position;
             float deltaAngle = GetDeltaAngle(currentDirection, toDirection);
@@ -119,9 +125,7 @@ namespace SevenSeas
             //Update boat state to idle after finishing moving and rotating
             BoatState = BoatState.Idle;
 
-            //Fire the moved position event
-            if (OnBoatMovedPosition != null)
-                OnBoatMovedPosition(gameObject, transform.position);
+            
         }
 
         private float GetDeltaAngle(Direction currentDirection, Direction toDirection)
@@ -166,10 +170,17 @@ namespace SevenSeas
             EffectManager.Instance.SpawnEffect(EffectManager.Instance.explosion, transform.position, Quaternion.identity);
             SoundManager.Instance.PlayDestroyShipSound();
 
-            //Instantiate a skull represent the boat grave
-            Instantiate(skullPrefab, transform.position, Quaternion.identity);
+            SpawnSkull();
 
             Destroy(gameObject);
+        }
+
+        protected void SpawnSkull()
+        {
+            //Instantiate a skull represent the boat grave
+            var skull = Instantiate(skullPrefab, transform.position, Quaternion.identity);
+            if (OnSpawnSkull != null)
+                OnSpawnSkull(skull, skull.transform.position);
         }
     }
 }

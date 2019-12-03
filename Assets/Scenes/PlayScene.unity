@@ -811,6 +811,7 @@ MonoBehaviour:
   - Obstacle
   - Enemy
   - PlayerShip
+  drawGizmos: 0
 --- !u!1001 &1284252436
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1155,7 +1156,7 @@ GameObject:
   m_Layer: 0
   m_Name: TestDestroyPlayer
   m_TagString: Enemy
-  m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1

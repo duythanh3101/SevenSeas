@@ -38,7 +38,7 @@ namespace Assets.Scripts.Extensions.Utils
 
         public static int GetVerticalSign(int row,int centerNumber)
         {
-            return (row <= (centerNumber - 1) ? -1 : 1);
+            return (row <= (centerNumber - 1) ? 1 : -1);
         }
 
         public static Vector2 GetDirectionVector(Direction direction)
