@@ -16,7 +16,6 @@ public class LoseGameHandler : MonoBehaviour
     private void OnFindTreasureGameOnver()
     {
         new WaitForSeconds(3);
-        SceneManager.LoadScene(CommonConstants.SceneName.MapMovementScene, LoadSceneMode.Single);
     }
 
 }

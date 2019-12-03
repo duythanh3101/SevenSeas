@@ -53,7 +53,7 @@ namespace MainGame
             {
                 if (isEndGame)
                 {
-                    this.PostEvent(ObserverEventID.OnFindTreasureGameOver);
+                    SceneGameManager.LoadNextMapFindingTreasure(isEndGame);
                     return;
                 }
                 Interact();
@@ -83,6 +83,7 @@ namespace MainGame
             {
                 treasure.SetActive(true);
                 isEndGame = true;
+                this.PostEvent(ObserverEventID.OnFindTreasureGameOver);
                 instructionText.text = CommonConstants.Instruction.CLICK_TO_CONTINUE;
                 return;
             }
@@ -94,6 +95,7 @@ namespace MainGame
                 {
                     obj.SetActive(true);
                     isEndGame = true;
+                    this.PostEvent(ObserverEventID.OnFindTreasureGameOver);
                     instructionText.text = CommonConstants.Instruction.CLICK_TO_CONTINUE;
                     return;
                 }
