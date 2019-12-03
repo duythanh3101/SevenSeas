@@ -21,7 +21,6 @@ public class AudioManager : Singleton<AudioManager>
     {
         audioWinGame.clip = audioWinGameClip;
         audioWinGame.PlayOneShot(audioWinGameClip, 1f);
-        Debug.Log("hahahahahaha");
     }
 
     // Update is called once per frame
