@@ -31,5 +31,14 @@ public class CommonConstants
     public static Vector2 NORTH_WEST_VECTOR = new Vector2(-1, 1);
     public static Vector2 SOUTH_WEST_VECTOR = new Vector2(-1, -1);
 
-
+    public static Vector2[] DIRECTION_VECTORS = new Vector2[]{
+        Vector2.down, 
+        Vector2.left, 
+        Vector2.up,
+        Vector2.right, 
+        new Vector2(1,1), 
+        new Vector2(1,-1), 
+        new Vector2(-1,1),
+        new Vector2(-1,-1)
+    };
 }

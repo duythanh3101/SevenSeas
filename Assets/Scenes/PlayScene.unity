@@ -809,9 +809,11 @@ MonoBehaviour:
   objectTag:
   - Whirlpool
   - Obstacle
-  - Enemy
+  - EnemyShip
   - PlayerShip
-  drawGizmos: 0
+  drawStaticPosition: 0
+  drawPossiblePosition: 0
+  drawDynamicPosition: 0
 --- !u!1001 &1284252436
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1140,6 +1142,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5647315321460447328, guid: 16ef9f0a9cf878149865b8cd981ac8e5,
+        type: 3}
+      propertyPath: targetTrans
+      value: 
+      objectReference: {fileID: 3561167854133903331}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16ef9f0a9cf878149865b8cd981ac8e5, type: 3}
 --- !u!1 &1845603330
@@ -1159,7 +1166,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1845603331
 Transform:
   m_ObjectHideFlags: 0
@@ -1639,6 +1646,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3688b474c477bd64783aca73341a8b7f, type: 3}
+--- !u!4 &3561167854133903331 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6075846875433817276, guid: 3688b474c477bd64783aca73341a8b7f,
+    type: 3}
+  m_PrefabInstance: {fileID: 3561167854133903330}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7247641401388710007
 PrefabInstance:
   m_ObjectHideFlags: 0

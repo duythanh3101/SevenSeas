@@ -71,23 +71,38 @@ namespace SevenSeas
 
         }
 
-        public bool drawGizmos;
+        [Header("Debug")]
+        public bool drawStaticPosition;
+        public bool drawPossiblePosition;
+        public bool drawDynamicPosition;
+
         void OnDrawGizmos()
         {
-            if (drawGizmos)
+            if (drawPossiblePosition)
             {
                 Gizmos.color = Color.green;
                 for (int i = 0; i < possiblePositions.Count; i++)
                 {
                     Gizmos.DrawCube(possiblePositions[i], Vector3.one * 0.5f);
                 }
+            }
 
+            if (drawStaticPosition)
+            {
                 Gizmos.color = Color.red;
                 foreach (var obj in staticObjectDicts)
                 {
                     Gizmos.DrawCube(obj.Value, Vector3.one * 0.4f);
                 }
-          
+            }
+
+            if (drawDynamicPosition)
+            {
+                Gizmos.color = Color.yellow;
+                foreach (var obj in dynamicObjectDicts)
+                {
+                    Gizmos.DrawCube(obj.Value, Vector3.one * 0.4f);
+                }
             }
             
         }
@@ -222,7 +237,7 @@ namespace SevenSeas
                 }
                 else
                 {
-                    Debug.Log("Add " + dynamicObjectDicts[obj] + " Remove " + newPos + " Obj name:" + obj.name);
+                    //Debug.Log("Add " + dynamicObjectDicts[obj] + " Remove " + newPos + " Obj name:" + obj.name);
                     possiblePositions.Add(dynamicObjectDicts[obj]);
                     dynamicObjectDicts[obj] = newPos;
                     RemovePossiblePosition(possiblePositions, newPos);
@@ -235,7 +250,7 @@ namespace SevenSeas
                 {
                     staticObjectDicts.Add(obj, newPos);
                     RemovePossiblePosition(possiblePositions, newPos);
-                    Debug.Log("remove: " + newPos);
+                    //Debug.Log("remove: " + newPos);
                 }
                 else
                 {

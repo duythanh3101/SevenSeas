@@ -101,6 +101,7 @@ namespace SevenSeas
             //Fire the moved position event
             if (OnBoatMovedPosition != null)
                 OnBoatMovedPosition(gameObject, targetPos);
+                
 
             Vector2 startPos = transform.position;
             float deltaAngle = GetDeltaAngle(currentDirection, toDirection);

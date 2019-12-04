@@ -335,7 +335,7 @@ GameObject:
   - component: {fileID: 4757178384015137145}
   m_Layer: 0
   m_Name: NormalEnemy
-  m_TagString: Untagged
+  m_TagString: EnemyShip
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -368,12 +368,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc9dadbfa97ac35408a4f077bb4ac81f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isometricModel: {fileID: 6075846875433486122}
+  isometricModel: {fileID: 6075846875433561520}
   skullPrefab: {fileID: 5620171592396521548, guid: ec8e928a322a56d43adfc5525bc839d2,
     type: 3}
   moveAndRotateTime: 0.3
   boatState: 0
   currentDirection: 1
+  targetTrans: {fileID: 0}
 --- !u!50 &4757178384015137145
 Rigidbody2D:
   serializedVersion: 4
