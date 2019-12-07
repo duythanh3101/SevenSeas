@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,8 +12,8 @@ public class DottedLine : MonoBehaviour
     [Range(0.1f, 2f)]
     public float Delta;
 
-    [SerializeField] private List<CheckPoint> checkPoints = new List<CheckPoint>();
-
+    [HideInInspector]
+    public bool isDrawFinished = false;
     //Static Property with backing field
     private static DottedLine instance;
     public static DottedLine Instance
@@ -48,41 +49,45 @@ public class DottedLine : MonoBehaviour
         return gameObject;
     }
 
-    public void DrawDottedLine(Vector2 start, Vector2 end)
+    public void DrawDottedLine(Vector3 start, Vector3 end)
     {
-        //DestroyAllDots();
+        isDrawFinished = false;
         List<Vector2> positions = new List<Vector2>();
 
-        Vector2 point = start;
-        Vector2 direction = (end - start).normalized;
-        int lineSteps = 15;
-        Vector3 lineStart = GetPoint(0f);
+        int lineSteps = GetLineSteps(start, end);
+        Vector3 lineStart = GetPoint(0f, start, end);
         for (int i = 1; i <= lineSteps; i++)
         {
-            Vector3 lineEnd = GetPoint(i / (float)lineSteps);
+            Vector3 lineEnd = GetPoint(i / (float)lineSteps, start, end);
             positions.Add(lineEnd);
             lineStart = lineEnd;
         }
 
-        //while ((end - start).magnitude > (point - start).magnitude)
-        //{
-        //    positions.Add(point);
-        //    point += (direction * Delta);
-        //}
-
         StartCoroutine("Render", positions);
     }
 
-    public Vector3 GetPoint(float t)
+    private int GetLineSteps(Vector3 start, Vector3 end)
     {
-        return transform.TransformPoint(Bezier.GetPoint(checkPoints[0].StartPoint.transform.position,
-            new Vector3(2f, 2.4f, 0f), 
-            checkPoints[1].EndPoint.transform.position, t));
+        var distance = (int)(end - start).magnitude;
+        return distance != 0 ? distance * 5 : 2;
+    }
+
+    public Vector3 GetPoint(float t, Vector3 startPoint, Vector3 endPoint)
+    {
+        var middleCurvePosition = new Vector3((startPoint.x + endPoint.x)/2 + 0.5f,
+                                            (startPoint.y + endPoint.y) / 2 + 0.5f,
+                                            0f);
+        return transform.TransformPoint(Bezier.GetPoint(startPoint,
+           middleCurvePosition,
+           endPoint, t));
     }
 
     private IEnumerator Render(List<Vector2> positionList)
     {
-        checkPoints[0].Parent.gameObject.SetActive(true);
+        if (DottedLineDrawer.Instance.checkPoints[DottedLineDrawer.Instance.CHECK_POINT_LEVEL].Parent.gameObject == null
+            || DottedLineDrawer.Instance.checkPoints[DottedLineDrawer.Instance.CHECK_POINT_LEVEL + 1].Parent.gameObject == null)
+            yield return null;
+        DottedLineDrawer.Instance.checkPoints[DottedLineDrawer.Instance.CHECK_POINT_LEVEL].Parent.gameObject.SetActive(true);
         foreach (var position in positionList)
         {
             yield return new WaitForSeconds(0.25f);
@@ -90,7 +95,8 @@ public class DottedLine : MonoBehaviour
             g.transform.position = position;
             dots.Add(g);
         }
-        checkPoints[1].Parent.gameObject.SetActive(true);
+        DottedLineDrawer.Instance.checkPoints[DottedLineDrawer.Instance.CHECK_POINT_LEVEL + 1].Parent.gameObject.SetActive(true);
+        isDrawFinished = true;
         yield return null;
     }
 }
