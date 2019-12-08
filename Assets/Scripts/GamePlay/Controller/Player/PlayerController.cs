@@ -214,13 +214,21 @@ namespace SevenSeas
             //Layout another position
             isometricModel.SetActive(false);
 
+            //Spawn  a skull at the player dead pos
+            var skull = Instantiate(skullPrefab, transform.position, Quaternion.identity);
+
+
             while (!doneEffect)
             {
                 yield return null;
             }
 
-          
             MapConstantProvider.Instance.LayoutUnitAtRandomPosition(gameObject, true);
+
+            //After layout player at another pos, fire event spawn skull to remove this pos from the possible position when the map provider listen to this event
+            if (OnSpawnSkull != null)
+                OnSpawnSkull(skull,skull.transform.position);
+           
             for (int i = 0; i < 2; i++ )
             {
                 isometricModel.SetActive(true);
@@ -252,13 +260,14 @@ namespace SevenSeas
             if (currentPlayerHealth > 0)
             {
                 Respawn();
+                
             }
             else
             {
-                //Instantiate a skull represent the boat grave
-                Instantiate(skullPrefab, transform.position, Quaternion.identity);
+                SpawnSkull();
                 arrowCollection.SetActive(false);
                 isometricModel.SetActive(false);
+                GameManager.Instance.GameLose();
                 //Destroy(gameObject);
             }
         }

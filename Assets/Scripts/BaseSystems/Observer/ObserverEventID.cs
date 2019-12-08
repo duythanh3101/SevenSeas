@@ -44,9 +44,17 @@
         OnArrowDirectionClicked,
         #endregion
 
+        #region Treasure Finder events
+        OnFindTreasureGameOver,
+        OnCheckPointMapStarted,
+        #endregion
+
         #region Player Events
         OnPlayerMoving,
         OnPlayerFiring,
         # endregion Player Events
+
+        OnSpawnerDynamicObject,
+        OnSpawnerStaticObject,
     }
 }

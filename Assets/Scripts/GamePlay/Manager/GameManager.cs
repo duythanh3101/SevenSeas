@@ -12,7 +12,8 @@ namespace SevenSeas
         Playing,
         Pause,
         PregameOver,
-        GameOver
+        GameOver,
+        GameWin
     }
 
     public class GameManager : MonoBehaviour
@@ -72,7 +73,15 @@ namespace SevenSeas
         }
 
 
-       
+       public void GameWin()
+        {
+            GameState = GameState.GameWin;
+        }
+
+        public void GameLose()
+       {
+           GameState = GameState.GameOver;
+       }
     }
 }
 

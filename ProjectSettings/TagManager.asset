@@ -13,6 +13,8 @@ TagManager:
   - Projectile
   - ModelPlayer
   - ColliderDetector
+  - Teleporter
+  - EnemyShip
   layers:
   - Default
   - TransparentFX

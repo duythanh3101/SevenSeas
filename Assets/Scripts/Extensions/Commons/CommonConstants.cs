@@ -31,5 +31,41 @@ public class CommonConstants
     public static Vector2 NORTH_WEST_VECTOR = new Vector2(-1, 1);
     public static Vector2 SOUTH_WEST_VECTOR = new Vector2(-1, -1);
 
+    public static Vector2[] DIRECTION_VECTORS = new Vector2[]{
+        Vector2.down, 
+        Vector2.left, 
+        Vector2.up,
+        Vector2.right, 
+        new Vector2(1,1), 
+        new Vector2(1,-1), 
+        new Vector2(-1,1),
+        new Vector2(-1,-1)
+    };
+    public class Instruction
+    {
+        public static string WRONG_DIRECTION = "WRONG DIRECTION";
+        public static string NEAR_YOU = "YOU ARE VERY CLOSE TO THE TREASURE";
+        public static string IN_DIRECTION = "THE TREASURE IS TO THE ";
+        public static string WIN = "YOU WIN";
+        public static string CLICK_TO_CONTINUE = "CLICK TO CONTINUE";
+    }
 
+    public class SceneName
+    {
+        public static string MapMovementScene = "CheckPointMapScene";
+        public static string MainScene = "MainScene";
+        public static string TreasureMapScene = "TreasureMapScene";
+    }
+
+    public class DirectionName
+    {
+        public static string SOUTH_NAME = "SOUTH";
+        public static string WEST_NAME = "WEST";
+        public static string NORTH_NAME = "NORTH";
+        public static string EAST_NAME = "EAST";
+        public static string NORTH_EAST_NAME = "NORTH EAST";
+        public static string SOUTH_EAST_NAME = "SOUTH EAST";
+        public static string NORTH_WEST_NAME = "NORTH WEST";
+        public static string SOUTH_WEST_NAME = "SOUTH WEST";
+    }
 }

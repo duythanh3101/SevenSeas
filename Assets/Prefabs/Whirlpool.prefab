@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 490952}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Whirlpool
-  m_TagString: Untagged
+  m_TagString: Whirlpool
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 439968}
   - component: {fileID: 21226810}
   - component: {fileID: 9560336}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -143,7 +143,7 @@ GameObject:
   - component: {fileID: 6126176}
   m_Layer: 10
   m_Name: Controller
-  m_TagString: Whirlpool
+  m_TagString: Teleporter
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
