@@ -110,6 +110,7 @@ namespace SevenSeas
             //NOTE: must multiply by the rotation to create a local space rotation
             Quaternion endRot = Quaternion.AngleAxis(-deltaAngle, modelUp) * isometricModel.transform.localRotation;
 
+
             float t = 0;
             while (t < moveAndRotateTime)
             {

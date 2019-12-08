@@ -30,8 +30,9 @@ public class MapSpawnner : MonoBehaviour
     {
         SpawnWhirlpools();
         SpawnIslands();
-        SpawnEnemies();
         SpawnPlayer();
+        SpawnEnemies();
+        
     }
 
 

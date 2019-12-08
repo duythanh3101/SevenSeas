@@ -8,8 +8,24 @@ namespace SevenSeas
     public class EnemyController : BoatController
     {
         [Header("AI")]
+
+        [Header("Debug")]
         [SerializeField]
+        private bool drawRayToTarget = false;
         private Transform targetTrans;
+
+
+        void OnDrawGizmos()
+        {
+            if (drawRayToTarget)
+            {
+                Gizmos.color = Color.red;
+                Gizmos.DrawRay(transform.position, offset * 5f);
+
+                Gizmos.color = Color.yellow;
+                Gizmos.DrawRay(transform.position, direction * 5f);
+            }
+        }
 
         private void OnTriggerEnter2D(Collider2D other)
         {
@@ -17,6 +33,12 @@ namespace SevenSeas
             {
                 GetDestroy();
             }
+        }
+
+        protected override void Start()
+        {
+            base.Start();
+            targetTrans = FindObjectOfType<PlayerController>().transform;
         }
 
         void Update()
@@ -27,9 +49,13 @@ namespace SevenSeas
             }
         }
 
+
+        Vector2 offset;
+        Vector2 direction;
+
         Direction CalculateNextDirection()
         {
-            Vector2 offset = targetTrans.position - transform.position;
+             offset = targetTrans.position - transform.position;
 
             //Find the min angle between the offset vector and eight direction
             float minAngle = 0;
@@ -43,10 +69,7 @@ namespace SevenSeas
                     minIndex = i;
                 }
             }
-
-            //Convert to that min direction
-            currentDirection = UtilMapHelpers.VectorToDirection(CommonConstants.DIRECTION_VECTORS[minIndex]);
-            return currentDirection;
+            return UtilMapHelpers.VectorToDirection(CommonConstants.DIRECTION_VECTORS[minIndex]);
         }
     }
 
