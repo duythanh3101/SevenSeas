@@ -1,12 +1,26 @@
-﻿using System.Collections;
+﻿using BaseSystems.Singleton;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+<<<<<<< HEAD
 namespace SevenSeas
 {
     public class UIManager : MonoBehaviour
     {
+=======
+public class UIManager : Singleton<UIManager>
+{
+    [SerializeField]
+    private GameObject treasureGameOverPanel;
+    
+    // Start is called before the first frame update
+    void Start()
+    {
+            
+    }
+>>>>>>> origin/thanhdp
 
         public static UIManager Instance = null;
 
@@ -41,4 +55,11 @@ namespace SevenSeas
         }
     }
 
+<<<<<<< HEAD
+=======
+    public void ShowFindTreasureGameOver()
+    {
+        treasureGameOverPanel.SetActive(true);
+    }
+>>>>>>> origin/thanhdp
 }
