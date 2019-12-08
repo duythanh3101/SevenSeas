@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Extensions.Utils;
+using BaseSystems.Observer;
 using BaseSystems.Singleton;
 using System.Collections.Generic;
 using UnityEngine;
@@ -91,11 +92,7 @@ namespace MainGame
 
                 Transform tileChoice = transforms[Random.Range(0, transforms.Length)];
 
-                Transform toInstance = Instantiate(tileChoice, randomPosition, Quaternion.identity);
-                if (parent != null)
-                {
-                    toInstance.SetParent(parent);
-                }
+                LayoutObjectAtPosition(tileChoice, randomPosition, parent);
             }
         }
 
@@ -124,6 +121,8 @@ namespace MainGame
         {
             allPositions.Remove(position);
             Transform toInstance = Instantiate(tileChoice, position, Quaternion.identity);
+            //this.PostEvent(ObserverEventID.OnSpawnerObject, toInstance);
+
             if (parent != null)
             {
                 toInstance.SetParent(parent);
@@ -140,7 +139,7 @@ namespace MainGame
             InitialiseList();
 
             // Spawn edge
-            edgeSpawner.Spawn();
+            //edgeSpawner.Spawn();
 
             //Layout player 
             LayoutObjectAtPosition(player, new Vector3(-0.5f, 0.5f, 0f));

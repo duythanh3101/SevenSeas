@@ -2,12 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Assets.Scripts.Extensions.Utils;
+using BaseSystems.Observer;
 
 namespace SevenSeas
 {
     public class MapConstantProvider : MonoBehaviour
     {
         public static MapConstantProvider Instance = null;
+
+        [SerializeField]
+        private GameObject whirlpoolPrefab;
+        [SerializeField]
+        private GameObject islandPrefab;
+        [SerializeField]
+        private GameObject enemyPrefab;
+        [SerializeField]
+        private GameObject playerPrefab;
 
         [SerializeField]
         private GameObject backgroundMap;
@@ -68,7 +78,29 @@ namespace SevenSeas
             InitValues();
             InitObjectDictionary();
             InitStaticPositions();
+        }
 
+        void SpawnObjectAtStart()
+        {
+
+            //whirl pool
+            //add static
+
+            //spawn island
+            //add static
+
+
+            //spawn enemy
+            //add dynamic
+
+            //spawn player
+            //add dynamic
+
+        }
+
+        private object OnSpawnerObject(Transform transform)
+        {
+            return null;
         }
 
         [Header("Debug")]
@@ -177,6 +209,8 @@ namespace SevenSeas
                 }
             }
         }
+
+
 
         bool IsExists(Vector2 pos,Dictionary<GameObject, Vector2> dic)
         {
