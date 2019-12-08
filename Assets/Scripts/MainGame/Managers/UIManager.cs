@@ -7,9 +7,11 @@ using UnityEngine.UI;
 namespace SevenSeas
 {
     public class UIManager : MonoBehaviour
-    private GameObject treasureGameOverPanel;
-    [SerializeField]
     {
+
+    private GameObject treasureGameOverPanel;
+
+    [SerializeField]
 
         public static UIManager Instance = null;
 
@@ -42,10 +44,12 @@ namespace SevenSeas
         {
             healthImages[index].gameObject.SetActive(false);
         }
-    }
 
-    public void ShowFindTreasureGameOver()
+        public void ShowFindTreasureGameOver()
     {
         treasureGameOverPanel.SetActive(true);
     }
+    }
+
+    
 }
