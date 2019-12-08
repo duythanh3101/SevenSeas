@@ -9,28 +9,44 @@ namespace SevenSeas
     public class MapConstantProvider : MonoBehaviour
     {
         public static MapConstantProvider Instance = null;
-
-        [SerializeField]
-        private GameObject whirlpoolPrefab;
-        [SerializeField]
-        private GameObject islandPrefab;
-        [SerializeField]
-        private GameObject enemyPrefab;
-        [SerializeField]
-        private GameObject playerPrefab;
-
         [SerializeField]
         private GameObject backgroundMap;
 
+
+        [Header("Level Initialization")]
+        [Header("Whirlpool")]
         [SerializeField]
-        private List<string> objectTag;
+        private GameObject whirlpoolPrefab;
+        [SerializeField]
+        private Transform whirlpoolParent;
+        [Header("Island")]
+        [SerializeField]
+        private GameObject islandPrefab;
+        [SerializeField]
+        private Transform islandParent;
+        [Header("Enemy")]
+        [SerializeField]
+        private GameObject enemyPrefab;
+        [SerializeField]
+        private Transform enemyParent;
+        [Header("Player")]
+        [SerializeField]
+        private GameObject playerPrefab;
+        [SerializeField]
+        private int islandCount = 5;
+        [SerializeField]
+        private int enemyCount = 1;
+
+        public int currentLevel;
 
         //Properties
         public Vector2 TileSize { get; private set; }
         public Vector2 BackgroundSize { get; private set; }
 
-        private Dictionary<GameObject, Vector2> staticObjectDicts = new Dictionary<GameObject, Vector2>();
-        private Dictionary<GameObject, Vector2> dynamicObjectDicts = new Dictionary<GameObject, Vector2>();
+        public Vector2 CenterPosition { get { return centerPosition; } }
+
+        public Dictionary<GameObject, Vector2> staticObjectDicts = new Dictionary<GameObject, Vector2>();
+        public Dictionary<GameObject, Vector2> dynamicObjectDicts = new Dictionary<GameObject, Vector2>();
 
         private List<Vector2> possiblePositions = new List<Vector2>(); // The available position from the first creating level
 
@@ -63,8 +79,8 @@ namespace SevenSeas
 
         private void BoatController_OnBoatMovedPosition(GameObject moveObj, Vector2 newPos)
         {
-           //This only change the position of moved obj, not instantiate new one
-            UpdatePossiblePosition(moveObj, newPos, true); 
+            //This only change the position of moved obj, not instantiate new one
+            UpdatePossiblePosition(moveObj, newPos, true);
         }
 
         private void BoatController_OnSpawnSkull(GameObject staticObj, Vector2 newPos)
@@ -76,31 +92,8 @@ namespace SevenSeas
         void Start()
         {
             InitValues();
-            InitObjectDictionary();
-            InitStaticPositions();
-        }
-
-        void SpawnObjectAtStart()
-        {
-
-            //whirl pool
-            //add static
-
-            //spawn island
-            //add static
-
-
-            //spawn enemy
-            //add dynamic
-
-            //spawn player
-            //add dynamic
-
-        }
-
-        private object OnSpawnerObject(Transform transform)
-        {
-            return null;
+            InitPossiblePositions();
+            SetupLevel(currentLevel);
         }
 
         [Header("Debug")]
@@ -136,7 +129,59 @@ namespace SevenSeas
                     Gizmos.DrawCube(obj.Value, Vector3.one * 0.4f);
                 }
             }
-            
+        }
+        
+
+
+        void SetupLevel(int level)
+        {
+            //Precalculate the number of islands, whirlpools, enemies base on level
+
+            SpawnWhirlpools();
+            SpawnIslands();
+            SpawnEnemies();
+            SpawnPlayer();
+        }
+
+        void SpawnWhirlpools()
+        {
+            //Top left
+            Vector2 pos = new Vector2(centerPosition.x - BackgroundSize.x /2  + TileSize.x / 2, centerPosition.y + BackgroundSize.y / 2 - TileSize.y / 2);
+            LayoutUnitAtSpecific(whirlpoolPrefab, pos,whirlpoolParent);
+
+            //Top right
+            pos = new Vector2(centerPosition.x + BackgroundSize.x / 2 - TileSize.x / 2, centerPosition.y + BackgroundSize.y / 2 - TileSize.y / 2);
+            LayoutUnitAtSpecific(whirlpoolPrefab, pos, whirlpoolParent);
+
+            //Bottom left
+            pos = new Vector2(centerPosition.x - BackgroundSize.x / 2 + TileSize.x / 2, centerPosition.y - BackgroundSize.y / 2 + TileSize.y / 2);
+            LayoutUnitAtSpecific(whirlpoolPrefab, pos, whirlpoolParent);
+             
+            //Bottom right
+            pos = new Vector2(centerPosition.x + BackgroundSize.x / 2 - TileSize.x / 2, centerPosition.y - BackgroundSize.y / 2 + TileSize.y / 2);
+            LayoutUnitAtSpecific(whirlpoolPrefab, pos, whirlpoolParent);
+
+        }
+
+        void SpawnIslands()
+        {
+            for (int i =0; i < islandCount;i++)
+            {
+                LayoutUnitAtRandomPosition(islandPrefab, false,islandParent);
+            }
+        }
+
+        void SpawnEnemies()
+        {
+            for (int i = 0; i < enemyCount; i++)
+            {
+                LayoutUnitAtRandomPosition(enemyPrefab, false,enemyParent);
+            }
+        }
+
+        void SpawnPlayer()
+        {
+            LayoutUnitAtRandomPosition(playerPrefab, false);
         }
 
         void InitValues()
@@ -153,36 +198,7 @@ namespace SevenSeas
             return (tag == "Whirlpool" || tag == "Obstacle");
         }
 
-        void InitObjectDictionary()
-        {
-            int count = objectTag.Count;
-
-            for (int i = 0; i < count; i++)
-            {
-                var objectsFound = GameObject.FindGameObjectsWithTag(objectTag[i]);
-
-                if (objectsFound.Length > 0)
-                {
-                    if (IsStaticObject(objectTag[i]))
-                    {
-                        foreach (var obj in objectsFound)
-                        {
-                            //Debug.Log((Vector2)obj.transform.position);
-                            staticObjectDicts.Add(obj, (Vector2)obj.transform.position);
-                        }
-                    }
-                    else
-                    {
-                        foreach (var obj in objectsFound)
-                        {
-                            dynamicObjectDicts.Add(obj, (Vector2)obj.transform.position);
-                        }
-                    }
-                }
-            }
-        }
-
-        void InitStaticPositions()
+        void InitPossiblePositions()
         {
 
             int row = (int)Mathf.Sqrt(CommonConstants.NUMBER_OF_CELLS);
@@ -196,23 +212,22 @@ namespace SevenSeas
                     Vector2 pos = new Vector2(
                   (centerPosition.x + UtilMapHelpers.GetHorizontalSign(icol, centerNumber) * (TileSize.x * Mathf.Abs(centerNumber - icol))) + TileSize.x / 2,
                   (centerPosition.y + UtilMapHelpers.GetVerticalSign(irow, centerNumber) * (TileSize.y * Mathf.Abs(centerNumber - irow))) - TileSize.y / 2);
-
-                    if (IsExists(pos, staticObjectDicts) || IsExists(pos, dynamicObjectDicts))
-                        continue;
                     possiblePositions.Add(pos);
-
-                    //if (!staticObjectDicts.ContainsValue(pos) && !dynamicObjectDicts.ContainsValue(pos))
-                    //{
-                        
-                    //    possiblePositions.Add(pos);
-                    //}
                 }
             }
         }
 
+        bool IsExists(Vector2 pos, List<Vector2> list)
+        {
+            foreach (var obj in list)
+            {
+                if (pos == obj)
+                    return true;
+            }
+            return false;
+        }
 
-
-        bool IsExists(Vector2 pos,Dictionary<GameObject, Vector2> dic)
+        bool IsExists(Vector2 pos, Dictionary<GameObject, Vector2> dic)
         {
             foreach (var obj in dic)
             {
@@ -225,14 +240,35 @@ namespace SevenSeas
 
         void RemovePossiblePosition(List<Vector2> possiblePos, Vector2 pos)
         {
-            for (int i =0; i < possiblePos.Count; i++)
+            for (int i = 0; i < possiblePos.Count; i++)
             {
                 if (possiblePos[i] == pos)
                     possiblePos.RemoveAt(i);
             }
         }
 
-        public void LayoutUnitAtRandomPosition(GameObject unit, bool recycle)
+        public void LayoutUnitAtSpecific(GameObject unit,Vector2 pos, Transform parent = null)
+        {
+            if (!IsExists(pos,possiblePositions))
+            {
+                Debug.Log("Cant spawn: " + unit.name + "at: " + pos);
+                return;
+            }
+
+            bool isStatic = IsStaticObject(unit.tag);
+            var ins = Instantiate(unit, pos, Quaternion.identity,parent);
+            if (isStatic)
+            {
+                staticObjectDicts.Add(ins, pos);
+            }
+            else
+            {
+                dynamicObjectDicts.Add(ins, pos);
+            }
+            RemovePossiblePosition(possiblePositions, pos);
+        }
+
+        public void LayoutUnitAtRandomPosition(GameObject unit, bool recycle, Transform parent = null)
         {
             Vector2 randomPos = possiblePositions[Random.Range(0, possiblePositions.Count)];
             if (recycle) //reuse the game object, just update the position
@@ -241,22 +277,22 @@ namespace SevenSeas
                 unit.SetActive(true);
 
                 //Make sure to update all the position
-                UpdatePossiblePosition(unit, randomPos,recycle);
+                UpdatePossiblePosition(unit, randomPos, recycle);
 
             }
             else // Create the new unit instance
             {
-                Instantiate(unit, randomPos, Quaternion.identity);
+                var unitIns =  Instantiate(unit, randomPos, Quaternion.identity,parent);
 
                 //Make sure to update all the position
-                UpdatePossiblePosition(unit, randomPos, recycle);
+                UpdatePossiblePosition(unitIns, randomPos, recycle);
             }
         }
 
         void UpdatePossiblePosition(GameObject obj, Vector2 newPos, bool recycle)
         {
             bool isStatic = IsStaticObject(obj.tag);
-           //Check the has-object-pos dictionary
+            //Check the has-object-pos dictionary
             if (recycle) // reuse
             {
                 //In the possible position, add the current pos stored in the object dict and remove the new pos
@@ -266,7 +302,7 @@ namespace SevenSeas
                     possiblePositions.Add(staticObjectDicts[obj]);
                     staticObjectDicts[obj] = newPos;
                     RemovePossiblePosition(possiblePositions, newPos);
-                   
+
 
                 }
                 else
@@ -292,7 +328,7 @@ namespace SevenSeas
                     RemovePossiblePosition(possiblePositions, newPos);
                 }
 
-                 //Debug.Log("Remove " + newPos + "Obj name:  " + obj.name + "status: " + status);
+                //Debug.Log("Remove " + newPos + "Obj name:  " + obj.name + "status: " + status);
             }
         }
 
