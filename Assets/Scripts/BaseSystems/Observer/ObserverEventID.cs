@@ -46,6 +46,7 @@
 
         #region Treasure Finder events
         OnFindTreasureGameOver,
+        OnCheckPointMapStarted,
         #endregion
 
         #region Player Events

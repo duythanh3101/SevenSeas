@@ -90,7 +90,7 @@ public class DottedLine : MonoBehaviour
         DottedLineDrawer.Instance.checkPoints[DottedLineDrawer.Instance.CHECK_POINT_LEVEL].Parent.gameObject.SetActive(true);
         foreach (var position in positionList)
         {
-            yield return new WaitForSeconds(0.25f);
+            yield return new WaitForSeconds(0.5f);
             var g = GetOneDot();
             g.transform.position = position;
             dots.Add(g);

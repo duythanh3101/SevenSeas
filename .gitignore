@@ -24,3 +24,9 @@ Zenject-TestFramework.csproj
 Zenject.csproj
 
 Unity2D-SevenSeas.sln
+
+.vs/
+
+Assets/
+
+obj/
