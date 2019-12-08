@@ -5,7 +5,6 @@ TagManager:
   serializedVersion: 2
   tags:
   - Obstacle
-  - Portal
   - PlayerShip
   - Arrow
   - Edge
@@ -13,6 +12,9 @@ TagManager:
   - Enemy
   - Projectile
   - ModelPlayer
+  - ColliderDetector
+  - Teleporter
+  - EnemyShip
   layers:
   - Default
   - TransparentFX
@@ -24,7 +26,7 @@ TagManager:
   - 
   - BlockingLayer
   - Player
-  - 
+  - Interaction
   - 
   - 
   - 
@@ -50,9 +52,21 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Player
+    uniqueID: 56120075
+    locked: 0
+  - name: Background
+    uniqueID: 2417593735
+    locked: 0
   - name: Map
     uniqueID: 2896578539
     locked: 0
-  - name: Player
-    uniqueID: 56120075
+  - name: Foreground
+    uniqueID: 847925135
+    locked: 0
+  - name: Effect
+    uniqueID: 4236191357
+    locked: 0
+  - name: UIInput
+    uniqueID: 2447801429
     locked: 0
