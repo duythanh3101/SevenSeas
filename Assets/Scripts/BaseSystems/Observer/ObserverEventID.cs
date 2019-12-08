@@ -53,5 +53,8 @@
         OnPlayerMoving,
         OnPlayerFiring,
         # endregion Player Events
+
+        OnSpawnerDynamicObject,
+        OnSpawnerStaticObject,
     }
 }
