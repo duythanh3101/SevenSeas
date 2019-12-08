@@ -57,7 +57,7 @@ namespace MainGame
             currentPosition = transform.parent.position;
         }
 
-        public void CannonTargeting(Direction toDirection)
+       public void CanonTargeting(Direction toDirection)
         {
             isTargetDecting = true;
 
@@ -83,6 +83,11 @@ namespace MainGame
             SetPositionAndMoveCrosshair(leftTargetPosition, rightTargetPosition);
 
             isTargetDecting = false;
+        }
+
+        public void FireCanonball(Direction toDirection)
+        {
+
         }
 
         private ShootDirection GetShootDirection(Direction toDirection)
