@@ -97,12 +97,11 @@ namespace SevenSeas
         {
             //Start moving and rotating the model
             BoatState = BoatState.MoveAndRotate;
+            var boxCollider = GetComponentInChildren<BoxCollider2D>();
 
-            //Fire the moved position event
-            if (OnBoatMovedPosition != null)
-                OnBoatMovedPosition(gameObject, targetPos);
-                
 
+
+            boxCollider.enabled = false;
             Vector2 startPos = transform.position;
             float deltaAngle = GetDeltaAngle(currentDirection, toDirection);
 
@@ -120,6 +119,13 @@ namespace SevenSeas
                 isometricModel.transform.localRotation = Quaternion.Lerp(startRot, endRot, fraction);
                 yield return null;
             }
+
+            boxCollider.enabled = true;
+
+            //Fire the moved position event
+            if (OnBoatMovedPosition != null)
+                OnBoatMovedPosition(gameObject, targetPos);
+           
 
             //Update the current Direction
             currentDirection = toDirection;

@@ -33,6 +33,45 @@ namespace SevenSeas
             {
                 GetDestroy();
             }
+            else if (other.CompareTag("Obstacle"))
+            {
+                DestroyByObstacle();
+            }
+            else if (other.CompareTag("PlayerShip") || other.CompareTag("Enemy"))
+            {
+                DestroyByBoat();
+            }
+        }
+
+
+        void DestroyByObstacle()
+        {
+            BoatState = BoatState.Destroyed;
+
+            EffectManager.Instance.SpawnEffect(EffectManager.Instance.explosion, transform.position, Quaternion.identity);
+            SoundManager.Instance.PlayDestroyShipSound();
+
+            Destroy(gameObject);
+        }
+
+        void DestroyByBoat()
+        {
+            BoatState = BoatState.Destroyed;
+
+            EffectManager.Instance.SpawnEffect(EffectManager.Instance.explosion, transform.position, Quaternion.identity);
+            SoundManager.Instance.PlayDestroyShipSound();
+            Debug.Log("Destroyed");
+
+            MapConstantProvider.Instance.LayoutUnitAtSpecific(skullPrefab, transform.position);
+
+            Destroy(gameObject);
+
+            
+        }
+
+        Vector2 GetSnapPosition()
+        {
+            return MapConstantProvider.Instance.dynamicObjectDicts[gameObject] + MapConstantProvider.Instance.TileSize * UtilMapHelpers.GetDirectionVector(currentDirection);
         }
 
         protected override void Start()
@@ -58,11 +97,12 @@ namespace SevenSeas
              offset = targetTrans.position - transform.position;
 
             //Find the min angle between the offset vector and eight direction
-            float minAngle = 0;
+             float minAngle = Vector2.Angle(offset, CommonConstants.DIRECTION_VECTORS[0]);
             int minIndex = 0;
-            for (int i = 0; i < CommonConstants.DIRECTION_VECTORS.Length; i++ )
+            for (int i = 1; i < CommonConstants.DIRECTION_VECTORS.Length; i++ )
             {
                 float angle = Vector2.Angle(offset, CommonConstants.DIRECTION_VECTORS[i]);
+               
                 if (angle <= minAngle)
                 {
                     minAngle = angle;

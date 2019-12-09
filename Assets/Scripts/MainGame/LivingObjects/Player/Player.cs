@@ -68,7 +68,6 @@ namespace MainGame
 
             toDirection = Direction.East;
 
-            this.RegisterListener(ObserverEventID.OnArrowDirectionClicked, (param) => OnArrowDirectionClicked((Direction)param));
         }
 
 

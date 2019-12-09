@@ -52,6 +52,7 @@ MonoBehaviour:
   moveAndRotateTime: 0.3
   boatState: 0
   currentDirection: 1
+  drawRayToTarget: 0
 --- !u!50 &4757178384015137145
 Rigidbody2D:
   serializedVersion: 4
@@ -5535,7 +5536,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.041003168, y: -0.037275553}
+  m_Offset: {x: 0.037617326, y: -0.037275553}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -5546,7 +5547,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.41799366, y: 0.32107687}
+  m_Size: {x: 0.28932977, y: 0.32107687}
   m_EdgeRadius: 0
 --- !u!1 &6075846875433569168
 GameObject:

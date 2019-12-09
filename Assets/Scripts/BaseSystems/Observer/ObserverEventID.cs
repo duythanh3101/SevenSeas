@@ -40,9 +40,6 @@
         OnHighestScoreChanged,
         #endregion
 
-        #region Arrow events
-        OnArrowDirectionClicked,
-        #endregion
 
         #region Treasure Finder events
         OnFindTreasureGameOver,

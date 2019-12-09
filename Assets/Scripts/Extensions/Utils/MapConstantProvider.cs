@@ -318,12 +318,16 @@ namespace SevenSeas
                 //In the possible positions list, just remove the current pos 
                 if (isStatic)
                 {
+                    if (IsExists(newPos, staticObjectDicts))
+                        return;
                     staticObjectDicts.Add(obj, newPos);
                     RemovePossiblePosition(possiblePositions, newPos);
                     //Debug.Log("remove: " + newPos);
                 }
                 else
                 {
+                    if (IsExists(newPos, dynamicObjectDicts))
+                        return;
                     dynamicObjectDicts.Add(obj, newPos);
                     RemovePossiblePosition(possiblePositions, newPos);
                 }

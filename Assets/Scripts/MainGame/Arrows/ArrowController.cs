@@ -62,7 +62,6 @@ namespace MainGame
             if (isMovable && arrow.arrowSprite.gameObject.activeSelf)
             {
                 arrow.arrowSprite.gameObject.SetActive(false);
-                this.PostEvent(ObserverEventID.OnArrowDirectionClicked, arrow.direction);
                 OnArrowClicked(arrow.direction);
             }
         }
