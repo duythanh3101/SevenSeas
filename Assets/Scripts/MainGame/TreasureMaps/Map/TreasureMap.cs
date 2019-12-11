@@ -19,7 +19,7 @@ namespace MainGame
         [SerializeField] private GameObject skullPrefab;
         [SerializeField] private int skullCount = 10;
         [SerializeField] private Text instructionText;
-
+      
         private GameObject treasure;
         private Vector3 currentTreasurePosition;
         private List<XSign> XSignList;
@@ -45,6 +45,11 @@ namespace MainGame
             {
                 instructionText.text = string.Empty;
             }
+        }
+
+        private void Start()
+        {
+            this.PostEvent(ObserverEventID.OnFindTreasureGameStarted);
         }
 
         protected virtual void Update()
@@ -78,6 +83,10 @@ namespace MainGame
             if (!IsClickPositionValidAt(posClick))
             {
                 return;
+            }
+            else
+            {
+                this.PostEvent(ObserverEventID.OnClickedTreasureMap);
             }
             if (IsExistingTreasureAt(posClick))
             {

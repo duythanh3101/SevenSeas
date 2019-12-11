@@ -46,7 +46,9 @@
 
         #region Treasure Finder events
         OnFindTreasureGameOver,
+        OnClickedTreasureMap,
         OnCheckPointMapStarted,
+        OnFindTreasureGameStarted,
         #endregion
 
         #region Player Events
@@ -54,7 +56,5 @@
         OnPlayerFiring,
         # endregion Player Events
 
-        OnSpawnerDynamicObject,
-        OnSpawnerStaticObject,
     }
 }

@@ -7,35 +7,55 @@ using UnityEngine;
 
 public class AudioManager : Singleton<AudioManager>
 {
-    [SerializeField] private AudioSource audioWinGame;
-    [SerializeField] private AudioClip audioWinGameClip;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioSource audioSourceBackground;
 
-    [SerializeField] private AudioSource audioBackGround;
+    [SerializeField] private AudioClip audioWinGameClip;
     [SerializeField] private AudioClip audioBackGroundClip;
+    [SerializeField] private AudioClip audioClickedFindTreasureClip;
+    [SerializeField] private AudioClip audioFindTreasureClip;
 
     // Start is called before the first frame update
     void Start()
     {
-        audioWinGame = GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
         this.RegisterListener(ObserverEventID.OnFindTreasureGameOver, (param) => OnFindTreasureGameOver());
         this.RegisterListener(ObserverEventID.OnCheckPointMapStarted, (param) => OnCheckPointMapStarted());
+        this.RegisterListener(ObserverEventID.OnClickedTreasureMap, (param) => OnClickedTreasureMap());
+        this.RegisterListener(ObserverEventID.OnFindTreasureGameStarted, (param) => OnFindTreasureGameStarted());
     }
 
-    private void OnCheckPointMapStarted()
+    private void OnFindTreasureGameStarted()
     {
-        audioWinGame.clip = audioWinGameClip;
-        audioWinGame.Play();
+        audioSourceBackground.clip = audioBackGroundClip;
+        audioSourceBackground.Play();
+    }
+
+    private void OnClickedTreasureMap()
+    {
+        audioSource.clip = audioClickedFindTreasureClip;
+        audioSource.PlayOneShot(audioSource.clip, 1f);
+    }
+
+    public void OnCheckPointMapStarted()
+    {
+        StartCoroutine("PlayAudioBackground", audioSource.isPlaying);
+    }
+
+    private IEnumerator PlayAudioBackground()
+    {
+        while (audioSource.isPlaying)
+        {
+            yield return null;
+        }
+        audioSource.clip = audioBackGroundClip;
+        audioSource.Play();
+        yield return null;
     }
 
     private void OnFindTreasureGameOver()
     {
-        audioWinGame.clip = audioWinGameClip;
-        audioWinGame.PlayOneShot(audioWinGameClip, 1f);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        audioSource.clip = audioWinGameClip;
+        audioSource.PlayOneShot(audioWinGameClip, 1f);
     }
 }

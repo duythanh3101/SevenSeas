@@ -1,4 +1,5 @@
-﻿using BaseSystems.Singleton;
+﻿using BaseSystems.Observer;
+using BaseSystems.Singleton;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,7 @@ public class DottedLineDrawer : Singleton<DottedLineDrawer>
     void Start()
     {
         DottedLine.Instance.DrawDottedLine(checkPoints[CHECK_POINT_LEVEL].StartPoint.transform.position, checkPoints[CHECK_POINT_LEVEL + 1].EndPoint.transform.position);
+        this.PostEvent(ObserverEventID.OnCheckPointMapStarted);
     }
 
 

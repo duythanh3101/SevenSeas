@@ -6,7 +6,7 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance = null;
 
-     [System.Serializable]
+    [System.Serializable]
     public class Sound
     {
         public AudioClip clip;
