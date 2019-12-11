@@ -10,8 +10,8 @@ public class AudioManager : Singleton<AudioManager>
     [SerializeField] private AudioSource audioWinGame;
     [SerializeField] private AudioClip audioWinGameClip;
 
-    [SerializeField] private AudioSource audioBackGround;
-    [SerializeField] private AudioClip audioBackGroundClip;
+    //[SerializeField] private AudioSource audioBackGround;
+    //[SerializeField] private AudioClip audioBackGroundClip;
 
     // Start is called before the first frame update
     void Start()
