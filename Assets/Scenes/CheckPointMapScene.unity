@@ -162,7 +162,7 @@ GameObject:
   - component: {fileID: 72895676}
   - component: {fileID: 72895678}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: LoadCheckPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

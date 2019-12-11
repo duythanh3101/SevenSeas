@@ -53,7 +53,7 @@ namespace MainGame
             {
                 if (isEndGame)
                 {
-                    SceneGameManager.LoadNextMapFindingTreasure(isEndGame);
+                    SceneGameManager.Instance.LoadScene(CommonConstants.SceneName.CheckPointMapScene);
                     return;
                 }
                 Interact();

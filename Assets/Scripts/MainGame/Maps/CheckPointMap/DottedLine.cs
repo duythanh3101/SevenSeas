@@ -49,7 +49,7 @@ public class DottedLine : MonoBehaviour
         return gameObject;
     }
 
-    public void DrawDottedLine(Vector3 start, Vector3 end)
+    public bool DrawDottedLine(Vector3 start, Vector3 end)
     {
         isDrawFinished = false;
         List<Vector2> positions = new List<Vector2>();
@@ -64,6 +64,7 @@ public class DottedLine : MonoBehaviour
         }
 
         StartCoroutine("Render", positions);
+        return isDrawFinished;
     }
 
     private int GetLineSteps(Vector3 start, Vector3 end)

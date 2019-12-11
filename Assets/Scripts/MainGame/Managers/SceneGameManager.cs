@@ -13,7 +13,12 @@ public class SceneGameManager : Singleton<SceneGameManager>
     {
         if (isFindingTreasureEnded)
         {
-            SceneManager.LoadScene(CommonConstants.SceneName.MapMovementScene, LoadSceneMode.Single);
+            SceneManager.LoadScene(CommonConstants.SceneName.CheckPointMapScene, LoadSceneMode.Single);
         }
+    }
+
+    public void LoadScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
 }
