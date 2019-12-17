@@ -5,8 +5,6 @@ using Assets.Scripts.Extensions.Utils;
 
 namespace SevenSeas
 {
-
-  
     public enum BoatState
     {
         Idle,
@@ -21,7 +19,7 @@ namespace SevenSeas
     {
         public static System.Action<GameObject,Vector2> OnBoatMovedPosition;
         public static System.Action<GameObject, Vector2> OnSpawnSkull;
-
+        public static System.Action<BoatController> OnChangeTurn;
 
         [Header("Object References")]
         [SerializeField]
@@ -65,6 +63,30 @@ namespace SevenSeas
         public Direction currentDirection = Direction.East;
         #endregion
 
+        protected virtual void Awake()
+        {
+            TurnBasedSystemManager.BattleStateChanged += TurnBasedSystemManager_BattleStateChanged;
+            EffectManager.OnAllEffectCompleted += EffectManager_OnAllEffectCompleted;
+        }
+
+        protected virtual void  OnDestroy()
+        {
+            TurnBasedSystemManager.BattleStateChanged -= TurnBasedSystemManager_BattleStateChanged;
+            EffectManager.OnAllEffectCompleted -= EffectManager_OnAllEffectCompleted;
+        }
+
+
+        protected virtual void EffectManager_OnAllEffectCompleted()
+        {
+
+        }
+
+
+        protected virtual void TurnBasedSystemManager_BattleStateChanged(BattleState newState)
+        {
+            
+        }
+
         protected void MoveAndRotate(Direction dir)
         {
             if (BoatState == BoatState.MoveAndRotate)
@@ -77,8 +99,6 @@ namespace SevenSeas
             if (moveAndRotateCR != null)
                 StopCoroutine(moveAndRotateCR);
             moveAndRotateCR = StartCoroutine(CR_MoveAndRotate(targetPosition, targetDirection));
-
-            
         }
 
         protected virtual void Start()
@@ -98,9 +118,6 @@ namespace SevenSeas
             //Start moving and rotating the model
             BoatState = BoatState.MoveAndRotate;
             var boxCollider = GetComponentInChildren<BoxCollider2D>();
-
-
-
             boxCollider.enabled = false;
             Vector2 startPos = transform.position;
             float deltaAngle = GetDeltaAngle(currentDirection, toDirection);
@@ -108,7 +125,6 @@ namespace SevenSeas
             Quaternion startRot = isometricModel.transform.localRotation;
             //NOTE: must multiply by the rotation to create a local space rotation
             Quaternion endRot = Quaternion.AngleAxis(-deltaAngle, modelUp) * isometricModel.transform.localRotation;
-
 
             float t = 0;
             while (t < moveAndRotateTime)
@@ -120,20 +136,20 @@ namespace SevenSeas
                 yield return null;
             }
 
-            boxCollider.enabled = true;
-
             //Fire the moved position event
             if (OnBoatMovedPosition != null)
-                OnBoatMovedPosition(gameObject, targetPos);
-           
+                OnBoatMovedPosition(gameObject, targetPos); // This will update dictionary info when it's subscribed by the MapConstatnProvider
+            boxCollider.enabled = true;
 
             //Update the current Direction
             currentDirection = toDirection;
-
             //Update boat state to idle after finishing moving and rotating
             BoatState = BoatState.Idle;
 
-            
+            //Fire the turn changed event
+            if (OnChangeTurn != null)
+                OnChangeTurn(this);
+
         }
 
         private float GetDeltaAngle(Direction currentDirection, Direction toDirection)

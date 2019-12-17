@@ -12,7 +12,6 @@ namespace SevenSeas
         [SerializeField]
         private GameObject backgroundMap;
 
-
         [Header("Level Initialization")]
         [Header("Whirlpool")]
         [SerializeField]
@@ -130,9 +129,7 @@ namespace SevenSeas
                 }
             }
         }
-        
-
-
+     
         void SetupLevel(int level)
         {
             //Precalculate the number of islands, whirlpools, enemies base on level
@@ -265,6 +262,38 @@ namespace SevenSeas
             {
                 dynamicObjectDicts.Add(ins, pos);
             }
+            RemovePossiblePosition(possiblePositions, pos);
+        }
+
+        public void SpawnUnitOnDestroyedObject(GameObject unit, Vector2 pos, GameObject destroyedObject)
+        {
+            bool isStatic = IsStaticObject(unit.tag);
+            //Remove the destroyed object from the dictionary
+            if (staticObjectDicts.ContainsKey(destroyedObject))
+            {
+                staticObjectDicts.Remove(destroyedObject);
+            }
+            else if (dynamicObjectDicts.ContainsKey(destroyedObject))
+            {
+                dynamicObjectDicts.Remove(destroyedObject);
+            }
+
+            //Check to spawn the unit on destroyed object
+            if (isStatic)
+            {
+                if (IsExists(pos, staticObjectDicts))
+                    return;// To prevent the two object spawn on the same position
+                var ins = Instantiate(unit, pos, Quaternion.identity);
+                staticObjectDicts.Add(ins, pos);
+            }
+            else
+            {
+                if (IsExists(pos, dynamicObjectDicts))
+                    return;// To prevent the two object spawn on the same position
+                var ins = Instantiate(unit, pos, Quaternion.identity);
+                dynamicObjectDicts.Add(ins, pos);
+            }
+           
             RemovePossiblePosition(possiblePositions, pos);
         }
 

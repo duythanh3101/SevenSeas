@@ -45,24 +45,31 @@ namespace SevenSeas
 
         #endregion
 
-        void Awake()
+        protected override  void Awake()
         {
+            base.Awake();
             ArrowController.OnArrowClicked += ArrowController_OnArrowClicked;
-            EffectManager.OnAllEffectCompleted += EffectManager_OnAllEffectCompleted;
-
             playerDetecter.RegisterHandler(this);
         }
       
-        void OnDestroy()
+        protected override void OnDestroy()
         {
+            base.OnDestroy();
             ArrowController.OnArrowClicked -= ArrowController_OnArrowClicked;
-            EffectManager.OnAllEffectCompleted -= EffectManager_OnAllEffectCompleted;
         }
 
         protected override void Start()
         {
             base.Start();
             InitValues();
+        }
+
+        protected override void TurnBasedSystemManager_BattleStateChanged(BattleState newState)
+        {
+            if (newState == BattleState.PlayerTurn)
+            {
+
+            }
         }
 
         void InitValues()
@@ -110,21 +117,28 @@ namespace SevenSeas
 
         #endregion
 
-        void EffectManager_OnAllEffectCompleted()
+        protected override void EffectManager_OnAllEffectCompleted()
         {
             if (BoatState == BoatState.Destroyed)
                 return;
 
-            arrowCollection.SetActive(true);
+            TogglePlayerInput(true);
+            //arrowCollection.SetActive(true);
             BoatState = BoatState.Idle;
 
             doneEffect = true;
+
+
+            if (OnChangeTurn != null)
+                OnChangeTurn(this);
         }
 
         void ArrowController_OnArrowClicked(Direction dir)
         {
             MoveAndRotate(dir);
         }
+
+        
 
         void CanonTargeting()
         {
@@ -151,7 +165,8 @@ namespace SevenSeas
             BoatState = BoatState.Firing;
             firingSystem.ResetData();
 
-            arrowCollection.SetActive(false);
+            TogglePlayerInput(false);
+            //arrowCollection.SetActive(false);
             firingSystem.FireCanonballs(currentDirection, isTargeting);
         }
 
@@ -171,7 +186,8 @@ namespace SevenSeas
         IEnumerator CR_Teleport()
         {
             //Sink time
-            arrowCollection.SetActive(false); //Disable input
+            TogglePlayerInput(false);
+           // arrowCollection.SetActive(false); //Disable input
             animator.SetTrigger(SINK_TRIGGER);
             yield return new WaitForSeconds(sinkTime);
 
@@ -189,7 +205,8 @@ namespace SevenSeas
             animator.SetTrigger(RISEUP_TRIGGER);
             yield return new WaitForSeconds(riseUpTime);
 
-            arrowCollection.SetActive(true); //enable the input
+            TogglePlayerInput(true);
+            //arrowCollection.SetActive(true); //enable the input
             BoatState = BoatState.Idle;
         }
 
@@ -204,13 +221,13 @@ namespace SevenSeas
 
         }
 
-
         private WaitForSeconds respawnIntervalWait = new WaitForSeconds(0.5f);
         private IEnumerator CR_Respawn()
         {
 
             //Disable input
-            arrowCollection.SetActive(false);
+            TogglePlayerInput(false);
+            //arrowCollection.SetActive(false);
             //Layout another position
             isometricModel.SetActive(false);
 
@@ -239,10 +256,16 @@ namespace SevenSeas
 
             isometricModel.SetActive(true);
             //Enable input
-            arrowCollection.SetActive(true);
+            TogglePlayerInput(true);
+           // arrowCollection.SetActive(true);
             BoatState = BoatState.Idle;
             doneEffect = false;
             
+        }
+
+        void TogglePlayerInput(bool isEnable)
+        {
+            arrowCollection.SetActive(isEnable);
         }
 
         protected override void GetDestroy()
@@ -265,12 +288,17 @@ namespace SevenSeas
             else
             {
                 SpawnSkull();
-                arrowCollection.SetActive(false);
+                TogglePlayerInput(false);
+                //arrowCollection.SetActive(false);
                 isometricModel.SetActive(false);
                 GameManager.Instance.GameLose();
                 //Destroy(gameObject);
             }
         }
+
+       
+
+
     }
 }
 

@@ -27,6 +27,22 @@ namespace SevenSeas
             }
         }
 
+        protected override void TurnBasedSystemManager_BattleStateChanged(BattleState newState)
+        {
+            if (newState == BattleState.EnemyTurn)
+            {
+
+            }
+        }
+
+        protected override void EffectManager_OnAllEffectCompleted()
+        {
+            BoatState = BoatState.Idle;
+
+            if (OnChangeTurn != null)
+                OnChangeTurn(this);
+        }
+
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.CompareTag("Projectile"))
@@ -60,9 +76,10 @@ namespace SevenSeas
 
             EffectManager.Instance.SpawnEffect(EffectManager.Instance.explosion, transform.position, Quaternion.identity);
             SoundManager.Instance.PlayDestroyShipSound();
-            Debug.Log("Destroyed");
+            //Debug.Log("Destroyed");
 
-            MapConstantProvider.Instance.LayoutUnitAtSpecific(skullPrefab, transform.position);
+            MapConstantProvider.Instance.SpawnUnitOnDestroyedObject(skullPrefab, transform.position, gameObject);
+            
 
             Destroy(gameObject);
 
