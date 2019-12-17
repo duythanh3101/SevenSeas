@@ -19,7 +19,7 @@ namespace SevenSeas
     {
         public static System.Action<GameObject,Vector2> OnBoatMovedPosition;
         public static System.Action<GameObject, Vector2> OnSpawnSkull;
-        public static System.Action<BoatController> OnChangeTurn;
+        public static System.Action<BoatController> OnBoatActivityCompleted = delegate { };
 
         [Header("Object References")]
         [SerializeField]
@@ -32,6 +32,8 @@ namespace SevenSeas
         private float moveAndRotateTime = 0.3f;
         [SerializeField]
         private BoatState boatState = BoatState.Idle;
+
+
 
         //Public properties 
         public BoatState BoatState
@@ -66,20 +68,13 @@ namespace SevenSeas
         protected virtual void Awake()
         {
             TurnBasedSystemManager.BattleStateChanged += TurnBasedSystemManager_BattleStateChanged;
-            EffectManager.OnAllEffectCompleted += EffectManager_OnAllEffectCompleted;
         }
 
         protected virtual void  OnDestroy()
         {
             TurnBasedSystemManager.BattleStateChanged -= TurnBasedSystemManager_BattleStateChanged;
-            EffectManager.OnAllEffectCompleted -= EffectManager_OnAllEffectCompleted;
         }
 
-
-        protected virtual void EffectManager_OnAllEffectCompleted()
-        {
-
-        }
 
 
         protected virtual void TurnBasedSystemManager_BattleStateChanged(BattleState newState)
@@ -139,6 +134,8 @@ namespace SevenSeas
             //Fire the moved position event
             if (OnBoatMovedPosition != null)
                 OnBoatMovedPosition(gameObject, targetPos); // This will update dictionary info when it's subscribed by the MapConstatnProvider
+
+
             boxCollider.enabled = true;
 
             //Update the current Direction
@@ -146,9 +143,15 @@ namespace SevenSeas
             //Update boat state to idle after finishing moving and rotating
             BoatState = BoatState.Idle;
 
-            //Fire the turn changed event
-            if (OnChangeTurn != null)
-                OnChangeTurn(this);
+            //After enable collider, we skip this frame to the box collider begin to check, check if the boat state is iddle
+            yield return null;
+
+            if (BoatState == BoatState.Idle)
+            {
+                //Fire the turn changed event
+                OnBoatActivityCompleted(this);
+            }
+           
 
         }
 

@@ -68,7 +68,16 @@ namespace SevenSeas
         {
             if (newState == BattleState.PlayerTurn)
             {
-
+                if (BoatState != BoatState.Respawning)
+                {
+                    TogglePlayerInput(true);
+                    BoatState = BoatState.Idle;
+                    firingSystem.boxCollider2D.enabled = true;
+                }
+            }
+            else if (newState == BattleState.EndBattle)
+            {
+                TogglePlayerInput(false);
             }
         }
 
@@ -116,22 +125,6 @@ namespace SevenSeas
         }
 
         #endregion
-
-        protected override void EffectManager_OnAllEffectCompleted()
-        {
-            if (BoatState == BoatState.Destroyed)
-                return;
-
-            TogglePlayerInput(true);
-            //arrowCollection.SetActive(true);
-            BoatState = BoatState.Idle;
-
-            doneEffect = true;
-
-
-            if (OnChangeTurn != null)
-                OnChangeTurn(this);
-        }
 
         void ArrowController_OnArrowClicked(Direction dir)
         {
@@ -205,9 +198,11 @@ namespace SevenSeas
             animator.SetTrigger(RISEUP_TRIGGER);
             yield return new WaitForSeconds(riseUpTime);
 
-            TogglePlayerInput(true);
+            //TogglePlayerInput(true);
             //arrowCollection.SetActive(true); //enable the input
             BoatState = BoatState.Idle;
+            OnBoatActivityCompleted(this);
+
         }
 
         private void Respawn()
@@ -227,19 +222,17 @@ namespace SevenSeas
 
             //Disable input
             TogglePlayerInput(false);
-            //arrowCollection.SetActive(false);
             //Layout another position
             isometricModel.SetActive(false);
 
             //Spawn  a skull at the player dead pos
             var skull = Instantiate(skullPrefab, transform.position, Quaternion.identity);
 
-
-            while (!doneEffect)
+            while (EffectManager.Instance.effectPlaying)
             {
                 yield return null;
             }
-
+            
             MapConstantProvider.Instance.LayoutUnitAtRandomPosition(gameObject, true);
 
             //After layout player at another pos, fire event spawn skull to remove this pos from the possible position when the map provider listen to this event
@@ -257,10 +250,8 @@ namespace SevenSeas
             isometricModel.SetActive(true);
             //Enable input
             TogglePlayerInput(true);
-           // arrowCollection.SetActive(true);
             BoatState = BoatState.Idle;
-            doneEffect = false;
-            
+          
         }
 
         void TogglePlayerInput(bool isEnable)
@@ -282,14 +273,13 @@ namespace SevenSeas
 
             if (currentPlayerHealth > 0)
             {
+
                 Respawn();
-                
             }
             else
             {
                 SpawnSkull();
                 TogglePlayerInput(false);
-                //arrowCollection.SetActive(false);
                 isometricModel.SetActive(false);
                 GameManager.Instance.GameLose();
                 //Destroy(gameObject);

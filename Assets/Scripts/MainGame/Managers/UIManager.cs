@@ -9,14 +9,16 @@ namespace SevenSeas
     public class UIManager : MonoBehaviour
     {
 
-    private GameObject treasureGameOverPanel;
+        private GameObject treasureGameOverPanel;
 
-    [SerializeField]
+        [SerializeField]
 
         public static UIManager Instance = null;
 
         [SerializeField]
         private Image[] healthImages;
+        [SerializeField]
+        private GameOverUIController gameOverUIController;
 
         void Awake()
         {
@@ -24,6 +26,21 @@ namespace SevenSeas
                 Instance = this;
             else if (Instance != this)
                 DestroyImmediate(gameObject);
+
+            GameManager.GameStateChanged += GameManager_GameStateChanged;
+        }
+
+        void OnDestroy()
+        {
+            GameManager.GameStateChanged -= GameManager_GameStateChanged;
+        }
+
+        void GameManager_GameStateChanged(GameState newState, GameState oldState)
+        {
+            if (newState == GameState.GameOver)
+            {
+                StartCoroutine(CR_ShowGameOverUI());
+            }
         }
 
         void Start()
@@ -33,7 +50,7 @@ namespace SevenSeas
 
         void InitValues()
         {
-            int healthCount = GameManager.Instance.playerController.playerHealth;
+            int healthCount = FindObjectOfType<PlayerController>().playerHealth;
             for (int i = 0; i < healthCount; i++)
             {
                 healthImages[i].gameObject.SetActive(true);
@@ -46,10 +63,15 @@ namespace SevenSeas
         }
 
         public void ShowFindTreasureGameOver()
-    {
-        treasureGameOverPanel.SetActive(true);
-    }
-    }
+        {
+            treasureGameOverPanel.SetActive(true);
+        }
 
-    
+       IEnumerator CR_ShowGameOverUI()
+        {
+            yield return new WaitForSeconds(1);
+
+            gameOverUIController.ShowGameOverImage();
+        }
+    }
 }

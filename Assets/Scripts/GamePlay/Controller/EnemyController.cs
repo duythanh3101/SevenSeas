@@ -31,18 +31,12 @@ namespace SevenSeas
         {
             if (newState == BattleState.EnemyTurn)
             {
-
+                if (BoatState == BoatState.Destroyed)
+                    return;
+                MoveAndRotate(CalculateNextDirection());
             }
+
         }
-
-        protected override void EffectManager_OnAllEffectCompleted()
-        {
-            BoatState = BoatState.Idle;
-
-            if (OnChangeTurn != null)
-                OnChangeTurn(this);
-        }
-
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.CompareTag("Projectile"))
@@ -79,7 +73,6 @@ namespace SevenSeas
             //Debug.Log("Destroyed");
 
             MapConstantProvider.Instance.SpawnUnitOnDestroyedObject(skullPrefab, transform.position, gameObject);
-            
 
             Destroy(gameObject);
 
@@ -96,15 +89,6 @@ namespace SevenSeas
             base.Start();
             targetTrans = FindObjectOfType<PlayerController>().transform;
         }
-
-        void Update()
-        {
-            if (Input.GetKey(KeyCode.Space))
-            {
-                MoveAndRotate(CalculateNextDirection());
-            }
-        }
-
 
         Vector2 offset;
         Vector2 direction;

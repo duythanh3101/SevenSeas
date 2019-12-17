@@ -14,6 +14,7 @@ namespace MainGame
         [SerializeField]
         private Arrow arrow = null;
 
+        [SerializeField]
         private bool isMovable;
     
         // Use this for initialization

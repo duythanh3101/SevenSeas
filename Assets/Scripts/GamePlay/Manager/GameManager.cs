@@ -80,6 +80,8 @@ namespace SevenSeas
 
         public void GameLose()
        {
+
+           SoundManager.Instance.PlayLoseSound();
            GameState = GameState.GameOver;
        }
     }

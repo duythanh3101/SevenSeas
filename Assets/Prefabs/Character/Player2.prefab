@@ -57,7 +57,7 @@ MonoBehaviour:
   moveAndRotateTime: 0.25
   boatState: 0
   currentDirection: 1
-  playerHealth: 3
+  playerHealth: 2
   arrowCollection: {fileID: 6075846875433487724}
   firingSystem: {fileID: 910804244076948277}
   playerDetecter: {fileID: 5794988342134403239}
@@ -5704,7 +5704,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.011670291, y: -0.0373448}
@@ -5752,6 +5752,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   maxShootingTile: 3
+  boxCollider2D: {fileID: 0}
   leftCrosshair: {fileID: 6075846875433597562}
   rightCrosshair: {fileID: 6075846875433533620}
   crosshairMoveSpeed: 7

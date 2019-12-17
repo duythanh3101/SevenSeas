@@ -52,6 +52,7 @@ namespace SevenSeas
             {
                 detectionHandler.OnPlayerTeleporting();
             }
+           
         }
 
         

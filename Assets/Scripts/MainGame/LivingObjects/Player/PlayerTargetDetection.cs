@@ -85,11 +85,6 @@ namespace MainGame
             isTargetDecting = false;
         }
 
-        public void FireCanonball(Direction toDirection)
-        {
-
-        }
-
         private ShootDirection GetShootDirection(Direction toDirection)
         {
             var moveDirection = UtilMapHelpers.GetDirectionVector(toDirection);

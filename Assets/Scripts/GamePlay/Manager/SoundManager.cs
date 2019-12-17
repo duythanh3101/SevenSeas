@@ -36,6 +36,8 @@ public class SoundManager : MonoBehaviour
     public Sound shipExplosion;
     public Sound waterSplash;
     public Sound firingCanonball;
+    public Sound winSound;
+    public Sound loseSound;
 
     [SerializeField]
     private AudioSource bgmSource;
@@ -167,5 +169,10 @@ public class SoundManager : MonoBehaviour
     public void PlayFiringSound()
     {
         PlaySound(firingCanonball);
+    }
+
+    public void PlayLoseSound()
+    {
+        PlaySound(loseSound);
     }
 }

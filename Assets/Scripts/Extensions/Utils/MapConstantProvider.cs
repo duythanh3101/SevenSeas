@@ -179,6 +179,7 @@ namespace SevenSeas
         void SpawnPlayer()
         {
             LayoutUnitAtRandomPosition(playerPrefab, false);
+            
         }
 
         void InitValues()
