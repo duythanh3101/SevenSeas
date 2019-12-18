@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using static SoundManager;
 using Random = UnityEngine.Random;
 
 namespace MainGame
@@ -19,6 +20,11 @@ namespace MainGame
         [SerializeField] private GameObject skullPrefab;
         [SerializeField] private int skullCount = 10;
         [SerializeField] private Text instructionText;
+        [SerializeField] private Sound clickSound;
+        [SerializeField] private Sound treasureGameSound;
+        [SerializeField] private Sound winGameSound;
+        [SerializeField] private Sound loseGameSound;
+        [SerializeField] private Sound failGameSound;
 
         private GameObject treasure;
         private Vector3 currentTreasurePosition;
@@ -30,9 +36,11 @@ namespace MainGame
         private static List<Vector3> allPositions;
         #endregion Private Properties
 
+
         #region Mono Behaviour
         protected virtual void Awake()
         {
+            Instance.PlayMusic(treasureGameSound);
             InitMap();
 
             SpawnTreasureRandom();
@@ -74,16 +82,17 @@ namespace MainGame
             int row = Mathf.RoundToInt(mousePosition.y);
 
             Vector3 posClick = new Vector3(col, row, 0);
+
             // Check valid of position click
             if (!IsClickPositionValidAt(posClick))
             {
                 return;
             }
+            Instance.PlaySound(clickSound);
+
             if (IsExistingTreasureAt(posClick))
             {
-                treasure.SetActive(true);
-                isEndGame = true;
-                this.PostEvent(ObserverEventID.OnFindTreasureGameOver);
+                LoseTreasureGame();
                 instructionText.text = CommonConstants.Instruction.CLICK_TO_CONTINUE;
                 return;
             }
@@ -94,8 +103,9 @@ namespace MainGame
                 if (obj != null)
                 {
                     obj.SetActive(true);
-                    isEndGame = true;
-                    this.PostEvent(ObserverEventID.OnFindTreasureGameOver);
+                    LoseTreasureGame();
+
+                    //display treasure
                     instructionText.text = CommonConstants.Instruction.CLICK_TO_CONTINUE;
                     return;
                 }
@@ -113,10 +123,20 @@ namespace MainGame
                     xSignPrefab.SetText(numberOfSkulls);
                 }
                 XSign xSign = Instantiate(xSignPrefab, new Vector3(col, row, 0), Quaternion.identity, tileHolder);
-                
+
                 XSignList.Add(xSign);
                 instructionText.text = treasureInstruction.GetInstruction(currentTreasurePosition, posClick);
             }
+        }
+
+        private void LoseTreasureGame()
+        {
+            treasure.SetActive(true);
+            isEndGame = true;
+
+            Instance.StopMusic();
+            Instance.PlaySound(loseGameSound);
+            Instance.PlaySound(failGameSound);
         }
 
         /// <summary>
