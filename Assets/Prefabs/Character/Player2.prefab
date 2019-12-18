@@ -57,7 +57,7 @@ MonoBehaviour:
   moveAndRotateTime: 0.25
   boatState: 0
   currentDirection: 1
-  playerHealth: 2
+  playerHealth: 3
   arrowCollection: {fileID: 6075846875433487724}
   firingSystem: {fileID: 910804244076948277}
   playerDetecter: {fileID: 5794988342134403239}
@@ -405,6 +405,7 @@ MonoBehaviour:
   arrow:
     arrowSprite: {fileID: 6075846875412755774}
     direction: 7
+  isMovable: 0
 --- !u!1 &6075846875433499964
 GameObject:
   m_ObjectHideFlags: 0
@@ -5326,6 +5327,7 @@ MonoBehaviour:
   arrow:
     arrowSprite: {fileID: 6075846875412749442}
     direction: 2
+  isMovable: 0
 --- !u!1 &6075846875433556668
 GameObject:
   m_ObjectHideFlags: 0
@@ -5400,6 +5402,7 @@ MonoBehaviour:
   arrow:
     arrowSprite: {fileID: 6075846875412728192}
     direction: 1
+  isMovable: 0
 --- !u!1 &6075846875433558144
 GameObject:
   m_ObjectHideFlags: 0
@@ -5474,6 +5477,7 @@ MonoBehaviour:
   arrow:
     arrowSprite: {fileID: 6075846875412706822}
     direction: 3
+  isMovable: 0
 --- !u!1 &6075846875433560142
 GameObject:
   m_ObjectHideFlags: 0
@@ -5548,6 +5552,7 @@ MonoBehaviour:
   arrow:
     arrowSprite: {fileID: 6075846875412654694}
     direction: 6
+  isMovable: 0
 --- !u!1 &6075846875433561520
 GameObject:
   m_ObjectHideFlags: 0
@@ -5842,6 +5847,7 @@ MonoBehaviour:
   arrow:
     arrowSprite: {fileID: 6075846875412751990}
     direction: 4
+  isMovable: 0
 --- !u!1 &6075846875433575590
 GameObject:
   m_ObjectHideFlags: 0
@@ -5916,6 +5922,7 @@ MonoBehaviour:
   arrow:
     arrowSprite: {fileID: 6075846875412653828}
     direction: 8
+  isMovable: 0
 --- !u!1 &6075846875433579678
 GameObject:
   m_ObjectHideFlags: 0
@@ -11134,6 +11141,7 @@ MonoBehaviour:
   arrow:
     arrowSprite: {fileID: 6075846875412655500}
     direction: 5
+  isMovable: 0
 --- !u!1001 &6757662340694148196
 PrefabInstance:
   m_ObjectHideFlags: 0

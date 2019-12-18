@@ -28,12 +28,23 @@ namespace SevenSeas
                 DestroyImmediate(gameObject);
 
             GameManager.GameStateChanged += GameManager_GameStateChanged;
+
+            gameOverUIController.OnRestartButtonClick += gameOverUIController_OnRestartButtonClick;
+
         }
 
         void OnDestroy()
         {
             GameManager.GameStateChanged -= GameManager_GameStateChanged;
+            gameOverUIController.OnRestartButtonClick -= gameOverUIController_OnRestartButtonClick;
         }
+
+        void gameOverUIController_OnRestartButtonClick()
+        {
+            GameManager.Instance.RestartGame();
+        }
+
+       
 
         void GameManager_GameStateChanged(GameState newState, GameState oldState)
         {
@@ -71,7 +82,7 @@ namespace SevenSeas
         {
             yield return new WaitForSeconds(1);
 
-            gameOverUIController.ShowGameOverImage();
+            gameOverUIController.Show();
         }
     }
 }

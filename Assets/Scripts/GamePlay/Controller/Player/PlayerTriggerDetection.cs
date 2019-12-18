@@ -46,6 +46,7 @@ namespace SevenSeas
         {
             if (other.CompareTag("Enemy") || other.CompareTag("Projectile"))
             {
+                //Debug.Log("Collide with: " + other.tag);
                 detectionHandler.OnPlayerDestroyed();
             }
             else if (other.CompareTag("Teleporter"))

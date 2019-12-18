@@ -269,6 +269,7 @@ namespace SevenSeas
         public void SpawnUnitOnDestroyedObject(GameObject unit, Vector2 pos, GameObject destroyedObject)
         {
             bool isStatic = IsStaticObject(unit.tag);
+
             //Remove the destroyed object from the dictionary
             if (staticObjectDicts.ContainsKey(destroyedObject))
             {
@@ -276,7 +277,14 @@ namespace SevenSeas
             }
             else if (dynamicObjectDicts.ContainsKey(destroyedObject))
             {
-                dynamicObjectDicts.Remove(destroyedObject);
+
+                //Make sure it's not player, because we only disable the player, not actually destroying it
+                if (!destroyedObject.CompareTag("PlayerShip"))
+                {
+                    dynamicObjectDicts.Remove(destroyedObject);
+                }
+
+                
             }
 
             //Check to spawn the unit on destroyed object
@@ -284,6 +292,7 @@ namespace SevenSeas
             {
                 if (IsExists(pos, staticObjectDicts))
                     return;// To prevent the two object spawn on the same position
+                //Debug.Log("Spawn skull");
                 var ins = Instantiate(unit, pos, Quaternion.identity);
                 staticObjectDicts.Add(ins, pos);
             }
@@ -319,6 +328,14 @@ namespace SevenSeas
             }
         }
 
+        public void SetRespawningPosition(GameObject player)
+        {
+            Vector2 randomPos = possiblePositions[Random.Range(0, possiblePositions.Count)];
+            player.transform.position = randomPos;
+            player.SetActive(true);
+            dynamicObjectDicts[player] = randomPos;
+        }
+
         void UpdatePossiblePosition(GameObject obj, Vector2 newPos, bool recycle)
         {
             bool isStatic = IsStaticObject(obj.tag);
@@ -329,6 +346,8 @@ namespace SevenSeas
                 if (isStatic)
                 {
                     //Debug.Log("Add " + staticObjectDicts[obj] + " Remove " + newPos + " Obj name:" + obj.name);
+                   
+                    
                     possiblePositions.Add(staticObjectDicts[obj]);
                     staticObjectDicts[obj] = newPos;
                     RemovePossiblePosition(possiblePositions, newPos);

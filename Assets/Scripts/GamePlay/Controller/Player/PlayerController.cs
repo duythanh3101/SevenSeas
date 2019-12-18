@@ -135,7 +135,7 @@ namespace SevenSeas
 
         void CanonTargeting()
         {
-            if (BoatState == BoatState.Idle)
+            if (BoatState == BoatState.Idle && TurnBasedSystemManager.Instance.BattleState == BattleState.PlayerTurn)
             {
                 isTargeting = true;
                 firingSystem.CanonTargeting(currentDirection);
@@ -157,10 +157,9 @@ namespace SevenSeas
 
             BoatState = BoatState.Firing;
             firingSystem.ResetData();
+            firingSystem.FireCanonballs(currentDirection,isTargeting);
 
             TogglePlayerInput(false);
-            //arrowCollection.SetActive(false);
-            firingSystem.FireCanonballs(currentDirection, isTargeting);
         }
 
         void Teleport()
@@ -225,20 +224,12 @@ namespace SevenSeas
             //Layout another position
             isometricModel.SetActive(false);
 
-            //Spawn  a skull at the player dead pos
-            var skull = Instantiate(skullPrefab, transform.position, Quaternion.identity);
-
             while (EffectManager.Instance.effectPlaying)
             {
                 yield return null;
             }
-            
-            MapConstantProvider.Instance.LayoutUnitAtRandomPosition(gameObject, true);
 
-            //After layout player at another pos, fire event spawn skull to remove this pos from the possible position when the map provider listen to this event
-            if (OnSpawnSkull != null)
-                OnSpawnSkull(skull,skull.transform.position);
-           
+            MapConstantProvider.Instance.SetRespawningPosition(gameObject);
             for (int i = 0; i < 2; i++ )
             {
                 isometricModel.SetActive(true);
@@ -259,13 +250,20 @@ namespace SevenSeas
             arrowCollection.SetActive(isEnable);
         }
 
+        int currentDestroy = 0;
         protected override void GetDestroy()
         {
+
+            if (BoatState == BoatState.Respawning || BoatState == BoatState.Destroyed)
+                return;
+
+            Debug.Log("player destroyed");
             BoatState = BoatState.Destroyed;
 
             //Effect and sound
             EffectManager.Instance.SpawnEffect(EffectManager.Instance.explosion, transform.position, Quaternion.identity);
             SoundManager.Instance.PlayDestroyShipSound();
+            MapConstantProvider.Instance.SpawnUnitOnDestroyedObject(skullPrefab, transform.position, gameObject);
 
             currentPlayerHealth--;
             //UI
@@ -273,14 +271,13 @@ namespace SevenSeas
 
             if (currentPlayerHealth > 0)
             {
-
                 Respawn();
             }
             else
             {
-                SpawnSkull();
                 TogglePlayerInput(false);
-                isometricModel.SetActive(false);
+                gameObject.SetActive(false);
+                //isometricModel.SetActive(false);
                 GameManager.Instance.GameLose();
                 //Destroy(gameObject);
             }

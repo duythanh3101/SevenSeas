@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 namespace SevenSeas
@@ -50,15 +51,12 @@ namespace SevenSeas
             }
         }
 
-
         public static int LEVEL = 1;
         void Awake()
         {
             if (Instance == null)
             {
                 Instance = this;
-                DontDestroyOnLoad(gameObject);
-                return;
             } 
             else if (Instance != null)
             {
@@ -70,6 +68,7 @@ namespace SevenSeas
         void Start()
         {
             Application.targetFrameRate = targetFrameRate;
+            PrepareGame();
         }
 
 
@@ -84,6 +83,30 @@ namespace SevenSeas
            SoundManager.Instance.PlayLoseSound();
            GameState = GameState.GameOver;
        }
+
+        bool isRestart = false;
+        public void RestartGame()
+        {
+            isRestart = true;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+
+        public void PrepareGame()
+        {
+            GameState = GameState.Prepare;
+
+            if (isRestart)
+            {
+                StartGame();
+                isRestart = false;
+            }
+        }
+
+        public void StartGame()
+        {
+            GameState = GameState.Playing;
+
+        }
     }
 }
 

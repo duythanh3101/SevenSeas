@@ -69,6 +69,8 @@ namespace MainGame
 
         public void OnPointerEnter(PointerEventData eventData)
         {
+            //Debug.Log(name + "enter");
+
             if (isMovable)
             {
                 arrow.arrowSprite.gameObject.SetActive(true);
@@ -77,6 +79,7 @@ namespace MainGame
 
         public void OnPointerExit(PointerEventData eventData)
         {
+            //Debug.Log(name + "exit");
             arrow.arrowSprite.gameObject.SetActive(false);
         }
     }

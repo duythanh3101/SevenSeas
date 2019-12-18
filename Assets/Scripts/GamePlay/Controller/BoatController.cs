@@ -197,7 +197,8 @@ namespace SevenSeas
             EffectManager.Instance.SpawnEffect(EffectManager.Instance.explosion, transform.position, Quaternion.identity);
             SoundManager.Instance.PlayDestroyShipSound();
 
-            SpawnSkull();
+            //SpawnSkull();
+            MapConstantProvider.Instance.SpawnUnitOnDestroyedObject(skullPrefab, transform.position, gameObject);
 
             Destroy(gameObject);
         }
