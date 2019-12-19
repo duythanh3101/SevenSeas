@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<< HEAD:Assets/Prefabs/Character.meta
-guid: 2c615a81ffb6d4c42bbefab97d2d49c4
-=======
-guid: 30d77621113e97c44900d60588243277
->>>>>>> origin/tuan:Assets/Sprites/Games.meta
+guid: ef147353d5b238c459f358749451ffed
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

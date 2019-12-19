@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<< HEAD:Assets/Audios.meta
-guid: ac32cc41ab8c5ec4b8b0184a35ef8396
-=======
-guid: 60130466537521d4d86fc6e11a3780f4
->>>>>>> origin/tuan:Assets/Sprites/Background.meta
+guid: a03139738c911ad40bac9570b181aed8
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
