@@ -75,8 +75,6 @@ namespace SevenSeas
             TurnBasedSystemManager.BattleStateChanged -= TurnBasedSystemManager_BattleStateChanged;
         }
 
-
-
         protected virtual void TurnBasedSystemManager_BattleStateChanged(BattleState newState)
         {
             

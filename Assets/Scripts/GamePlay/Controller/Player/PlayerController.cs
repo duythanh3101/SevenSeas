@@ -262,7 +262,7 @@ namespace SevenSeas
             if (BoatState == BoatState.Respawning || BoatState == BoatState.Destroyed)
                 return;
 
-            Debug.Log("player destroyed");
+            //Debug.Log("player destroyed");
             BoatState = BoatState.Destroyed;
 
             //Effect and sound

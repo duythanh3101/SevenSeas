@@ -14,10 +14,6 @@ public class GameOverUIController : MonoBehaviour
     [SerializeField]
     private CanvasGroup canvasGroup;
 
-
-
-
-
     void Start()
     {
         restartButton.onClick.AddListener(() => OnRestartButtonClick());
@@ -42,6 +38,8 @@ public class GameOverUIController : MonoBehaviour
     private Coroutine fadeImageCR;
     void ShowGameOverImage()
     {
+        gameOverImage.gameObject.SetActive(true);
+
         if (fadeImageCR != null)
             StopCoroutine(fadeImageCR);
          fadeImageCR = StartCoroutine(CR_FadeInImage(gameOverImage));
@@ -52,11 +50,12 @@ public class GameOverUIController : MonoBehaviour
     IEnumerator CR_FadeInImage(Image img)
     {
         Color currentColr = img.color;
+        currentColr.a = 0;
         float t = 0;
         while (t < 1)
         {
             t += Time.deltaTime;
-            currentColr.a = Mathf.Lerp(0, 1, 1 / t);
+            currentColr.a = Mathf.Lerp(0, 1, t);
             img.color = currentColr;
             yield return null;
         }

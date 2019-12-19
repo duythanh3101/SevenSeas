@@ -178,13 +178,19 @@ MonoBehaviour:
     clip: {fileID: 0}
     simultaneousPlayCount: 0
   shipExplosion:
-    clip: {fileID: 8300000, guid: a019ae3af8e864616b85773c509f5285, type: 3}
+    clip: {fileID: 8300000, guid: c4d7502b96f2d9a439c0968e5ffee50e, type: 3}
     simultaneousPlayCount: 0
   waterSplash:
     clip: {fileID: 0}
     simultaneousPlayCount: 0
   firingCanonball:
-    clip: {fileID: 8300000, guid: a019ae3af8e864616b85773c509f5285, type: 3}
+    clip: {fileID: 8300000, guid: 90d6e8d8e5f775549865f7008c230b7b, type: 3}
+    simultaneousPlayCount: 0
+  winSound:
+    clip: {fileID: 0}
+    simultaneousPlayCount: 0
+  loseSound:
+    clip: {fileID: 8300000, guid: 3c365bab45a4f35468231836c65fd148, type: 3}
     simultaneousPlayCount: 0
   bgmSource: {fileID: 7247641401471862353}
   sfxSource: {fileID: 7247641401443819713}
