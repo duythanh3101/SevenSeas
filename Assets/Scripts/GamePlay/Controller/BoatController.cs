@@ -142,7 +142,7 @@ namespace SevenSeas
             BoatState = BoatState.Idle;
 
             //NOTE: After enable collider, we skip this frame to the box collider begin to check, check if the boat state is iddle
-            yield return null;
+            yield return new WaitForSeconds(0.1f);
 
             if (BoatState == BoatState.Idle)
             {

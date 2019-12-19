@@ -32,7 +32,6 @@ namespace SevenSeas
 
         //bool
         private bool isTargeting = false;
-        private bool doneEffect = false;    
 
         //Float
         private float sinkTime;
@@ -166,8 +165,6 @@ namespace SevenSeas
 
         void Teleport()
         {
-            Debug.Log("teleport in player controller");
-
             BoatState = BoatState.Teleporting;
 
             if (sinkTime == 0 || riseUpTime == 0)
@@ -176,8 +173,6 @@ namespace SevenSeas
             if (teleCR != null)
                 StopCoroutine(teleCR);
             teleCR = StartCoroutine(CR_Teleport());
-
-            Debug.Log("Boat state in player controller:  " + BoatState);
         }
 
         IEnumerator CR_Teleport()
@@ -255,7 +250,6 @@ namespace SevenSeas
             arrowCollection.SetActive(isEnable);
         }
 
-        int currentDestroy = 0;
         protected override void GetDestroy()
         {
 

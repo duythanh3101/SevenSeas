@@ -41,26 +41,30 @@ namespace SevenSeas
             EnemyManager.OnAllEnemyActivityCompleted -= EnemyManager_OnAllEnemyActivityCompleted;
         }
 
+        int stateChangedCount = 0;
+
         private void PlayerController_OnBoatActivityCompleted(BoatController player)
         {
             if (player.GetType() == typeof(PlayerController))
             {
                 if (!effectPlaying)
                 {
-                     //Debug.Log("Chane state in player not effect, old state:"  + TurnBasedSystemManager.Instance.BattleState);
+                    Debug.Log("Chane state in player not effect, old state:"  + TurnBasedSystemManager.Instance.BattleState);
                     OnAllBehaviourCompleted(TurnBasedSystemManager.Instance.BattleState);
+                    //stateChangedCount++;
                 }
             }
         }
 
         private void EnemyManager_OnAllEnemyActivityCompleted()
         {
-            //Debug.Log("Calling on all enemy activity complete with effefct " + (effectPlaying ? "playing" :"not playing" ));
+            Debug.Log("Calling on all enemy activity complete with effefct " + (effectPlaying ? "playing" :"not playing" ));
 
             if (!effectPlaying)
             {
-                    //Debug.Log("Chane state  in all enemy not effect, old state: " + TurnBasedSystemManager.Instance.BattleState);
+                Debug.Log("Chane state  in all enemy not effect, old state: " + TurnBasedSystemManager.Instance.BattleState);
                 OnAllBehaviourCompleted(TurnBasedSystemManager.Instance.BattleState);
+                //stateChangedCount++;
             }
         }
 
@@ -108,9 +112,9 @@ namespace SevenSeas
 
         void OnAllEffectCompleted()
         {
-            effectPlaying = false;
-            //Debug.Log("Change state with effect, old state: " + TurnBasedSystemManager.Instance.BattleState );
-            OnAllBehaviourCompleted(TurnBasedSystemManager.Instance.BattleState);
+                effectPlaying = false;
+                Debug.Log("Change state with effect, old state: " + TurnBasedSystemManager.Instance.BattleState);
+                OnAllBehaviourCompleted(TurnBasedSystemManager.Instance.BattleState);
         }
 
     }
