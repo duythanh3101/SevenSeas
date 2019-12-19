@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Material.meta
 guid: 850f4ec360cf0f143bc1226acc805c0a
+=======
+guid: 993d32d16edbb5f4e8bc6ad14c3ad4df
+>>>>>>> origin/tuan:Assets/Fonts.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
