@@ -128,7 +128,9 @@ namespace SevenSeas
 
         void ArrowController_OnArrowClicked(Direction dir)
         {
+            TogglePlayerInput(false);
             MoveAndRotate(dir);
+
         }
 
         
@@ -164,6 +166,8 @@ namespace SevenSeas
 
         void Teleport()
         {
+            Debug.Log("teleport in player controller");
+
             BoatState = BoatState.Teleporting;
 
             if (sinkTime == 0 || riseUpTime == 0)
@@ -173,6 +177,7 @@ namespace SevenSeas
                 StopCoroutine(teleCR);
             teleCR = StartCoroutine(CR_Teleport());
 
+            Debug.Log("Boat state in player controller:  " + BoatState);
         }
 
         IEnumerator CR_Teleport()
@@ -196,9 +201,9 @@ namespace SevenSeas
             //Riseup time
             animator.SetTrigger(RISEUP_TRIGGER);
             yield return new WaitForSeconds(riseUpTime);
+            
+            
 
-            //TogglePlayerInput(true);
-            //arrowCollection.SetActive(true); //enable the input
             BoatState = BoatState.Idle;
             OnBoatActivityCompleted(this);
 

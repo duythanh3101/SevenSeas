@@ -143,16 +143,13 @@ namespace SevenSeas
             //Update boat state to idle after finishing moving and rotating
             BoatState = BoatState.Idle;
 
-            //After enable collider, we skip this frame to the box collider begin to check, check if the boat state is iddle
+            //NOTE: After enable collider, we skip this frame to the box collider begin to check, check if the boat state is iddle
             yield return null;
 
             if (BoatState == BoatState.Idle)
             {
-                //Fire the turn changed event
                 OnBoatActivityCompleted(this);
             }
-           
-
         }
 
         private float GetDeltaAngle(Direction currentDirection, Direction toDirection)

@@ -47,7 +47,7 @@ namespace SevenSeas
             {
                 if (!effectPlaying)
                 {
-                   // Debug.Log("Chane state not effect, current state:"  + TurnBasedSystemManager.Instance.BattleState);
+                     //Debug.Log("Chane state in player not effect, old state:"  + TurnBasedSystemManager.Instance.BattleState);
                     OnAllBehaviourCompleted(TurnBasedSystemManager.Instance.BattleState);
                 }
             }
@@ -55,9 +55,11 @@ namespace SevenSeas
 
         private void EnemyManager_OnAllEnemyActivityCompleted()
         {
+            //Debug.Log("Calling on all enemy activity complete with effefct " + (effectPlaying ? "playing" :"not playing" ));
+
             if (!effectPlaying)
             {
-               // Debug.Log("Chane state not effect: " + TurnBasedSystemManager.Instance.BattleState);
+                    //Debug.Log("Chane state  in all enemy not effect, old state: " + TurnBasedSystemManager.Instance.BattleState);
                 OnAllBehaviourCompleted(TurnBasedSystemManager.Instance.BattleState);
             }
         }
@@ -84,12 +86,17 @@ namespace SevenSeas
 
             effectStopHandlers.Add(effect, callBack);
 
+            //Debug.Log("adding: " + effect.name);
+            //Debug.Log("effect count: " + effectStopHandlers.Count);
+
         }
 
         void AutoStopEffect_OnEffectStoped(GameObject effect)
         {
             if (!effectStopHandlers.ContainsKey(effect))
                 return;
+
+            //Debug.Log("effect count before move: " + effectStopHandlers.Count);
 
             effectStopHandlers.Remove(effect);
             if (effectStopHandlers.Count == 0)
@@ -102,7 +109,7 @@ namespace SevenSeas
         void OnAllEffectCompleted()
         {
             effectPlaying = false;
-            //Debug.Log("Change state with effect, current state: " + TurnBasedSystemManager.Instance.BattleState );
+            //Debug.Log("Change state with effect, old state: " + TurnBasedSystemManager.Instance.BattleState );
             OnAllBehaviourCompleted(TurnBasedSystemManager.Instance.BattleState);
         }
 

@@ -51,6 +51,7 @@ namespace SevenSeas
             }
             else if (other.CompareTag("Teleporter"))
             {
+                Debug.Log("Player teleport in trigger dection" );
                 detectionHandler.OnPlayerTeleporting();
             }
            
