@@ -79,7 +79,7 @@ namespace SevenSeas
 
         public void GameLose()
        {
-
+           SoundManager.Instance.StopMusic();
            SoundManager.Instance.PlayLoseSound();
            GameState = GameState.GameOver;
        }
@@ -94,6 +94,7 @@ namespace SevenSeas
         public void PrepareGame()
         {
             GameState = GameState.Prepare;
+            SoundManager.Instance.PlayMusic(SoundManager.Instance.background);
 
             if (isRestart)
             {
@@ -105,6 +106,7 @@ namespace SevenSeas
         public void StartGame()
         {
             GameState = GameState.Playing;
+            SoundManager.Instance.PlayMusic(SoundManager.Instance.background);
 
         }
     }
