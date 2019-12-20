@@ -7,13 +7,13 @@ namespace SevenSeas
 {
     public class EnemyController : BoatController
     {
+
         [Header("AI")]
 
         [Header("Debug")]
         [SerializeField]
         private bool drawRayToTarget = false;
         private Transform targetTrans;
-
 
         void OnDrawGizmos()
         {
@@ -39,6 +39,8 @@ namespace SevenSeas
         }
         private void OnTriggerEnter2D(Collider2D other)
         {
+            bool isDestroy = other.CompareTag("Projectile") || other.CompareTag("Obstacle") || other.CompareTag("PlayerShip") || other.CompareTag("Enemy");
+
             if (other.CompareTag("Projectile"))
             {
                 GetDestroy();
@@ -51,6 +53,9 @@ namespace SevenSeas
             {
                 DestroyByBoat();
             }
+
+            if (isDestroy)
+                EnemyManager.Instance.UpdateEnemyCount();
         }
 
 

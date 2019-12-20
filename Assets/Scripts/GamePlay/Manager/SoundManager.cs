@@ -175,4 +175,9 @@ public class SoundManager : MonoBehaviour
     {
         PlaySound(loseSound);
     }
+
+    public void PlayWinSound()
+    {
+        PlaySound(winSound);
+    }
 }

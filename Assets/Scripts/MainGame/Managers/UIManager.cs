@@ -35,31 +35,22 @@ namespace SevenSeas
                 DestroyImmediate(gameObject);
 
             GameManager.GameStateChanged += GameManager_GameStateChanged;
-
             gameOverUIController.OnRestartButtonClick += gameOverUIController_OnRestartButtonClick;
             resultUIController.OnStartNewGameButtonClick += resultUIController_OnStartNewGameButtonClick;
             quitUIController.OnQuitButtonClick += quitUIController_OnQuitButtonClick;
-            resultUIController.OnStartNewGameButtonClick += quitUIController.OnQuitButtonClick;
-
+            nextLevelUIController.OnNextButtonClick += nextLevelUIController_OnNextButtonClick;
         }
 
-        private void quitUIController_OnQuitButtonClick()
-        {
-            
-        }
 
-        private void resultUIController_OnStartNewGameButtonClick()
-        {
-            
-        }
-
+       
         void OnDestroy()
         {
             GameManager.GameStateChanged -= GameManager_GameStateChanged;
             gameOverUIController.OnRestartButtonClick -= gameOverUIController_OnRestartButtonClick;
             resultUIController.OnStartNewGameButtonClick -= resultUIController_OnStartNewGameButtonClick;
             quitUIController.OnQuitButtonClick -= quitUIController_OnQuitButtonClick;
-            resultUIController.OnStartNewGameButtonClick -= quitUIController.OnQuitButtonClick;
+            nextLevelUIController.OnNextButtonClick -= nextLevelUIController_OnNextButtonClick;
+            
         }
 
         void gameOverUIController_OnRestartButtonClick()
@@ -73,7 +64,13 @@ namespace SevenSeas
         {
             if (newState == GameState.GameOver)
             {
-                StartCoroutine(CR_ShowGameOverUI());
+                //Debug.Log("Game over");
+                StartCoroutine(CR_DelayGameOverUI());
+            }
+            else if (newState == GameState.GameWin)
+            {
+                //Debug.Log("Game win");
+                StartCoroutine(CR_ShowNextLevelUI());
             }
         }
 
@@ -101,11 +98,36 @@ namespace SevenSeas
             treasureGameOverPanel.SetActive(true);
         }
 
-       IEnumerator CR_ShowGameOverUI()
+        private void nextLevelUIController_OnNextButtonClick()
+        {
+ 	
+        }
+
+        private void quitUIController_OnQuitButtonClick()
+        {
+            
+        }
+
+        private void resultUIController_OnStartNewGameButtonClick()
+        {
+            
+        }
+
+       IEnumerator CR_DelayGameOverUI()
         {
             yield return new WaitForSeconds(1);
-
             gameOverUIController.Show();
+            yield return new WaitForSeconds(gameOverUIController.timeDisplay + 2);
+            resultUIController.Show();
+
+            
         }
+
+        IEnumerator  CR_ShowNextLevelUI()
+       {
+           yield return new WaitForSeconds(1);
+
+           nextLevelUIController.Show();
+       }
     }
 }

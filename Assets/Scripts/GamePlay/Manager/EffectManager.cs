@@ -41,8 +41,6 @@ namespace SevenSeas
             EnemyManager.OnAllEnemyActivityCompleted -= EnemyManager_OnAllEnemyActivityCompleted;
         }
 
-        int stateChangedCount = 0;
-
         private void PlayerController_OnBoatActivityCompleted(BoatController player)
         {
             if (player.GetType() == typeof(PlayerController))

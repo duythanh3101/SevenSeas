@@ -276,6 +276,8 @@ namespace SevenSeas
             {
                 TogglePlayerInput(false);
                 gameObject.SetActive(false);
+
+                //Debug.Log("Enemy count: " + EnemyManager.Instance.CurrentEnemyCount);
                 //isometricModel.SetActive(false);
                 GameManager.Instance.GameLose();
                 //Destroy(gameObject);

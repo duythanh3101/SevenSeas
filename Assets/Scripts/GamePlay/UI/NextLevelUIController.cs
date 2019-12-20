@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class NextLevelUIController : MonoBehaviour
 {
+    public System.Action OnNextButtonClick = delegate { };
+
     [SerializeField]
     private Text levelTitleText;
 
@@ -18,9 +20,9 @@ public class NextLevelUIController : MonoBehaviour
     [SerializeField]
     private CanvasGroup canvasGroup;
 
-    void Start()
+    void Awake()
     {
-        
+        nextButton.onClick.AddListener(() => OnNextButtonClick());
     }
 
     void Display(bool isShowing)
@@ -30,12 +32,12 @@ public class NextLevelUIController : MonoBehaviour
         canvasGroup.interactable = isShowing;
     }
 
-    void Show()
+    public void Show()
     {
         Display(true);
     }
 
-    void Hide()
+    public void Hide()
     {
         Display(false);
     }

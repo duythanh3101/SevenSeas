@@ -7,13 +7,30 @@ namespace SevenSeas
     public class EnemyManager : MonoBehaviour
     {
 
+        public static EnemyManager Instance = null;
+
         public static event System.Action OnAllEnemyActivityCompleted;
+
+
+        public int CurrentEnemyCount { get; private set; }
 
        void Awake()
         {
-            EnemyController.OnBoatActivityCompleted += EnemyController_OnBoatActivityCompleted;
 
+           if (Instance == null)
+               Instance = this;
+           else if (Instance != this)
+           {
+               DestroyImmediate(gameObject);
+           }
+
+            EnemyController.OnBoatActivityCompleted += EnemyController_OnBoatActivityCompleted;
         }
+
+        void Start()
+       {
+           CurrentEnemyCount = transform.childCount;
+       }
         void OnDestroy()
        {
            EnemyController.OnBoatActivityCompleted -= EnemyController_OnBoatActivityCompleted;
@@ -34,7 +51,15 @@ namespace SevenSeas
           }
        }
 
-       
+       public void UpdateEnemyCount()
+       {
+           CurrentEnemyCount--;
+           if (CurrentEnemyCount <= 0 )
+           {
+               GameManager.Instance.GameWin();
+               CurrentEnemyCount = 0;
+           }
+       }
     }
 }
 

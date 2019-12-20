@@ -5,7 +5,9 @@ using UnityEngine.UI;
 
 public class GameOverUIController : MonoBehaviour
 {
-    public System.Action OnRestartButtonClick; 
+    public System.Action OnRestartButtonClick;
+
+    public float timeDisplay = 1;
 
     [SerializeField]
     private Button restartButton;
@@ -52,7 +54,7 @@ public class GameOverUIController : MonoBehaviour
         Color currentColr = img.color;
         currentColr.a = 0;
         float t = 0;
-        while (t < 1)
+        while (t < timeDisplay)
         {
             t += Time.deltaTime;
             currentColr.a = Mathf.Lerp(0, 1, t);

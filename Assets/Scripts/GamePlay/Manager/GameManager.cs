@@ -74,6 +74,8 @@ namespace SevenSeas
 
        public void GameWin()
         {
+            SoundManager.Instance.StopMusic();
+            SoundManager.Instance.PlayWinSound();
             GameState = GameState.GameWin;
         }
 

@@ -34,12 +34,12 @@ public class ResultUIController : MonoBehaviour
         canvasGroup.interactable = isShowing;
     }
 
-    void Show()
+    public void Show()
     {
         Display(true);
     }
 
-    void Hide()
+    public void Hide()
     {
         Display(false);
     }
