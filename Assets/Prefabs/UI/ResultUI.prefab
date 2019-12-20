@@ -29,7 +29,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 6317709750788793569}
+  m_Father: {fileID: 106081924942026398}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -104,7 +104,7 @@ RectTransform:
   - {fileID: 2571271995826344830}
   - {fileID: 2571271996233668848}
   - {fileID: 2571271994729169549}
-  m_Father: {fileID: 6317709750788793569}
+  m_Father: {fileID: 106081924942026398}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -505,7 +505,7 @@ RectTransform:
   m_Children:
   - {fileID: 2571271994777774978}
   - {fileID: 2571271995491196769}
-  m_Father: {fileID: 6317709750788793569}
+  m_Father: {fileID: 106081924942026398}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -525,7 +525,7 @@ GameObject:
   - component: {fileID: 2571271995308950227}
   - component: {fileID: 2571271995308950226}
   m_Layer: 5
-  m_Name: Text (2)
+  m_Name: TreasuresFoundText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -825,7 +825,7 @@ GameObject:
   - component: {fileID: 2571271995541449954}
   - component: {fileID: 2571271995541449957}
   m_Layer: 5
-  m_Name: Text (3)
+  m_Name: FinalScoreText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1079,7 +1079,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 6317709750788793569}
+  m_Father: {fileID: 106081924942026398}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -1437,7 +1437,7 @@ GameObject:
   - component: {fileID: 2571271995948277469}
   - component: {fileID: 2571271995948277468}
   m_Layer: 5
-  m_Name: Text (1)
+  m_Name: PirateSunkText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2152,7 +2152,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2571271996501730308}
-  m_Father: {fileID: 6317709750788793569}
+  m_Father: {fileID: 106081924942026398}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -2428,7 +2428,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2571271995967608018}
-  m_Father: {fileID: 6317709750788793569}
+  m_Father: {fileID: 106081924942026398}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -2702,7 +2702,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 6317709750788793569}
+  m_Father: {fileID: 106081924942026398}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -2759,7 +2759,7 @@ GameObject:
   - component: {fileID: 2571271996691105812}
   - component: {fileID: 2571271996691105815}
   m_Layer: 5
-  m_Name: Text
+  m_Name: TotalGameTimeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2835,6 +2835,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6317709750788793569}
+  - component: {fileID: 4937692878662582988}
   m_Layer: 5
   m_Name: ResultUI
   m_TagString: Untagged
@@ -2853,13 +2854,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 2571271996558107757}
-  - {fileID: 2571271995219808277}
-  - {fileID: 2571271995689242714}
-  - {fileID: 2571271994619374656}
-  - {fileID: 2571271994709116454}
-  - {fileID: 2571271996335399417}
-  - {fileID: 2571271996500863277}
+  - {fileID: 106081924942026398}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2868,3 +2863,76 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &4937692878662582988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3107067655227899038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deaabdd1c891b834bbc146f39026148b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  totalGameText: {fileID: 2571271996691105815}
+  pirateSunkText: {fileID: 2571271995948277468}
+  treasureFoundText: {fileID: 2571271995308950226}
+  finalScoreText: {fileID: 2571271995541449957}
+  startNewGameButton: {fileID: 2571271996500863274}
+  canvasGroup: {fileID: 3667645655314650447}
+--- !u!1 &3549259311614026439
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 106081924942026398}
+  - component: {fileID: 3667645655314650447}
+  m_Layer: 5
+  m_Name: Container
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &106081924942026398
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3549259311614026439}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 2571271996558107757}
+  - {fileID: 2571271995219808277}
+  - {fileID: 2571271995689242714}
+  - {fileID: 2571271994619374656}
+  - {fileID: 2571271994709116454}
+  - {fileID: 2571271996335399417}
+  - {fileID: 2571271996500863277}
+  m_Father: {fileID: 6317709750788793569}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &3667645655314650447
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3549259311614026439}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0

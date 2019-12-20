@@ -11,14 +11,21 @@ namespace SevenSeas
 
         private GameObject treasureGameOverPanel;
 
-        [SerializeField]
-
         public static UIManager Instance = null;
 
         [SerializeField]
         private Image[] healthImages;
         [SerializeField]
         private GameOverUIController gameOverUIController;
+        [SerializeField]
+        private ResultUIController resultUIController;
+        [SerializeField]
+        private QuitUIController quitUIController;
+        [SerializeField]
+        private OptionUIController optionUIController;
+        [SerializeField]
+        private NextLevelUIController nextLevelUIController;
+
 
         void Awake()
         {
@@ -30,13 +37,29 @@ namespace SevenSeas
             GameManager.GameStateChanged += GameManager_GameStateChanged;
 
             gameOverUIController.OnRestartButtonClick += gameOverUIController_OnRestartButtonClick;
+            resultUIController.OnStartNewGameButtonClick += resultUIController_OnStartNewGameButtonClick;
+            quitUIController.OnQuitButtonClick += quitUIController_OnQuitButtonClick;
+            resultUIController.OnStartNewGameButtonClick += quitUIController.OnQuitButtonClick;
 
+        }
+
+        private void quitUIController_OnQuitButtonClick()
+        {
+            
+        }
+
+        private void resultUIController_OnStartNewGameButtonClick()
+        {
+            
         }
 
         void OnDestroy()
         {
             GameManager.GameStateChanged -= GameManager_GameStateChanged;
             gameOverUIController.OnRestartButtonClick -= gameOverUIController_OnRestartButtonClick;
+            resultUIController.OnStartNewGameButtonClick -= resultUIController_OnStartNewGameButtonClick;
+            quitUIController.OnQuitButtonClick -= quitUIController_OnQuitButtonClick;
+            resultUIController.OnStartNewGameButtonClick -= quitUIController.OnQuitButtonClick;
         }
 
         void gameOverUIController_OnRestartButtonClick()
