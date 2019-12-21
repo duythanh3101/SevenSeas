@@ -5,8 +5,6 @@ using Assets.Scripts.Extensions.Utils;
 
 namespace SevenSeas
 {
-
-  
     public enum BoatState
     {
         Idle,
@@ -21,7 +19,7 @@ namespace SevenSeas
     {
         public static System.Action<GameObject,Vector2> OnBoatMovedPosition;
         public static System.Action<GameObject, Vector2> OnSpawnSkull;
-
+        public static System.Action<BoatController> OnBoatActivityCompleted = delegate { };
 
         [Header("Object References")]
         [SerializeField]
@@ -34,6 +32,8 @@ namespace SevenSeas
         private float moveAndRotateTime = 0.3f;
         [SerializeField]
         private BoatState boatState = BoatState.Idle;
+
+
 
         //Public properties 
         public BoatState BoatState
@@ -65,6 +65,21 @@ namespace SevenSeas
         public Direction currentDirection = Direction.East;
         #endregion
 
+        protected virtual void Awake()
+        {
+            TurnBasedSystemManager.BattleStateChanged += TurnBasedSystemManager_BattleStateChanged;
+        }
+
+        protected virtual void  OnDestroy()
+        {
+            TurnBasedSystemManager.BattleStateChanged -= TurnBasedSystemManager_BattleStateChanged;
+        }
+
+        protected virtual void TurnBasedSystemManager_BattleStateChanged(BattleState newState)
+        {
+            
+        }
+
         protected void MoveAndRotate(Direction dir)
         {
             if (BoatState == BoatState.MoveAndRotate)
@@ -77,8 +92,6 @@ namespace SevenSeas
             if (moveAndRotateCR != null)
                 StopCoroutine(moveAndRotateCR);
             moveAndRotateCR = StartCoroutine(CR_MoveAndRotate(targetPosition, targetDirection));
-
-            
         }
 
         protected virtual void Start()
@@ -97,12 +110,8 @@ namespace SevenSeas
         {
             //Start moving and rotating the model
             BoatState = BoatState.MoveAndRotate;
-
-            //Fire the moved position event
-            if (OnBoatMovedPosition != null)
-                OnBoatMovedPosition(gameObject, targetPos);
-                
-
+            var boxCollider = GetComponentInChildren<BoxCollider2D>();
+            boxCollider.enabled = false;
             Vector2 startPos = transform.position;
             float deltaAngle = GetDeltaAngle(currentDirection, toDirection);
 
@@ -120,13 +129,25 @@ namespace SevenSeas
                 yield return null;
             }
 
+            //Fire the moved position event
+            if (OnBoatMovedPosition != null)
+                OnBoatMovedPosition(gameObject, targetPos); // This will update dictionary info when it's subscribed by the MapConstatnProvider
+
+
+            boxCollider.enabled = true;
+
             //Update the current Direction
             currentDirection = toDirection;
-
             //Update boat state to idle after finishing moving and rotating
             BoatState = BoatState.Idle;
 
-            
+            //NOTE: After enable collider, we skip this frame to the box collider begin to check, check if the boat state is iddle
+            yield return new WaitForSeconds(0.1f);
+
+            if (BoatState == BoatState.Idle)
+            {
+                OnBoatActivityCompleted(this);
+            }
         }
 
         private float GetDeltaAngle(Direction currentDirection, Direction toDirection)
@@ -171,7 +192,8 @@ namespace SevenSeas
             EffectManager.Instance.SpawnEffect(EffectManager.Instance.explosion, transform.position, Quaternion.identity);
             SoundManager.Instance.PlayDestroyShipSound();
 
-            SpawnSkull();
+            //SpawnSkull();
+            MapConstantProvider.Instance.SpawnUnitOnDestroyedObject(skullPrefab, transform.position, gameObject);
 
             Destroy(gameObject);
         }

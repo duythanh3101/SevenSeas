@@ -8,6 +8,8 @@ namespace SevenSeas
 {
     public class PlayerController : BoatController, PlayerTriggerDetection.IPlayerTriggerDectecter
     {
+
+
         [Header("Health")]
         [Range(1, 3)]
         public int playerHealth = 3;
@@ -32,7 +34,6 @@ namespace SevenSeas
 
         //bool
         private bool isTargeting = false;
-        private bool doneEffect = false;    
 
         //Float
         private float sinkTime;
@@ -45,24 +46,40 @@ namespace SevenSeas
 
         #endregion
 
-        void Awake()
+        protected override  void Awake()
         {
+            base.Awake();
             ArrowController.OnArrowClicked += ArrowController_OnArrowClicked;
-            EffectManager.OnAllEffectCompleted += EffectManager_OnAllEffectCompleted;
-
             playerDetecter.RegisterHandler(this);
         }
       
-        void OnDestroy()
+        protected override void OnDestroy()
         {
+            base.OnDestroy();
             ArrowController.OnArrowClicked -= ArrowController_OnArrowClicked;
-            EffectManager.OnAllEffectCompleted -= EffectManager_OnAllEffectCompleted;
         }
 
         protected override void Start()
         {
             base.Start();
             InitValues();
+        }
+
+        protected override void TurnBasedSystemManager_BattleStateChanged(BattleState newState)
+        {
+            if (newState == BattleState.PlayerTurn)
+            {
+                if (BoatState != BoatState.Respawning)
+                {
+                    TogglePlayerInput(true);
+                    BoatState = BoatState.Idle;
+                    firingSystem.boxCollider2D.enabled = true;
+                }
+            }
+            else if (newState == BattleState.EndBattle)
+            {
+                TogglePlayerInput(false);
+            }
         }
 
         void InitValues()
@@ -110,25 +127,18 @@ namespace SevenSeas
 
         #endregion
 
-        void EffectManager_OnAllEffectCompleted()
-        {
-            if (BoatState == BoatState.Destroyed)
-                return;
-
-            arrowCollection.SetActive(true);
-            BoatState = BoatState.Idle;
-
-            doneEffect = true;
-        }
-
         void ArrowController_OnArrowClicked(Direction dir)
         {
+            TogglePlayerInput(false);
             MoveAndRotate(dir);
+
         }
+
+        
 
         void CanonTargeting()
         {
-            if (BoatState == BoatState.Idle)
+            if (BoatState == BoatState.Idle && TurnBasedSystemManager.Instance.BattleState == BattleState.PlayerTurn)
             {
                 isTargeting = true;
                 firingSystem.CanonTargeting(currentDirection);
@@ -150,9 +160,9 @@ namespace SevenSeas
 
             BoatState = BoatState.Firing;
             firingSystem.ResetData();
+            firingSystem.FireCanonballs(currentDirection,isTargeting);
 
-            arrowCollection.SetActive(false);
-            firingSystem.FireCanonballs(currentDirection, isTargeting);
+            TogglePlayerInput(false);
         }
 
         void Teleport()
@@ -165,13 +175,13 @@ namespace SevenSeas
             if (teleCR != null)
                 StopCoroutine(teleCR);
             teleCR = StartCoroutine(CR_Teleport());
-
         }
 
         IEnumerator CR_Teleport()
         {
             //Sink time
-            arrowCollection.SetActive(false); //Disable input
+            TogglePlayerInput(false);
+           // arrowCollection.SetActive(false); //Disable input
             animator.SetTrigger(SINK_TRIGGER);
             yield return new WaitForSeconds(sinkTime);
 
@@ -188,9 +198,12 @@ namespace SevenSeas
             //Riseup time
             animator.SetTrigger(RISEUP_TRIGGER);
             yield return new WaitForSeconds(riseUpTime);
+            
+            
 
-            arrowCollection.SetActive(true); //enable the input
             BoatState = BoatState.Idle;
+            OnBoatActivityCompleted(this);
+
         }
 
         private void Respawn()
@@ -204,31 +217,21 @@ namespace SevenSeas
 
         }
 
-
-        private WaitForSeconds respawnIntervalWait = new WaitForSeconds(0.5f);
+        private WaitForSeconds respawnIntervalWait = new WaitForSeconds(0.35f);
         private IEnumerator CR_Respawn()
         {
 
             //Disable input
-            arrowCollection.SetActive(false);
+            TogglePlayerInput(false);
             //Layout another position
             isometricModel.SetActive(false);
 
-            //Spawn  a skull at the player dead pos
-            var skull = Instantiate(skullPrefab, transform.position, Quaternion.identity);
-
-
-            while (!doneEffect)
+            while (EffectManager.Instance.effectPlaying)
             {
                 yield return null;
             }
 
-            MapConstantProvider.Instance.LayoutUnitAtRandomPosition(gameObject, true);
-
-            //After layout player at another pos, fire event spawn skull to remove this pos from the possible position when the map provider listen to this event
-            if (OnSpawnSkull != null)
-                OnSpawnSkull(skull,skull.transform.position);
-           
+            MapConstantProvider.Instance.SetRespawningPosition(gameObject);
             for (int i = 0; i < 2; i++ )
             {
                 isometricModel.SetActive(true);
@@ -239,19 +242,29 @@ namespace SevenSeas
 
             isometricModel.SetActive(true);
             //Enable input
-            arrowCollection.SetActive(true);
+            TogglePlayerInput(true);
             BoatState = BoatState.Idle;
-            doneEffect = false;
-            
+          
         }
 
+        void TogglePlayerInput(bool isEnable)
+        {
+            arrowCollection.SetActive(isEnable);
+        }
+
+        private Coroutine delayDestroyCR;
         protected override void GetDestroy()
         {
+            if (BoatState == BoatState.Respawning || BoatState == BoatState.Destroyed)
+                return;
+
+            //Debug.Log("player destroyed");
             BoatState = BoatState.Destroyed;
 
             //Effect and sound
             EffectManager.Instance.SpawnEffect(EffectManager.Instance.explosion, transform.position, Quaternion.identity);
             SoundManager.Instance.PlayDestroyShipSound();
+            MapConstantProvider.Instance.SpawnUnitOnDestroyedObject(skullPrefab, transform.position, gameObject);
 
             currentPlayerHealth--;
             //UI
@@ -260,17 +273,27 @@ namespace SevenSeas
             if (currentPlayerHealth > 0)
             {
                 Respawn();
-                
             }
             else
             {
-                SpawnSkull();
-                arrowCollection.SetActive(false);
-                isometricModel.SetActive(false);
-                GameManager.Instance.GameLose();
-                //Destroy(gameObject);
+                TogglePlayerInput(false);
+                gameObject.SetActive(false);
+
+                //Debug.Log(EnemyManager.Instance.CurrentEnemyCount);
+                if (EnemyManager.Instance.CurrentEnemyCount > 0)
+                {
+                    GameManager.Instance.GameLose();
+                }
             }
         }
+
+        //IEnumerator CR_DelayDestroy()
+        //{
+           
+        //}
+       
+
+
     }
 }
 

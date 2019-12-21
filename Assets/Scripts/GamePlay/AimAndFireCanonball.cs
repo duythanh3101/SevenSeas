@@ -36,8 +36,8 @@ namespace SevenSeas
 
         #region Cache value
 
-        
-        protected BoxCollider2D boxCollider2D;
+        [HideInInspector]
+        public BoxCollider2D boxCollider2D;
 
         //Structs
         private RaycastHit2D rightHit;
@@ -76,8 +76,12 @@ namespace SevenSeas
             if (!doneTarget)
                 CanonTargeting(toDirection);
 
+            boxCollider2D.enabled = false;
+
             FireCanonball(transform.position, leftTargetPosition);
             FireCanonball(transform.position,rightTargetPosition);
+
+            
         }
 
         void FireCanonball(Vector2 startPos, Vector2 endPos)
