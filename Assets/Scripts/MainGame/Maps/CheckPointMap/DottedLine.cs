@@ -12,8 +12,6 @@ public class DottedLine : MonoBehaviour
     [Range(0.1f, 2f)]
     public float Delta;
 
-    [HideInInspector]
-    public bool isDrawFinished = false;
     //Static Property with backing field
     private static DottedLine instance;
     public static DottedLine Instance
@@ -21,21 +19,35 @@ public class DottedLine : MonoBehaviour
         get
         {
             if (instance == null)
+            {
                 instance = FindObjectOfType<DottedLine>();
+            }
             return instance;
         }
     }
 
     //Utility fields
-    List<GameObject> dots = new List<GameObject>();
+    public List<GameObject> dots = new List<GameObject>();
 
-    private void DestroyAllDots()
+    public void SetActiveAllExisting(int level)
     {
-        foreach (var dot in dots)
+        if (level < 5)
         {
-            Destroy(dot);
+            for (int i = 0; i < level; i++)
+            {
+                if (DottedLineDrawer.Instance.checkPoints[i] != null && DottedLineDrawer.Instance.checkPoints[i + 1] != null)
+                {
+                    DottedLineDrawer.Instance.checkPoints[i].Parent.gameObject.SetActive(true);
+                    DrawDottedLine(
+                    DottedLineDrawer.Instance.checkPoints[i].StartPoint.transform.position,
+                    DottedLineDrawer.Instance.checkPoints[i + 1].EndPoint.transform.position,
+                    i,
+                    null,
+                    0f);
+                }
+            }
         }
-        dots.Clear();
+        
     }
 
     GameObject GetOneDot()
@@ -49,9 +61,8 @@ public class DottedLine : MonoBehaviour
         return gameObject;
     }
 
-    public bool DrawDottedLine(Vector3 start, Vector3 end)
+    public void DrawDottedLine(Vector3 start, Vector3 end, int level = 0, Action callback = null,float waitTime = 0.5f)
     {
-        isDrawFinished = false;
         List<Vector2> positions = new List<Vector2>();
 
         int lineSteps = GetLineSteps(start, end);
@@ -63,8 +74,7 @@ public class DottedLine : MonoBehaviour
             lineStart = lineEnd;
         }
 
-        StartCoroutine("Render", positions);
-        return isDrawFinished;
+        StartCoroutine(Render(positions, level, callback, waitTime));
     }
 
     private int GetLineSteps(Vector3 start, Vector3 end)
@@ -83,21 +93,24 @@ public class DottedLine : MonoBehaviour
            endPoint, t));
     }
 
-    private IEnumerator Render(List<Vector2> positionList)
+    private IEnumerator Render(List<Vector2> positionList, int level = 0, Action callback = null, float waitTime = 0.5f)
     {
         if (DottedLineDrawer.Instance.checkPoints[DottedLineDrawer.Instance.CHECK_POINT_LEVEL].Parent.gameObject == null
             || DottedLineDrawer.Instance.checkPoints[DottedLineDrawer.Instance.CHECK_POINT_LEVEL + 1].Parent.gameObject == null)
             yield return null;
-        DottedLineDrawer.Instance.checkPoints[DottedLineDrawer.Instance.CHECK_POINT_LEVEL].Parent.gameObject.SetActive(true);
+        DottedLineDrawer.Instance.checkPoints[level].Parent.gameObject.SetActive(true);
         foreach (var position in positionList)
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(waitTime);
             var g = GetOneDot();
             g.transform.position = position;
             dots.Add(g);
         }
-        DottedLineDrawer.Instance.checkPoints[DottedLineDrawer.Instance.CHECK_POINT_LEVEL + 1].Parent.gameObject.SetActive(true);
-        isDrawFinished = true;
+        DottedLineDrawer.Instance.checkPoints[level + 1].Parent.gameObject.SetActive(true);
+        if (callback != null)
+        {
+            callback.Invoke();
+        }
         yield return null;
     }
 }

@@ -7,7 +7,6 @@ public class TreasureInstruction : MonoBehaviour
     public string GetInstruction(Vector3 currentTreasurePosition, Vector3 xSignPosition)
     {
         var distance = (xSignPosition - currentTreasurePosition).magnitude;
-        Debug.Log(xSignPosition + " - " + currentTreasurePosition + " - " + distance);
         if (distance >= 3)
         {
             return CommonConstants.Instruction.IN_DIRECTION + GetDirectionName(currentTreasurePosition, xSignPosition);
