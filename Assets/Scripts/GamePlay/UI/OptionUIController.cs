@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class OptionUIController : MonoBehaviour
 {
-
+    public System.Action OnCloseButtonClick = delegate { };
 
     [SerializeField]
     private Slider soundFxSlider;
@@ -21,7 +21,7 @@ public class OptionUIController : MonoBehaviour
 
     void Awake()
     {
-        closeButton.onClick.AddListener(Hide);
+        closeButton.onClick.AddListener(() => OnCloseButtonClick());
     }
 
     void Display(bool isShowing)

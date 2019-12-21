@@ -5,21 +5,16 @@ using UnityEngine.UI;
 
 public class GameOverUIController : MonoBehaviour
 {
-    public System.Action OnRestartButtonClick;
+   
 
     public float timeDisplay = 1;
 
-    [SerializeField]
-    private Button restartButton;
     [SerializeField]
     private Image gameOverImage;
     [SerializeField]
     private CanvasGroup canvasGroup;
 
-    void Start()
-    {
-        restartButton.onClick.AddListener(() => OnRestartButtonClick());
-    }
+    
     public void Show()
     {
         Display(true);

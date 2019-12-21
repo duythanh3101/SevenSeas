@@ -10,7 +10,6 @@ namespace SevenSeas
     {
 
         private GameObject treasureGameOverPanel;
-
         public static UIManager Instance = null;
 
         [SerializeField]
@@ -25,7 +24,8 @@ namespace SevenSeas
         private OptionUIController optionUIController;
         [SerializeField]
         private NextLevelUIController nextLevelUIController;
-
+        [SerializeField]
+        private MenuLeftUIController menuLeftUIController;
 
         void Awake()
         {
@@ -35,30 +35,46 @@ namespace SevenSeas
                 DestroyImmediate(gameObject);
 
             GameManager.GameStateChanged += GameManager_GameStateChanged;
-            gameOverUIController.OnRestartButtonClick += gameOverUIController_OnRestartButtonClick;
-            resultUIController.OnStartNewGameButtonClick += resultUIController_OnStartNewGameButtonClick;
-            quitUIController.OnQuitButtonClick += quitUIController_OnQuitButtonClick;
-            nextLevelUIController.OnNextButtonClick += nextLevelUIController_OnNextButtonClick;
-        }
 
+            resultUIController.OnStartNewGameButtonClick += resultUIController_OnStartNewGameButtonClick;
+
+            quitUIController.OnQuitButtonClick += quitUIController_OnQuitButtonClick;
+
+            nextLevelUIController.OnNextButtonClick += nextLevelUIController_OnNextButtonClick;
+
+            menuLeftUIController.OnExitButtonClick += menuLeftUIController_OnExitButtonClick;
+            menuLeftUIController.OnOptionButtonClick += menuLeftUIController_OnOptionButtonClick;
+
+            optionUIController.OnCloseButtonClick += optionUIController_OnCloseButtonClick;
+        }
 
        
         void OnDestroy()
         {
             GameManager.GameStateChanged -= GameManager_GameStateChanged;
-            gameOverUIController.OnRestartButtonClick -= gameOverUIController_OnRestartButtonClick;
+
             resultUIController.OnStartNewGameButtonClick -= resultUIController_OnStartNewGameButtonClick;
+
             quitUIController.OnQuitButtonClick -= quitUIController_OnQuitButtonClick;
+
             nextLevelUIController.OnNextButtonClick -= nextLevelUIController_OnNextButtonClick;
-            
+
+            menuLeftUIController.OnExitButtonClick -= menuLeftUIController_OnExitButtonClick;
+            menuLeftUIController.OnOptionButtonClick -= menuLeftUIController_OnOptionButtonClick;
+
+            optionUIController.OnCloseButtonClick -= optionUIController_OnCloseButtonClick;
+        }
+
+        private void optionUIController_OnCloseButtonClick()
+        {
+            optionUIController.Hide();
+            GameManager.Instance.ResumeGame();
         }
 
         void gameOverUIController_OnRestartButtonClick()
         {
             GameManager.Instance.RestartGame();
         }
-
-       
 
         void GameManager_GameStateChanged(GameState newState, GameState oldState)
         {
@@ -77,6 +93,18 @@ namespace SevenSeas
         void Start()
         {
             InitValues();
+        }
+
+
+        private void menuLeftUIController_OnOptionButtonClick()
+        {
+            optionUIController.Show();
+            GameManager.Instance.PauseGame();
+        }
+
+        private void menuLeftUIController_OnExitButtonClick()
+        {
+            
         }
 
         void InitValues()
@@ -110,7 +138,7 @@ namespace SevenSeas
 
         private void resultUIController_OnStartNewGameButtonClick()
         {
-            
+            GameManager.Instance.RestartGame();
         }
 
        IEnumerator CR_DelayGameOverUI()

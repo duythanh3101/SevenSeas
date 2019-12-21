@@ -114,9 +114,20 @@ namespace SevenSeas
         {
             GameState = GameState.Playing;
             SoundManager.Instance.PlayMusic(SoundManager.Instance.background);
+        }
+
+        GameState suspendState;
+        public void PauseGame()
+        {
+            suspendState = GameState;
+            GameState = GameState.Pause;
 
         }
-       
+
+        public void ResumeGame()
+        {
+            GameState = suspendState;
+        }
     }
 }
 
