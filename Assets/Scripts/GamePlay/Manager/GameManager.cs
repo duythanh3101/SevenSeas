@@ -52,6 +52,7 @@ namespace SevenSeas
         }
 
         public static int LEVEL = 1;
+       
         void Awake()
         {
             if (Instance == null)
@@ -62,16 +63,19 @@ namespace SevenSeas
             {
                 DestroyImmediate(gameObject);
             }
-               
+
+         
+
         }
 
+     
         void Start()
         {
             Application.targetFrameRate = targetFrameRate;
             PrepareGame();
         }
 
-
+       
        public void GameWin()
         {
             SoundManager.Instance.StopMusic();
@@ -84,6 +88,7 @@ namespace SevenSeas
            SoundManager.Instance.StopMusic();
            SoundManager.Instance.PlayLoseSound();
            GameState = GameState.GameOver;
+
        }
 
         bool isRestart = false;
@@ -111,6 +116,7 @@ namespace SevenSeas
             SoundManager.Instance.PlayMusic(SoundManager.Instance.background);
 
         }
+       
     }
 }
 

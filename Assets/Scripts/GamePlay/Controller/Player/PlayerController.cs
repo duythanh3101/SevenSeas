@@ -8,6 +8,8 @@ namespace SevenSeas
 {
     public class PlayerController : BoatController, PlayerTriggerDetection.IPlayerTriggerDectecter
     {
+
+
         [Header("Health")]
         [Range(1, 3)]
         public int playerHealth = 3;
@@ -215,7 +217,7 @@ namespace SevenSeas
 
         }
 
-        private WaitForSeconds respawnIntervalWait = new WaitForSeconds(0.5f);
+        private WaitForSeconds respawnIntervalWait = new WaitForSeconds(0.35f);
         private IEnumerator CR_Respawn()
         {
 
@@ -250,9 +252,9 @@ namespace SevenSeas
             arrowCollection.SetActive(isEnable);
         }
 
+        private Coroutine delayDestroyCR;
         protected override void GetDestroy()
         {
-
             if (BoatState == BoatState.Respawning || BoatState == BoatState.Destroyed)
                 return;
 
@@ -277,13 +279,18 @@ namespace SevenSeas
                 TogglePlayerInput(false);
                 gameObject.SetActive(false);
 
-                //Debug.Log("Enemy count: " + EnemyManager.Instance.CurrentEnemyCount);
-                //isometricModel.SetActive(false);
-                GameManager.Instance.GameLose();
-                //Destroy(gameObject);
+                //Debug.Log(EnemyManager.Instance.CurrentEnemyCount);
+                if (EnemyManager.Instance.CurrentEnemyCount > 0)
+                {
+                    GameManager.Instance.GameLose();
+                }
             }
         }
 
+        //IEnumerator CR_DelayDestroy()
+        //{
+           
+        //}
        
 
 

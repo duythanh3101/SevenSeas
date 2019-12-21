@@ -175,7 +175,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSimultaneousSounds: 7
   background:
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: e609be319c927f44c870db787e2318f2, type: 3}
     simultaneousPlayCount: 0
   shipExplosion:
     clip: {fileID: 8300000, guid: c4d7502b96f2d9a439c0968e5ffee50e, type: 3}
@@ -187,10 +187,10 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 90d6e8d8e5f775549865f7008c230b7b, type: 3}
     simultaneousPlayCount: 0
   winSound:
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: ef906e8cac96c6443a38afef20e3a2a6, type: 3}
     simultaneousPlayCount: 0
   loseSound:
-    clip: {fileID: 8300000, guid: 3c365bab45a4f35468231836c65fd148, type: 3}
+    clip: {fileID: 8300000, guid: 3bdb2814d67cf354fbce93337f58a26e, type: 3}
     simultaneousPlayCount: 0
   bgmSource: {fileID: 7247641401471862353}
   sfxSource: {fileID: 7247641401443819713}

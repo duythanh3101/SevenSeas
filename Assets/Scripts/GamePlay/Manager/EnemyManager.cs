@@ -11,7 +11,6 @@ namespace SevenSeas
 
         public static event System.Action OnAllEnemyActivityCompleted;
 
-
         public int CurrentEnemyCount { get; private set; }
 
        void Awake()
@@ -56,6 +55,7 @@ namespace SevenSeas
            CurrentEnemyCount--;
            if (CurrentEnemyCount <= 0 )
            {
+              // Debug.Log(CurrentEnemyCount);
                GameManager.Instance.GameWin();
                CurrentEnemyCount = 0;
            }
