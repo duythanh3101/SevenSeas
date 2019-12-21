@@ -6,19 +6,19 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance = null;
 
-    enum PlayingState
-    {
-        Playing,
-        Paused,
-        Stopped
-    }
-
-    [System.Serializable]
+     [System.Serializable]
     public class Sound
     {
         public AudioClip clip;
         [HideInInspector]
         public int simultaneousPlayCount = 0;
+    }
+
+    enum PlayingState
+    {
+        Playing,
+        Paused,
+        Stopped
     }
 
     //public delegate void MusicStatusChangedHandler(bool isOn);
