@@ -245,6 +245,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4265373189350393862}
+  - component: {fileID: 4265373189798455328}
   m_Layer: 5
   m_Name: ChooseLevelUI
   m_TagString: Untagged
@@ -272,6 +273,24 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &4265373189798455328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4265373189350393865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 261b8684dc618e7459e0375c96a53572, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 1893105196090693212}
+  startNewGameButton: {fileID: 4265373189234882727}
+  quitToWindowButton: {fileID: 4265373188991282891}
+  easyButton: {fileID: 4265373189489223546}
+  averageButton: {fileID: 4265373190524778675}
+  hardButton: {fileID: 4265373189634238890}
 --- !u!1 &4265373189489223548
 GameObject:
   m_ObjectHideFlags: 0
@@ -285,7 +304,7 @@ GameObject:
   - component: {fileID: 4265373189489223547}
   - component: {fileID: 4265373189489223546}
   m_Layer: 5
-  m_Name: QuitToWindowBtn
+  m_Name: EasyButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -440,7 +459,7 @@ GameObject:
   - component: {fileID: 4265373189634238891}
   - component: {fileID: 4265373189634238890}
   m_Layer: 5
-  m_Name: QuitToWindowBtn (2)
+  m_Name: HardButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -807,7 +826,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 118, y: -106}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 89.8, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4265373190044833696
 CanvasRenderer:
@@ -943,7 +962,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 118, y: -108}
-  m_SizeDelta: {x: 101, y: 100}
+  m_SizeDelta: {x: 92.8, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4265373190150075216
 CanvasRenderer:
@@ -1143,7 +1162,7 @@ GameObject:
   - component: {fileID: 4265373190524778672}
   - component: {fileID: 4265373190524778675}
   m_Layer: 5
-  m_Name: QuitToWindowBtn (1)
+  m_Name: AverageButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1476,6 +1495,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 312877732010676308}
+  - component: {fileID: 1893105196090693212}
   m_Layer: 5
   m_Name: Container
   m_TagString: Untagged
@@ -1507,8 +1527,20 @@ RectTransform:
   m_Father: {fileID: 4265373189350393862}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &1893105196090693212
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5262030170055407650}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
