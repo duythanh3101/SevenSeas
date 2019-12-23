@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class Sound
+{
+    public AudioClip clip;
+    [HideInInspector]
+    public int simultaneousPlayCount = 0;
+}
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance = null;
 
-     [System.Serializable]
-    public class Sound
-    {
-        public AudioClip clip;
-        [HideInInspector]
-        public int simultaneousPlayCount = 0;
-    }
+     
 
     enum PlayingState
     {
@@ -117,6 +118,9 @@ public class SoundManager : MonoBehaviour
     /// <param name="loop">If set to <c>true</c> loop.</param>
     public void PlayMusic(Sound music, bool loop = true)
     {
+        if (bgmSource.isPlaying)
+            StopMusic();
+
         bgmSource.clip = music.clip;
         bgmSource.loop = loop;
         bgmSource.Play();
