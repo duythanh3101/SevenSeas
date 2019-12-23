@@ -400,19 +400,19 @@ MonoBehaviour:
   skullCount: 10
   instructionText: {fileID: 69866822}
   clickSound:
-    clip: {fileID: 8300000, guid: 77a150dd507955e4a990aa6d14fcaf04, type: 3}
+    clip: {fileID: 8300000, guid: e68214713fe51b54990fc053556c18d8, type: 3}
     simultaneousPlayCount: 0
   treasureGameSound:
-    clip: {fileID: 8300000, guid: 2d75080d0851d4613ada1117d91ee417, type: 3}
+    clip: {fileID: 8300000, guid: cab18425ac3ce7243ab67452824a662e, type: 3}
     simultaneousPlayCount: 0
   winGameSound:
     clip: {fileID: 8300000, guid: e85cf7433b5d98147898ad0d87b1974b, type: 3}
     simultaneousPlayCount: 0
   loseGameSound:
-    clip: {fileID: 8300000, guid: c15724f0e9b0ddb45bbae9cc2f8dbf72, type: 3}
+    clip: {fileID: 8300000, guid: b551b7dfe64c0fc439b2e04d4938a88e, type: 3}
     simultaneousPlayCount: 0
   failGameSound:
-    clip: {fileID: 8300000, guid: eb25a91d5a77ebf4786597ab3c4cef5e, type: 3}
+    clip: {fileID: 8300000, guid: 033f4f9b3e4ff2e4888037df92a517e4, type: 3}
     simultaneousPlayCount: 0
 --- !u!114 &619372812
 MonoBehaviour:
