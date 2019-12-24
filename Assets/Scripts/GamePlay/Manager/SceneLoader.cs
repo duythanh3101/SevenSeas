@@ -52,8 +52,6 @@ namespace SevenSeas
 
         public void LoadChooseLevelScene()
         {
-            
-
             LoadScene(CHOOSE_LEVEL_SCENE_NAME);
             SoundManager.Instance.PlayMusic(chooseLevelSceneMusic);
         }
@@ -62,7 +60,12 @@ namespace SevenSeas
         {
             SceneManager.LoadScene(sceneName);
         }
-   
-    }
+
+
+        public void ExitGame()
+        {
+            Application.Quit();
+        }
+}
 
 }

@@ -28,12 +28,12 @@ public class QuitUIController : MonoBehaviour
         canvasGroup.interactable = isShowing;
     }
 
-    void Show()
+    public void Show()
     {
         Display(true);
     }
 
-    void Hide()
+    public void Hide()
     {
         Display(false);
     }

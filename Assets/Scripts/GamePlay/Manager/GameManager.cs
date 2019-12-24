@@ -63,16 +63,14 @@ namespace SevenSeas
             {
                 DestroyImmediate(gameObject);
             }
-
-         
-
         }
 
      
         void Start()
         {
             Application.targetFrameRate = targetFrameRate;
-            PrepareGame();
+            //PrepareGame();
+            StartGame();
         }
 
        
@@ -101,8 +99,6 @@ namespace SevenSeas
         public void PrepareGame()
         {
             GameState = GameState.Prepare;
-            SoundManager.Instance.PlayMusic(SoundManager.Instance.background);
-
             if (isRestart)
             {
                 StartGame();
@@ -128,6 +124,8 @@ namespace SevenSeas
         {
             GameState = suspendState;
         }
+
+       
     }
 }
 

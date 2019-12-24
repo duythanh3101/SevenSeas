@@ -2,43 +2,85 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MainMenuUIManager : MonoBehaviour
+
+namespace SevenSeas
 {
-
-    [SerializeField]
-    private MenuLeftUIController menuLeftUIController;
-    [SerializeField]
-    private ChooseLevelUIController chooseLevelUIController;
-    [SerializeField]
-    private OptionUIController optionUIController;
-
-    void Awake()
+    public class MainMenuUIManager : MonoBehaviour
     {
-        menuLeftUIController.OnOptionButtonClick += menuLeftUIController_OnOptionButtonClick;
-        optionUIController.OnCloseButtonClick += optionUIController_OnCloseButtonClick;
-       
+
+        [SerializeField]
+        private MenuLeftUIController menuLeftUIController;
+        [SerializeField]
+        private ChooseLevelUIController chooseLevelUIController;
+        [SerializeField]
+        private OptionUIController optionUIController;
+
+        void Awake()
+        {
+            menuLeftUIController.OnOptionButtonClick += menuLeftUIController_OnOptionButtonClick;
+
+            optionUIController.OnCloseButtonClick += optionUIController_OnCloseButtonClick;
+
+            chooseLevelUIController.OnStartNewGameButtonClick += chooseLevelUIController_OnStartNewGameButtonClick;
+            chooseLevelUIController.OnQuitToWindowButtonClick += chooseLevelUIController_OnQuitToWindowButtonClick;
+            chooseLevelUIController.OnAverageButtonClick += chooseLevelUIController_OnAverageButtonClick;
+            chooseLevelUIController.OnHardButtonClick += chooseLevelUIController_OnHardButtonClick;
+            chooseLevelUIController.OnEasyButtonClick += chooseLevelUIController_OnEasyButtonClick;
+        }
+
+
+
+        void OnDestroy()
+        {
+            menuLeftUIController.OnOptionButtonClick -= menuLeftUIController_OnOptionButtonClick;
+
+            optionUIController.OnCloseButtonClick -= optionUIController_OnCloseButtonClick;
+
+            chooseLevelUIController.OnStartNewGameButtonClick -= chooseLevelUIController_OnStartNewGameButtonClick;
+            chooseLevelUIController.OnQuitToWindowButtonClick -= chooseLevelUIController_OnQuitToWindowButtonClick;
+            chooseLevelUIController.OnAverageButtonClick -= chooseLevelUIController_OnAverageButtonClick;
+            chooseLevelUIController.OnHardButtonClick -= chooseLevelUIController_OnHardButtonClick;
+            chooseLevelUIController.OnEasyButtonClick -= chooseLevelUIController_OnEasyButtonClick;
+        }
+
+
+        private void chooseLevelUIController_OnStartNewGameButtonClick()
+        {
+            SceneLoader.Instance.LoadPlayScene();
+        }
+
+        private void optionUIController_OnCloseButtonClick()
+        {
+            optionUIController.Hide();
+        }
+
+
+        private void chooseLevelUIController_OnEasyButtonClick()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private void chooseLevelUIController_OnHardButtonClick()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private void chooseLevelUIController_OnAverageButtonClick()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private void chooseLevelUIController_OnQuitToWindowButtonClick()
+        {
+            SceneLoader.Instance.ExitGame();
+        }
+
+        private void menuLeftUIController_OnOptionButtonClick()
+        {
+            optionUIController.Show();
+        }
+
+
     }
 
-    private void optionUIController_OnCloseButtonClick()
-    {
-        optionUIController.Hide();
-    }
-
-    void OnDestroy()
-    {
-        menuLeftUIController.OnOptionButtonClick -= menuLeftUIController_OnOptionButtonClick;
-        optionUIController.OnCloseButtonClick -= optionUIController_OnCloseButtonClick;
-    }
-
-    private void menuLeftUIController_OnOptionButtonClick()
-    {
-        optionUIController.Show();
-    }
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 }

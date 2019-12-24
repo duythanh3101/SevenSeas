@@ -12,7 +12,7 @@ public class ChooseLevelUIController : MonoBehaviour
     public Action OnEasyButtonClick = delegate { };
     public Action OnAverageButtonClick = delegate { };
     public Action OnHardButtonClick = delegate { };
-    public Action onStartNewGameButtonClick = delegate { };
+    
 
     [SerializeField]
     private CanvasGroup canvasGroup;

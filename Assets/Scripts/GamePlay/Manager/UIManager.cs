@@ -104,7 +104,7 @@ namespace SevenSeas
 
         private void menuLeftUIController_OnExitButtonClick()
         {
-            
+            quitUIController.Show();
         }
 
         void InitValues()
@@ -133,7 +133,7 @@ namespace SevenSeas
 
         private void quitUIController_OnQuitButtonClick()
         {
-            
+            SceneLoader.Instance.LoadChooseLevelScene();
         }
 
         private void resultUIController_OnStartNewGameButtonClick()
