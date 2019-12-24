@@ -57,17 +57,17 @@ namespace SevenSeas
 
         private void chooseLevelUIController_OnEasyButtonClick()
         {
-            throw new System.NotImplementedException();
+           
         }
 
         private void chooseLevelUIController_OnHardButtonClick()
         {
-            throw new System.NotImplementedException();
+            
         }
 
         private void chooseLevelUIController_OnAverageButtonClick()
         {
-            throw new System.NotImplementedException();
+            
         }
 
         private void chooseLevelUIController_OnQuitToWindowButtonClick()

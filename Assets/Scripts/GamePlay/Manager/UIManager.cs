@@ -39,6 +39,7 @@ namespace SevenSeas
             resultUIController.OnStartNewGameButtonClick += resultUIController_OnStartNewGameButtonClick;
 
             quitUIController.OnQuitButtonClick += quitUIController_OnQuitButtonClick;
+            quitUIController.OnCancelButtonClick += quitUIController_OnCancelButtonClick;
 
             nextLevelUIController.OnNextButtonClick += nextLevelUIController_OnNextButtonClick;
 
@@ -47,6 +48,8 @@ namespace SevenSeas
 
             optionUIController.OnCloseButtonClick += optionUIController_OnCloseButtonClick;
         }
+
+        
 
        
         void OnDestroy()
@@ -58,11 +61,18 @@ namespace SevenSeas
             quitUIController.OnQuitButtonClick -= quitUIController_OnQuitButtonClick;
 
             nextLevelUIController.OnNextButtonClick -= nextLevelUIController_OnNextButtonClick;
+            quitUIController.OnCancelButtonClick -= quitUIController_OnCancelButtonClick;
 
             menuLeftUIController.OnExitButtonClick -= menuLeftUIController_OnExitButtonClick;
             menuLeftUIController.OnOptionButtonClick -= menuLeftUIController_OnOptionButtonClick;
 
             optionUIController.OnCloseButtonClick -= optionUIController_OnCloseButtonClick;
+        }
+
+        private void quitUIController_OnCancelButtonClick()
+        {
+            quitUIController.Hide();
+            GameManager.Instance.ResumeGame();
         }
 
         private void optionUIController_OnCloseButtonClick()
@@ -105,6 +115,7 @@ namespace SevenSeas
         private void menuLeftUIController_OnExitButtonClick()
         {
             quitUIController.Show();
+            GameManager.Instance.PauseGame();
         }
 
         void InitValues()
