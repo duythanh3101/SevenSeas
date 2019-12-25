@@ -6,12 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/Scenes/TreasureMapScene.unity
-    guid: 162ef8f1335f5f442983d5b77e4f9cd4
-  - enabled: 0
-    path: Assets/Scenes/CheckPointMapScene.unity
-    guid: 46539bfc14296544ab28a29f111b777c
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/MainScene.unity
-    guid: c02b0299882ad56478858124688c10aa
+    path: Assets/Scenes/IntroGame.unity
+    guid: 98a7da1404833c34c9c5ab9989aa2ef1
+  - enabled: 1
+    path: Assets/Scenes/ChooseLevel.unity
+    guid: f32b27fb3884baa4cbf9597569117203
+  - enabled: 1
+    path: Assets/Scenes/PlayScene.unity
+    guid: 3e2cdd7584131e244a1b0aa95a215668
   m_configObjects: {}
