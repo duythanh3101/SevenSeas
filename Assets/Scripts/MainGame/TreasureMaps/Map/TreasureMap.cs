@@ -92,7 +92,7 @@ namespace MainGame
 
             if (IsExistingTreasureAt(posClick))
             {
-                LoseTreasureGame();
+                LoseTreasureGame(true);
                 instructionText.text = CommonConstants.Instruction.CLICK_TO_CONTINUE;
                 return;
             }
@@ -103,7 +103,7 @@ namespace MainGame
                 if (obj != null)
                 {
                     obj.SetActive(true);
-                    LoseTreasureGame();
+                    LoseTreasureGame(false);
 
                     //display treasure
                     instructionText.text = CommonConstants.Instruction.CLICK_TO_CONTINUE;
@@ -129,14 +129,21 @@ namespace MainGame
             }
         }
 
-        private void LoseTreasureGame()
+        private void LoseTreasureGame(bool isWonGame = false)
         {
             treasure.SetActive(true);
             isEndGame = true;
 
             Instance.StopMusic();
-            Instance.PlaySound(loseGameSound);
-            Instance.PlaySound(failGameSound);
+            if (isWonGame)
+            {
+                Instance.PlaySound(winGameSound);
+            }
+            else
+            {
+                Instance.PlaySound(loseGameSound);
+                Instance.PlaySound(failGameSound);
+            }
         }
 
         /// <summary>
