@@ -53,7 +53,7 @@ public class CommonConstants
     public class SceneName
     {
         public static string CheckPointMapScene = "CheckPointMapScene";
-        public static string MainScene = "MainScene";
+        public static string PlayScene = "PlayScene";
         public static string TreasureMapScene = "TreasureMapScene";
     }
 

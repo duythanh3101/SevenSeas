@@ -53,7 +53,7 @@ public class DottedLineDrawer : MonoBehaviour
                 isfinished = false;
                 CHECK_POINT_LEVEL++;
                 PlayerPrefs.SetInt("CHECK_POINT_LEVEL", CHECK_POINT_LEVEL);
-                SceneGameManager.Instance.LoadScene(CommonConstants.SceneName.TreasureMapScene);
+                SceneGameManager.Instance.LoadScene(CommonConstants.SceneName.PlayScene);
             }
         }
     }
