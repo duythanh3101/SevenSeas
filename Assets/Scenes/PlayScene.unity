@@ -1175,7 +1175,7 @@ MonoBehaviour:
   playerPrefab: {fileID: 6075846875433479232, guid: 3688b474c477bd64783aca73341a8b7f,
     type: 3}
   islandCount: 5
-  enemyCount: 4
+  enemyCount: 3
   currentLevel: 0
   drawStaticPosition: 0
   drawPossiblePosition: 1

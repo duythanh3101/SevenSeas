@@ -24,7 +24,10 @@ namespace SevenSeas
            }
 
             EnemyController.OnBoatActivityCompleted += EnemyController_OnBoatActivityCompleted;
+            
         }
+
+      
 
         void Start()
        {
@@ -50,12 +53,14 @@ namespace SevenSeas
           }
        }
 
+       
+
        public void UpdateEnemyCount()
        {
            CurrentEnemyCount--;
            if (CurrentEnemyCount <= 0 )
            {
-              // Debug.Log(CurrentEnemyCount);
+               //Debug.Log(CurrentEnemyCount);
                GameManager.Instance.GameWin();
                CurrentEnemyCount = 0;
            }
