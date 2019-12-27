@@ -17,4 +17,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PlayScene.unity
     guid: 3e2cdd7584131e244a1b0aa95a215668
+  - enabled: 1
+    path: Assets/Scenes/TreasureMapScene.unity
+    guid: 162ef8f1335f5f442983d5b77e4f9cd4
+  - enabled: 1
+    path: Assets/Scenes/CheckPointMapScene.unity
+    guid: 46539bfc14296544ab28a29f111b777c
   m_configObjects: {}
