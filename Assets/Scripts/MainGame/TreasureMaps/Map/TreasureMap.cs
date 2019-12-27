@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-using static SoundManager;
+
 using Random = UnityEngine.Random;
 
 namespace MainGame
@@ -40,7 +40,7 @@ namespace MainGame
         #region Mono Behaviour
         protected virtual void Awake()
         {
-            Instance.PlayMusic(treasureGameSound);
+            SoundManager.Instance.PlayMusic(treasureGameSound);
             InitMap();
 
             SpawnTreasureRandom();
@@ -88,7 +88,7 @@ namespace MainGame
             {
                 return;
             }
-            Instance.PlaySound(clickSound);
+            SoundManager.Instance.PlaySound(clickSound);
 
             if (IsExistingTreasureAt(posClick))
             {
@@ -134,15 +134,15 @@ namespace MainGame
             treasure.SetActive(true);
             isEndGame = true;
 
-            Instance.StopMusic();
+            SoundManager.Instance.StopMusic();
             if (isWonGame)
             {
-                Instance.PlaySound(winGameSound);
+                SoundManager.Instance.PlaySound(winGameSound);
             }
             else
             {
-                Instance.PlaySound(loseGameSound);
-                Instance.PlaySound(failGameSound);
+                SoundManager.Instance.PlaySound(loseGameSound);
+                SoundManager.Instance.PlaySound(failGameSound);
             }
         }
 
