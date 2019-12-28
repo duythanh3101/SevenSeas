@@ -26,6 +26,7 @@ namespace SevenSeas
         private static readonly string INTRO_SCENE_NAME = "IntroGame";
         private static readonly string TREASURE_MAP_SCENE_NAME = "TreasureMapScene";
         private static readonly string CHECK_POINT_MAP_SCENE_NAME = "CheckPointMapScene";
+     
 
         void Awake()
         {
@@ -40,7 +41,9 @@ namespace SevenSeas
 
         void Start()
         {
-            SoundManager.Instance.PlayMusic(introSceneMusic);
+            if (SceneManager.GetActiveScene().name == INTRO_SCENE_NAME)
+                SoundManager.Instance.PlayMusic(introSceneMusic);
+            
         }
 
         public void LoadPlayScene()
@@ -61,6 +64,15 @@ namespace SevenSeas
             SceneManager.LoadScene(sceneName);
         }
 
+        public void LoadTreasureMapScene()
+        {
+            SceneManager.LoadScene(TREASURE_MAP_SCENE_NAME);
+        }
+
+        public void LoadCheckPointMapScene()
+        {
+            SceneManager.LoadScene(CHECK_POINT_MAP_SCENE_NAME);
+        }
 
         public void ExitGame()
         {

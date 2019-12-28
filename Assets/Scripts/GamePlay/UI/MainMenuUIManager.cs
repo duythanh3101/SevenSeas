@@ -17,9 +17,9 @@ namespace SevenSeas
 
         void Awake()
         {
-            menuLeftUIController.OnOptionButtonClick += menuLeftUIController_OnOptionButtonClick;
 
-            optionUIController.OnCloseButtonClick += optionUIController_OnCloseButtonClick;
+
+            
 
             chooseLevelUIController.OnStartNewGameButtonClick += chooseLevelUIController_OnStartNewGameButtonClick;
             chooseLevelUIController.OnQuitToWindowButtonClick += chooseLevelUIController_OnQuitToWindowButtonClick;
@@ -32,10 +32,6 @@ namespace SevenSeas
 
         void OnDestroy()
         {
-            menuLeftUIController.OnOptionButtonClick -= menuLeftUIController_OnOptionButtonClick;
-
-            optionUIController.OnCloseButtonClick -= optionUIController_OnCloseButtonClick;
-
             chooseLevelUIController.OnStartNewGameButtonClick -= chooseLevelUIController_OnStartNewGameButtonClick;
             chooseLevelUIController.OnQuitToWindowButtonClick -= chooseLevelUIController_OnQuitToWindowButtonClick;
             chooseLevelUIController.OnAverageButtonClick -= chooseLevelUIController_OnAverageButtonClick;
@@ -48,12 +44,6 @@ namespace SevenSeas
         {
             SceneLoader.Instance.LoadPlayScene();
         }
-
-        private void optionUIController_OnCloseButtonClick()
-        {
-            optionUIController.Hide();
-        }
-
 
         private void chooseLevelUIController_OnEasyButtonClick()
         {
@@ -75,10 +65,7 @@ namespace SevenSeas
             SceneLoader.Instance.ExitGame();
         }
 
-        private void menuLeftUIController_OnOptionButtonClick()
-        {
-            optionUIController.Show();
-        }
+        
 
 
     }

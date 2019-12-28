@@ -92,7 +92,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &686373413180343423
 RectTransform:
   m_ObjectHideFlags: 0
@@ -328,7 +328,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &686373413293372787
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1020,12 +1020,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c673cf2d3c7a744f97d19488581186e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvasGroup: {fileID: 0}
+  canvasGroup: {fileID: 7107174180316111189}
   undoButton: {fileID: 686373413293372784}
   optionButton: {fileID: 686373413201567315}
   exitButton: {fileID: 686373413180343420}
   levelText: {fileID: 686373413325037059}
   scoreTExt: {fileID: 686373414346993152}
+  quitUIController: {fileID: 0}
+  optionUIController: {fileID: 0}
 --- !u!1 &7107174180316111188
 GameObject:
   m_ObjectHideFlags: 0

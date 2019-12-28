@@ -1,11 +1,11 @@
 ﻿using BaseSystems.Observer;
+using SevenSeas;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-
 using Random = UnityEngine.Random;
 
 namespace MainGame
@@ -61,7 +61,9 @@ namespace MainGame
             {
                 if (isEndGame)
                 {
-                    SceneGameManager.Instance.LoadScene(CommonConstants.SceneName.CheckPointMapScene);
+                    //SceneGameManager.Instance.LoadScene(CommonConstants.SceneName.CheckPointMapScene);
+
+                    SceneLoader.Instance.LoadCheckPointMapScene();
                     return;
                 }
                 Interact();

@@ -1,4 +1,5 @@
 ﻿using BaseSystems.Singleton;
+using SevenSeas;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -53,7 +54,8 @@ public class DottedLineDrawer : MonoBehaviour
                 isfinished = false;
                 CHECK_POINT_LEVEL++;
                 PlayerPrefs.SetInt("CHECK_POINT_LEVEL", CHECK_POINT_LEVEL);
-                SceneGameManager.Instance.LoadScene(CommonConstants.SceneName.PlayScene);
+                //SceneGameManager.Instance.LoadScene(CommonConstants.SceneName.PlayScene);
+                SceneLoader.Instance.LoadPlayScene();
             }
         }
     }

@@ -120,6 +120,7 @@ public class SoundManager : MonoBehaviour
     {
         if (bgmSource.isPlaying)
             StopMusic();
+        
 
         bgmSource.clip = music.clip;
         bgmSource.loop = loop;
