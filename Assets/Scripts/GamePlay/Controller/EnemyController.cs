@@ -8,12 +8,17 @@ namespace SevenSeas
     public class EnemyController : BoatController
     {
 
-        [Header("AI")]
+        [SerializeField]
+        private int destroyedByBoatScore = 2;
+
+        [SerializeField]
+        private int normalDestroyScore = 1;
 
         [Header("Debug")]
         [SerializeField]
         private bool drawRayToTarget = false;
         private Transform targetTrans;
+        private int destroyScore;
 
         void OnDrawGizmos()
         {
@@ -54,10 +59,23 @@ namespace SevenSeas
                 DestroyByBoat();
             }
 
+            
             if (isDestroy)
+            {
                 EnemyManager.Instance.UpdateEnemyCount();
+
+                //Update data for result
+                PlayerInfoManager.Instance.UpdateScore(destroyScore);
+                PlayerInfoManager.Instance.UpdatePirateSunk();
+            }
+               
         }
 
+        protected override void GetDestroy()
+        {
+            destroyScore = normalDestroyScore;
+            base.GetDestroy();
+        }
 
         void DestroyByObstacle()
         {
@@ -65,6 +83,8 @@ namespace SevenSeas
 
             EffectManager.Instance.SpawnEffect(EffectManager.Instance.explosion, transform.position, Quaternion.identity);
             SoundManager.Instance.PlayDestroyShipSound();
+
+            destroyScore = normalDestroyScore;
 
             Destroy(gameObject);
         }
@@ -77,9 +97,9 @@ namespace SevenSeas
             SoundManager.Instance.PlayDestroyShipSound();
             MapConstantProvider.Instance.SpawnUnitOnDestroyedObject(skullPrefab, transform.position, gameObject);
 
-            Destroy(gameObject);
+            destroyScore = destroyedByBoatScore;
 
-            
+            Destroy(gameObject);
         }
 
         Vector2 GetSnapPosition()

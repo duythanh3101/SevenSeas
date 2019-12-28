@@ -31,10 +31,15 @@ namespace SevenSeas
             else if (Instance != this)
                 DestroyImmediate(gameObject);
 
+            //Event
             GameManager.GameStateChanged += GameManager_GameStateChanged;
 
             resultUIController.OnStartNewGameButtonClick += resultUIController_OnStartNewGameButtonClick;
             nextLevelUIController.OnNextButtonClick += nextLevelUIController_OnNextButtonClick;
+
+            
+            menuLeftUIController.SetData(PlayerInfoManager.Instance.playerInfoSession);
+            DecreaseHealth(PlayerInfoManager.Instance.playerInfoSession.playerHealth);
         }
 
         void OnDestroy()
@@ -70,7 +75,7 @@ namespace SevenSeas
 
         void InitValues()
         {
-            int healthCount = FindObjectOfType<PlayerController>().playerHealth;
+            int healthCount = PlayerInfoManager.Instance.playerInfoSession.playerHealth;
             for (int i = 0; i < healthCount; i++)
             {
                 healthImages[i].gameObject.SetActive(true);
@@ -85,6 +90,11 @@ namespace SevenSeas
         public void ShowFindTreasureGameOver()
         {
             treasureGameOverPanel.SetActive(true);
+        }
+
+        public void UpdateScore(int amount)
+        {
+            menuLeftUIController.UpdateScore(amount);
         }
 
         private void nextLevelUIController_OnNextButtonClick()
@@ -112,5 +122,10 @@ namespace SevenSeas
 
            nextLevelUIController.Show();
        }
+
+        public void SetDataForResultUI(PlayerInfoManager.PlayerInfoSession session)
+        {
+            resultUIController.SetData(session);
+        }
     }
 }

@@ -90,9 +90,15 @@ namespace SevenSeas
 
         public void GameLose()
        {
+           UIManager.Instance.SetDataForResultUI(PlayerInfoManager.Instance.playerInfoSession);
+
            SoundManager.Instance.StopMusic();
            SoundManager.Instance.PlayLoseSound();
+
+
            GameState = GameState.GameOver;
+
+           
 
        }
 

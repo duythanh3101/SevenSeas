@@ -27,8 +27,6 @@ namespace SevenSeas
             
         }
 
-      
-
         void Start()
        {
            CurrentEnemyCount = transform.childCount;
@@ -55,17 +53,16 @@ namespace SevenSeas
           }
        }
 
-       
-
        public void UpdateEnemyCount()
        {
            CurrentEnemyCount--;
            if (CurrentEnemyCount <= 0 )
            {
                //Debug.Log(CurrentEnemyCount);
-
                
-               GameManager.Instance.GameWin();
+               if (PlayerInfoManager.Instance.playerInfoSession.playerHealth > 0)
+                   GameManager.Instance.GameWin();
+              
                CurrentEnemyCount = 0;
            }
        }

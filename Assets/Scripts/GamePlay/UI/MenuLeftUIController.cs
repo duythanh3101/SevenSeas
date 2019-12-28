@@ -25,13 +25,15 @@ namespace SevenSeas
         [SerializeField]
         private Text levelText;
         [SerializeField]
-        private Text scoreTExt;
+        private Text scoreText;
 
         [Header("Object References")]
         [SerializeField]
         private QuitUIController quitUIController;
         [SerializeField]
         private OptionUIController optionUIController;
+
+        private bool blockElements;
 
         void Awake()
         {
@@ -44,8 +46,6 @@ namespace SevenSeas
                 quitUIController.OnQuitButtonClick += quitUIController_OnQuitButtonClick;
                 quitUIController.OnCancelButtonClick += quitUIController_OnCancelButtonClick;
             }
-
-           
 
             optionUIController.OnCloseButtonClick += optionUIController_OnCloseButtonClick;
         }
@@ -72,17 +72,24 @@ namespace SevenSeas
 
         void OnExitButtonClick()
         {
+            if (blockElements)
+                return;
+
             quitUIController.Show();
 
+            blockElements = true;
             if (GameManager.Instance != null)
                 GameManager.Instance.PauseGame();
-            
+           
         }
 
         void OnOptionButtonClick()
         {
-            
+            if (blockElements)
+                return;
+
             optionUIController.Show();
+            blockElements = true;
 
             if (GameManager.Instance != null)
                 GameManager.Instance.PauseGame();
@@ -94,6 +101,7 @@ namespace SevenSeas
             quitUIController.Hide();
             if (GameManager.Instance != null)
                 GameManager.Instance.ResumeGame();
+            blockElements = false;
         }
             
 
@@ -102,7 +110,7 @@ namespace SevenSeas
             optionUIController.Hide();
             if (GameManager.Instance != null)
                 GameManager.Instance.ResumeGame();
-           
+            blockElements = false;
         }
 
         private void quitUIController_OnQuitButtonClick()
@@ -125,6 +133,16 @@ namespace SevenSeas
         public void Hide()
         {
             Display(false);
+        }
+
+        public void UpdateScore(int amount)
+        {
+            scoreText.text = amount.ToString();
+        }
+
+        public void SetData(PlayerInfoManager.PlayerInfoSession session)
+        {
+            scoreText.text = session.playerScore.ToString();
         }
     }
 

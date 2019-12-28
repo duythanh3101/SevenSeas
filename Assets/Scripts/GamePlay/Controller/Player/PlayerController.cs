@@ -9,10 +9,6 @@ namespace SevenSeas
     public class PlayerController : BoatController, PlayerTriggerDetection.IPlayerTriggerDectecter
     {
        
-        [Header("Health")]
-        [Range(1, 3)]
-        public int playerHealth = 3;
-
         [Header("Aim and fire canonball")]
         [SerializeField]
         private GameObject arrowCollection;
@@ -83,7 +79,7 @@ namespace SevenSeas
 
         void InitValues()
         {
-            currentPlayerHealth = playerHealth;
+            currentPlayerHealth = PlayerInfoManager.Instance.playerInfoSession.playerHealth;
             animClips = animator.runtimeAnimatorController.animationClips;
             //Init data for animation
             foreach (var clip in animClips)
@@ -132,8 +128,6 @@ namespace SevenSeas
             MoveAndRotate(dir);
 
         }
-
-        
 
         void CanonTargeting()
         {
@@ -254,13 +248,8 @@ namespace SevenSeas
         private Coroutine delayDestroyCR;
         protected override void GetDestroy()
         {
-            StartCoroutine(CR_DelayDestroy());
-        }
-
-        IEnumerator CR_DelayDestroy()
-        {
             if (BoatState == BoatState.Respawning || BoatState == BoatState.Destroyed)
-                yield return null;
+                return;
 
             //Debug.Log("player destroyed");
             BoatState = BoatState.Destroyed;
@@ -271,6 +260,8 @@ namespace SevenSeas
             MapConstantProvider.Instance.SpawnUnitOnDestroyedObject(skullPrefab, transform.position, gameObject);
 
             currentPlayerHealth--;
+            PlayerInfoManager.Instance.UpdatePlayerHealth(currentPlayerHealth);
+
             //UI
             UIManager.Instance.DecreaseHealth(currentPlayerHealth);
 
@@ -281,21 +272,13 @@ namespace SevenSeas
             else
             {
                 TogglePlayerInput(false);
-                isometricModel.SetActive(false);
-
-                yield return new WaitForSeconds(0.05f);
-
                 gameObject.SetActive(false);
                 //Debug.Log(EnemyManager.Instance.CurrentEnemyCount);
-                if (EnemyManager.Instance.CurrentEnemyCount > 0)
-                {
-                    GameManager.Instance.GameLose();
-                }
+                GameManager.Instance.GameLose();
             }
         }
-       
 
-
+        
     }
 }
 
