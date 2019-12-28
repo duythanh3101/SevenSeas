@@ -39,6 +39,8 @@ namespace SevenSeas
        }
 
         int currentChangeTurn = 0;
+
+        
        private void EnemyController_OnBoatActivityCompleted(BoatController boatController)
        {
           if (boatController.GetType() == typeof(EnemyController))
@@ -61,6 +63,8 @@ namespace SevenSeas
            if (CurrentEnemyCount <= 0 )
            {
                //Debug.Log(CurrentEnemyCount);
+
+               
                GameManager.Instance.GameWin();
                CurrentEnemyCount = 0;
            }

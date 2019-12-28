@@ -18,6 +18,9 @@ namespace SevenSeas
 
         public static  event System.Action<BattleState> BattleStateChanged = delegate { };
 
+        
+
+
         public BattleState BattleState
         {
             get

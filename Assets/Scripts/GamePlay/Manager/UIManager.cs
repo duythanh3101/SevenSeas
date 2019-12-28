@@ -68,11 +68,6 @@ namespace SevenSeas
             InitValues();
         }
 
-
-        
-
-        
-
         void InitValues()
         {
             int healthCount = FindObjectOfType<PlayerController>().playerHealth;
@@ -94,14 +89,12 @@ namespace SevenSeas
 
         private void nextLevelUIController_OnNextButtonClick()
         {
-            GameManager.Instance.RestartGame();
+            GameManager.Instance.GoToNextLevel();
         }
-
-       
 
         private void resultUIController_OnStartNewGameButtonClick()
         {
-            GameManager.Instance.RestartGame();
+            SceneLoader.Instance.LoadChooseLevelScene();
         }
 
        IEnumerator CR_DelayGameOverUI()
