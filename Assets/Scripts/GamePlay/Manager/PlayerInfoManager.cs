@@ -5,14 +5,33 @@ using UnityEngine;
 namespace SevenSeas
 {
     
-
     public class PlayerInfoManager : MonoBehaviour
     {
         public static PlayerInfoManager Instance = null;
 
+        private static readonly string PLAYER_SESSION_FILE_NAME = "player_session.json";
+        private static readonly string END_PLAYER_SESSION_KEY = "END_PLAYER_SESSION";
+
+
+        private static string playerSessionFilePath;
+
+        public bool EndPlayerSession
+        {
+            get
+            {
+                return PlayerPrefs.GetInt(END_PLAYER_SESSION_KEY, 0) == 1;
+            }
+            set
+            {
+                PlayerPrefs.SetInt(END_PLAYER_SESSION_KEY, value ? 1 : 0 );
+                PlayerPrefs.Save();
+            }
+        }
+
         [System.Serializable]
         public class PlayerInfoSession
         {
+            public int levelInCheckPoint;
             public int playerScore;
             public int piratesSunk;
             public int checkPoint;
@@ -26,6 +45,7 @@ namespace SevenSeas
 
             public void SetData(int pHealth)
             {
+                levelInCheckPoint = 0;
                 playerScore = 0;
                 piratesSunk = 0;
                 checkPoint = 0;
@@ -51,6 +71,8 @@ namespace SevenSeas
             }
             else if (Instance != this)
                 DestroyImmediate(gameObject);
+
+            playerSessionFilePath = System.IO.Path.Combine(Application.dataPath,"Data", PLAYER_SESSION_FILE_NAME);
         }
 
         void Start()
@@ -77,10 +99,11 @@ namespace SevenSeas
 
         public void SavePlayerSession()
         {
-
+            //Debug.Log("Saving player session to: " + playerSessionFilePath);
+            JsonFileHelper.SaveToFile(playerSessionFilePath, playerInfoSession);
+            UnityEditor.AssetDatabase.Refresh();
         }
        
-
         public void ClearPlayerSession()
         {
             playerInfoSession.ClearData();
@@ -89,6 +112,16 @@ namespace SevenSeas
         public void UpdatePlayerHealth(int pHealth)
         {
             playerInfoSession.playerHealth = pHealth;
+        }
+        
+        public void UpdateLevelInCheckPoint()
+        {
+            playerInfoSession.levelInCheckPoint++;
+
+            if (playerInfoSession.levelInCheckPoint > CommonConstants.MAX_LEVEL_PER_CHECKPOINT)
+            {
+                playerInfoSession.levelInCheckPoint = 1;
+            }
         }
     }
 }

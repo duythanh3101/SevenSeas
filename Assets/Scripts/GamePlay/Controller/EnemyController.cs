@@ -62,11 +62,13 @@ namespace SevenSeas
             
             if (isDestroy)
             {
-                EnemyManager.Instance.UpdateEnemyCount();
 
                 //Update data for result
                 PlayerInfoManager.Instance.UpdateScore(destroyScore);
                 PlayerInfoManager.Instance.UpdatePirateSunk();
+
+                EnemyManager.Instance.UpdateEnemyCount();
+
             }
                
         }

@@ -82,6 +82,7 @@ namespace SevenSeas
        public void GameWin()
         {
             GameCount++;
+            PlayerInfoManager.Instance.UpdateLevelInCheckPoint();
 
             SoundManager.Instance.StopMusic();
             SoundManager.Instance.PlayWinSound();
@@ -90,15 +91,12 @@ namespace SevenSeas
 
         public void GameLose()
        {
-           UIManager.Instance.SetDataForResultUI(PlayerInfoManager.Instance.playerInfoSession);
+           PlayerInfoManager.Instance.EndPlayerSession = true;
 
            SoundManager.Instance.StopMusic();
            SoundManager.Instance.PlayLoseSound();
 
-
            GameState = GameState.GameOver;
-
-           
 
        }
 

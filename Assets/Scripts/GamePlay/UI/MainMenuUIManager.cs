@@ -18,16 +18,12 @@ namespace SevenSeas
         void Awake()
         {
 
-
-            
-
             chooseLevelUIController.OnStartNewGameButtonClick += chooseLevelUIController_OnStartNewGameButtonClick;
             chooseLevelUIController.OnQuitToWindowButtonClick += chooseLevelUIController_OnQuitToWindowButtonClick;
             chooseLevelUIController.OnAverageButtonClick += chooseLevelUIController_OnAverageButtonClick;
             chooseLevelUIController.OnHardButtonClick += chooseLevelUIController_OnHardButtonClick;
             chooseLevelUIController.OnEasyButtonClick += chooseLevelUIController_OnEasyButtonClick;
         }
-
 
 
         void OnDestroy()
@@ -38,7 +34,6 @@ namespace SevenSeas
             chooseLevelUIController.OnHardButtonClick -= chooseLevelUIController_OnHardButtonClick;
             chooseLevelUIController.OnEasyButtonClick -= chooseLevelUIController_OnEasyButtonClick;
         }
-
 
         private void chooseLevelUIController_OnStartNewGameButtonClick()
         {

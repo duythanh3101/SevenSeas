@@ -8,7 +8,6 @@ namespace SevenSeas
     public class MenuLeftUIController : MonoBehaviour
     {
        
-
         [Header("UI References")]
         [SerializeField]
         private CanvasGroup canvasGroup;
@@ -35,7 +34,7 @@ namespace SevenSeas
 
         private bool blockElements;
 
-        void Awake()
+        void OnEnable()
         {
             undoButton.onClick.AddListener(OnUndoButtonClick);
             optionButton.onClick.AddListener(() => OnOptionButtonClick());
@@ -52,7 +51,7 @@ namespace SevenSeas
 
        
 
-        void OnDestroy()
+        void OnDisable()
         {
 
             if (quitUIController != null)
@@ -60,7 +59,10 @@ namespace SevenSeas
                 quitUIController.OnQuitButtonClick -= quitUIController_OnQuitButtonClick;
                 quitUIController.OnCancelButtonClick -= quitUIController_OnCancelButtonClick;
             }
-           
+
+            undoButton.onClick.RemoveAllListeners();
+            optionButton.onClick.RemoveAllListeners();
+            exitButton.onClick.RemoveAllListeners();
 
             optionUIController.OnCloseButtonClick -= optionUIController_OnCloseButtonClick;
         }
@@ -115,6 +117,9 @@ namespace SevenSeas
 
         private void quitUIController_OnQuitButtonClick()
         {
+            //Save the current player session to JSON file if Player want to continue the game session
+            PlayerInfoManager.Instance.SavePlayerSession();
+
             SceneLoader.Instance.LoadChooseLevelScene();
         }
 

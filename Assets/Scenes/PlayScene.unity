@@ -1354,6 +1354,16 @@ PrefabInstance:
       propertyPath: m_FontData.m_FontSize
       value: 17
       objectReference: {fileID: 0}
+    - target: {fileID: 1697429840658224261, guid: 15c8e7daadb82454e89a82ef01a17bd1,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 89.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1697429840636390645, guid: 15c8e7daadb82454e89a82ef01a17bd1,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 110.3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15c8e7daadb82454e89a82ef01a17bd1, type: 3}
 --- !u!224 &993599753 stripped
@@ -1417,11 +1427,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 180dcbd5581fa854286ce18a76cf14d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxPlayerHealth: 3
   playerInfoSession:
+    levelInCheckPoint: 0
     playerScore: 0
     piratesSunk: 0
     checkPoint: 0
     treasureFound: 0
+    playerHealth: 0
 --- !u!1 &1118893101
 GameObject:
   m_ObjectHideFlags: 0
