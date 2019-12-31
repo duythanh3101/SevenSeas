@@ -29,11 +29,6 @@ namespace SevenSeas
         [SerializeField]
         private int targetFrameRate = 60;
 
-
-        static int GameCount = 0;
-
-
-
         public PlayerController playerController;
 
         public GameState GameState
@@ -81,7 +76,6 @@ namespace SevenSeas
        
        public void GameWin()
         {
-            GameCount++;
             PlayerInfoManager.Instance.UpdateLevelInCheckPoint();
 
             SoundManager.Instance.StopMusic();
@@ -91,7 +85,7 @@ namespace SevenSeas
 
         public void GameLose()
        {
-           PlayerInfoManager.Instance.EndPlayerSession = true;
+           PlayerInfoManager.Instance.ClearPlayerSession();
 
            SoundManager.Instance.StopMusic();
            SoundManager.Instance.PlayLoseSound();
@@ -138,7 +132,7 @@ namespace SevenSeas
         
         public void GoToNextLevel()
         {
-            if (GameCount >= CommonConstants.MAX_LEVEL_PER_CHECKPOINT)
+            if (PlayerInfoManager.Instance.playerInfoSession.levelInCheckPoint >= CommonConstants.MAX_LEVEL_PER_CHECKPOINT)
             {
                 SceneLoader.Instance.LoadTreasureMapScene();
             }

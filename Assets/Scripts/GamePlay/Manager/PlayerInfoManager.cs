@@ -19,9 +19,9 @@ namespace SevenSeas
         {
             get
             {
-                return PlayerPrefs.GetInt(END_PLAYER_SESSION_KEY, 0) == 1;
+                return PlayerPrefs.GetInt(END_PLAYER_SESSION_KEY, 1) == 1;
             }
-            set
+            private set
             {
                 PlayerPrefs.SetInt(END_PLAYER_SESSION_KEY, value ? 1 : 0 );
                 PlayerPrefs.Save();
@@ -38,12 +38,9 @@ namespace SevenSeas
             public int treasureFound;
             public int playerHealth;
 
-            public void ClearData()
-            {
+           
 
-            }
-
-            public void SetData(int pHealth)
+            public void ResetData(int pHealth)
             {
                 levelInCheckPoint = 0;
                 playerScore = 0;
@@ -77,7 +74,7 @@ namespace SevenSeas
 
         void Start()
         {
-            playerInfoSession.SetData(maxPlayerHealth);
+            playerInfoSession.ResetData(maxPlayerHealth);
         }
 
         public void UpdateScore(int amount)
@@ -100,13 +97,23 @@ namespace SevenSeas
         public void SavePlayerSession()
         {
             //Debug.Log("Saving player session to: " + playerSessionFilePath);
+
+            EndPlayerSession = false;
+
             JsonFileHelper.SaveToFile(playerSessionFilePath, playerInfoSession);
             UnityEditor.AssetDatabase.Refresh();
         }
        
         public void ClearPlayerSession()
         {
-            playerInfoSession.ClearData();
+            playerInfoSession.ResetData(maxPlayerHealth);
+            EndPlayerSession = true;
+        }
+
+        public void LoadPlayerSession()
+        {
+            playerInfoSession = JsonFileHelper.LoadFromFile<PlayerInfoSession>(playerSessionFilePath) as PlayerInfoSession;
+
         }
 
         public void UpdatePlayerHealth(int pHealth)
