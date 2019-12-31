@@ -56,6 +56,8 @@ namespace SevenSeas
         public void LoadChooseLevelScene()
         {
             LoadScene(CHOOSE_LEVEL_SCENE_NAME);
+
+            SoundManager.Instance.StopMusic();
             SoundManager.Instance.PlayMusic(chooseLevelSceneMusic);
         }
 

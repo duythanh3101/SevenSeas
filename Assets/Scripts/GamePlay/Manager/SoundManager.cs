@@ -15,7 +15,7 @@ public class SoundManager : MonoBehaviour
 
      
 
-    enum PlayingState
+    public enum PlayingState
     {
         Playing,
         Paused,
@@ -40,13 +40,14 @@ public class SoundManager : MonoBehaviour
     public Sound winSound;
     public Sound loseSound;
 
-    [SerializeField]
-    private AudioSource bgmSource;
-    [SerializeField]
-    private AudioSource sfxSource;
-    [SerializeField]
-    private AudioSource specialSfxSource;
+    
+    public AudioSource bgmSource;
+    public AudioSource sfxSource;
+    public AudioSource specialSfxSource;
 
+    public PlayingState MusicState { get => musicState;}
+    
+    [SerializeField]
     private PlayingState musicState = PlayingState.Stopped;
 
 
@@ -118,10 +119,7 @@ public class SoundManager : MonoBehaviour
     /// <param name="loop">If set to <c>true</c> loop.</param>
     public void PlayMusic(Sound music, bool loop = true)
     {
-        if (bgmSource.isPlaying)
-            StopMusic();
-        
-
+       
         bgmSource.clip = music.clip;
         bgmSource.loop = loop;
         bgmSource.Play();

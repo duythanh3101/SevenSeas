@@ -78,7 +78,8 @@ namespace SevenSeas
         {
             PlayerInfoManager.Instance.UpdateLevelInCheckPoint();
 
-            SoundManager.Instance.StopMusic();
+            SoundManager.Instance.PauseMusic();
+            
             SoundManager.Instance.PlayWinSound();
             GameState = GameState.GameWin;
         }
@@ -114,7 +115,14 @@ namespace SevenSeas
         public void StartGame()
         {
             GameState = GameState.Playing;
-            SoundManager.Instance.PlayMusic(SoundManager.Instance.background);
+
+            if (SoundManager.Instance.MusicState == SoundManager.PlayingState.Paused)
+                SoundManager.Instance.ResumeMusic();
+            else
+            {
+                SoundManager.Instance.PlayMusic(SoundManager.Instance.background);
+            }
+            
         }
 
         GameState suspendState;
