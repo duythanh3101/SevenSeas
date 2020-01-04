@@ -1193,7 +1193,7 @@ MonoBehaviour:
   - {fileID: 6075846875433479232, guid: 0512dd12335e58b40bc88e46d8d9ba22, type: 3}
   normalEnemyCount: 2
   advanceEnemyCount: 0
-  firingEnemyCount: 1
+  firingEnemyCount: 0
   enemyParent: {fileID: 2099584981}
   playerPrefab: {fileID: 6075846875433479232, guid: 3688b474c477bd64783aca73341a8b7f,
     type: 3}

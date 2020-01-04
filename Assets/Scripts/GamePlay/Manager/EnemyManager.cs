@@ -69,7 +69,7 @@ namespace SevenSeas
            CurrentEnemyCount--;
            if (CurrentEnemyCount <= 0 )
            {
-               //Debug.Log(CurrentEnemyCount);
+
                
                if (PlayerInfoManager.Instance.playerInfoSession.playerHealth > 0)
                    GameManager.Instance.GameWin();

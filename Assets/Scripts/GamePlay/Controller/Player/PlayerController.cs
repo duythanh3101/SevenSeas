@@ -245,14 +245,22 @@ namespace SevenSeas
 
         void TogglePlayerInput(bool isEnable)
         {
+
             arrowCollection.SetActive(isEnable);
         }
 
         private Coroutine delayDestroyCR;
         protected override void GetDestroy()
         {
+            if (delayDestroyCR != null)
+                StopCoroutine(delayDestroyCR);
+            delayDestroyCR = StartCoroutine(CR_DelayDestroy());
+        }
+
+        IEnumerator CR_DelayDestroy()
+        {
             if (BoatState == BoatState.Respawning || BoatState == BoatState.Destroyed)
-                return;
+                yield return null;
 
             //Debug.Log("player destroyed");
             BoatState = BoatState.Destroyed;
@@ -268,9 +276,20 @@ namespace SevenSeas
             //UI
             UIManager.Instance.DecreaseHealth(currentPlayerHealth);
 
+          
             if (currentPlayerHealth > 0)
             {
-                Respawn();
+                //wait for end of frame for updating enemy count, if Game is win, then we dont have to respawn
+                yield return new WaitForSeconds(0.01f);
+                var gameState = GameManager.Instance.GameState;
+                if (gameState == GameState.Playing)
+                    Respawn();
+                else if (gameState == GameState.GameWin)
+                {
+                    TogglePlayerInput(false);
+                    gameObject.SetActive(false);
+                }
+                
             }
             else
             {
@@ -280,7 +299,6 @@ namespace SevenSeas
                 GameManager.Instance.GameLose();
             }
         }
-
         
     }
 }
