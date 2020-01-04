@@ -28,7 +28,7 @@ namespace SevenSeas
                     movableDirection.Add(directionVectors[i]);
                 }
             }
-
+          
 
             //Find the min direction in the movable direction vector list
             float minAngle = Vector2.Angle(offset, movableDirection[0]);
@@ -64,7 +64,7 @@ namespace SevenSeas
         {
             Vector2 attendMovePos = (Vector2)transform.position + dir * MapConstantProvider.Instance.TileSize;
             //return !MapConstantProvider.Instance.ContainsPosInUnitDictionary(attendMovePos);
-            return MapConstantProvider.Instance.ContainsInPossiblePosition(attendMovePos);
+            return MapConstantProvider.Instance.ContainsInPossiblePositionIncludePlayer(attendMovePos);
         }
       
     }

@@ -48,6 +48,7 @@ namespace SevenSeas
         public Vector2 BackgroundSize { get; private set; }
 
         public Vector2 CenterPosition { get { return centerPosition; } }
+        public Vector2 PlayerPos { get { return dynamicObjectDicts[player]; } }
 
         public Dictionary<GameObject, Vector2> staticObjectDicts = new Dictionary<GameObject, Vector2>();
         public Dictionary<GameObject, Vector2> dynamicObjectDicts = new Dictionary<GameObject, Vector2>();
@@ -322,13 +323,17 @@ namespace SevenSeas
             RemovePossiblePosition(possiblePositions, pos);
         }
 
-        public bool ContainsInPossiblePosition(Vector2 valuePos)
+        public bool ContainsInPossiblePositionIncludePlayer(Vector2 valuePos)
         {
             foreach (var pos in possiblePositions)
             {
                 if (valuePos == pos)
                     return true;
             }
+
+            if (valuePos == PlayerPos)
+                return true;
+            
             return false;
         }
 
