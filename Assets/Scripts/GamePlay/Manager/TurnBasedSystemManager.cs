@@ -18,9 +18,6 @@ namespace SevenSeas
 
         public static  event System.Action<BattleState> BattleStateChanged = delegate { };
 
-        
-
-
         public BattleState BattleState
         {
             get
@@ -66,8 +63,10 @@ namespace SevenSeas
             }
         }
 
-        void EffectManager_OnAllBehaviourCompleted(BattleState obj)
+        void EffectManager_OnAllBehaviourCompleted(BattleState oldState)
         {
+           // Debug.Log("Change state from: " + BattleState);
+
             if (BattleState == BattleState.EnemyTurn)
             {
                 BattleState = BattleState.PlayerTurn;

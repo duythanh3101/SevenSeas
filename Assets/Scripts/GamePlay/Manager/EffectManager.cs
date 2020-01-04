@@ -56,11 +56,11 @@ namespace SevenSeas
 
         private void EnemyManager_OnAllEnemyActivityCompleted()
         {
-           // Debug.Log("Calling on all enemy activity complete with effefct " + (effectPlaying ? "playing" :"not playing" ));
+            //Debug.Log("Calling on all enemy activity complete with effefct " + (effectPlaying ? "playing" :"not playing" ));
 
             if (!effectPlaying)
             {
-                //Debug.Log("Chane state  in all enemy not effect, old state: " + TurnBasedSystemManager.Instance.BattleState);
+                //Debug.Log("Change state  in all enemy not effect, old state: " + TurnBasedSystemManager.Instance.BattleState);
                 OnAllBehaviourCompleted(TurnBasedSystemManager.Instance.BattleState);
                 //stateChangedCount++;
             }

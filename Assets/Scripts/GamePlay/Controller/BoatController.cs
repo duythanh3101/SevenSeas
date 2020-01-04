@@ -80,7 +80,7 @@ namespace SevenSeas
             
         }
 
-        protected void MoveAndRotate(Direction dir)
+        protected  void MoveAndRotate(Direction dir)
         {
             if (BoatState == BoatState.MoveAndRotate)
                 return;
@@ -91,7 +91,12 @@ namespace SevenSeas
 
             if (moveAndRotateCR != null)
                 StopCoroutine(moveAndRotateCR);
-            moveAndRotateCR = StartCoroutine(CR_MoveAndRotate(targetPosition, targetDirection));
+            moveAndRotateCR = StartCoroutine(CR_MoveAndRotate(targetPosition, targetDirection, () => OnCompletedRotateAndMove()));
+        }
+
+        protected virtual void OnCompletedRotateAndMove()
+        {
+            OnBoatActivityCompleted(this);
         }
 
         protected virtual void Start()
@@ -106,7 +111,7 @@ namespace SevenSeas
             animator = isometricModel.transform.parent.GetComponent<Animator>();
         }
 
-        IEnumerator CR_MoveAndRotate(Vector2 targetPos, Direction toDirection)
+        IEnumerator CR_MoveAndRotate(Vector2 targetPos, Direction toDirection, System.Action completed = null)
         {
             //Start moving and rotating the model
             BoatState = BoatState.MoveAndRotate;
@@ -137,7 +142,6 @@ namespace SevenSeas
             //if (OnBoatMovedPosition != null)
             //    OnBoatMovedPosition(gameObject, targetPos); // This will update dictionary info when it's subscribed by the MapConstatnProvider
 
-
             boxCollider.enabled = true;
 
             //Update the current Direction
@@ -145,12 +149,13 @@ namespace SevenSeas
             //Update boat state to idle after finishing moving and rotating
             BoatState = BoatState.Idle;
 
-            //NOTE: After enable collider, we skip this frame to the box collider begin to check, check if the boat state is iddle
+            //NOTE: After enable collider, we skip this frame to the box collider begin to check,because this boat can collide when box collider is enabled, check if the boat state is idle
             yield return new WaitForSeconds(0.1f);
 
             if (BoatState == BoatState.Idle)
             {
-                OnBoatActivityCompleted(this);
+                if (completed != null)
+                    completed();
             }
         }
 

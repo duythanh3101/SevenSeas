@@ -32,6 +32,8 @@ namespace SevenSeas
         private int normalEnemyCount;
         [SerializeField]
         private int advanceEnemyCount;
+       
+        public int firingEnemyCount;
         
         [SerializeField]
         private Transform enemyParent;
@@ -188,6 +190,12 @@ namespace SevenSeas
             for (int i = 0; i < advanceEnemyCount;i++ )
             {
                 LayoutUnitAtRandomPosition(advanceEnemyPrefab, false, enemyParent);
+            }
+
+            GameObject firingEnemyPrefab = enemiesPrefab[2];
+            for (int i = 0 ; i < firingEnemyCount;i++)
+            {
+                LayoutUnitAtRandomPosition(firingEnemyPrefab, false, enemyParent);
             }
         }
 

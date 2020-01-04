@@ -13,6 +13,7 @@ namespace SevenSeas
 
         public int CurrentEnemyCount { get; private set; }
 
+        private int notEffectEnemyCount;
        void Awake()
         {
 
@@ -29,7 +30,9 @@ namespace SevenSeas
 
         void Start()
        {
+        
            CurrentEnemyCount = transform.childCount;
+           notEffectEnemyCount = transform.childCount - MapConstantProvider.Instance.firingEnemyCount;
        }
         void OnDestroy()
        {
@@ -39,9 +42,12 @@ namespace SevenSeas
 
         int currentChangeTurn = 0;
         
+        
        private void EnemyController_OnBoatActivityCompleted(BoatController boatController)
        {
            var boatType = boatController.GetType();
+           
+           //We just care about the normal and advance enemy controller, because the firing enemy controller's TURN will be controlled by the effect manager
           if (boatType == typeof(NormalEnemyController) || boatType == typeof(AdvanceEnemyController))
           {
               currentChangeTurn++;
@@ -51,6 +57,10 @@ namespace SevenSeas
                   currentChangeTurn = 0;
                   OnAllEnemyActivityCompleted();
               }
+          }
+          else if (boatType == typeof(FiringEnemyController))
+          {
+              currentChangeTurn = 0;// this will be controled by the effect manager
           }
        }
 
