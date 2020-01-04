@@ -119,6 +119,10 @@ namespace SevenSeas
             //NOTE: must multiply by the rotation to create a local space rotation
             Quaternion endRot = Quaternion.AngleAxis(-deltaAngle, modelUp) * isometricModel.transform.localRotation;
 
+            //Fire the moved position event
+            if (OnBoatMovedPosition != null)
+                OnBoatMovedPosition(gameObject, targetPos); // This will update dictionary info when it's subscribed by the MapConstatnProvider
+
             float t = 0;
             while (t < moveAndRotateTime)
             {
@@ -129,9 +133,9 @@ namespace SevenSeas
                 yield return null;
             }
 
-            //Fire the moved position event
-            if (OnBoatMovedPosition != null)
-                OnBoatMovedPosition(gameObject, targetPos); // This will update dictionary info when it's subscribed by the MapConstatnProvider
+            ////Fire the moved position event
+            //if (OnBoatMovedPosition != null)
+            //    OnBoatMovedPosition(gameObject, targetPos); // This will update dictionary info when it's subscribed by the MapConstatnProvider
 
 
             boxCollider.enabled = true;

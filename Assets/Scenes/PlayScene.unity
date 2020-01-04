@@ -1185,18 +1185,20 @@ MonoBehaviour:
   whirlpoolParent: {fileID: 7294267620598843102}
   islandPrefab: {fileID: 4236238002438081190, guid: c67e5feb612b1d74c88a9fa0ced9be5c,
     type: 3}
+  islandCount: 5
   islandParent: {fileID: 7294267620297969115}
-  enemyPrefab: {fileID: 6075846875433479232, guid: 16ef9f0a9cf878149865b8cd981ac8e5,
-    type: 3}
+  enemiesPrefab:
+  - {fileID: 6075846875433479232, guid: 16ef9f0a9cf878149865b8cd981ac8e5, type: 3}
+  - {fileID: 6075846875433479232, guid: aac79f75af511a04093b395673c44cc2, type: 3}
+  normalEnemyCount: 3
+  advanceEnemyCount: 2
   enemyParent: {fileID: 2099584981}
   playerPrefab: {fileID: 6075846875433479232, guid: 3688b474c477bd64783aca73341a8b7f,
     type: 3}
-  islandCount: 5
-  enemyCount: 3
   currentLevel: 0
-  drawStaticPosition: 0
-  drawPossiblePosition: 1
-  drawDynamicPosition: 0
+  drawStaticPosition: 1
+  drawPossiblePosition: 0
+  drawDynamicPosition: 1
 --- !u!1001 &993599752
 PrefabInstance:
   m_ObjectHideFlags: 0

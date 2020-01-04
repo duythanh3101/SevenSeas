@@ -39,7 +39,7 @@ public class SoundManager : MonoBehaviour
     public Sound firingCanonball;
     public Sound winSound;
     public Sound loseSound;
-
+    public Sound respawnSound;
     
     public AudioSource bgmSource;
     public AudioSource sfxSource;
@@ -182,5 +182,10 @@ public class SoundManager : MonoBehaviour
     public void PlayWinSound()
     {
         PlaySound(winSound);
+    }
+
+    public void PlayRespawnSound()
+    {
+        PlaySound(respawnSound);
     }
 }

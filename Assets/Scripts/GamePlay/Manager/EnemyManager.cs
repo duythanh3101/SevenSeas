@@ -34,14 +34,15 @@ namespace SevenSeas
         void OnDestroy()
        {
            EnemyController.OnBoatActivityCompleted -= EnemyController_OnBoatActivityCompleted;
+           
        }
 
         int currentChangeTurn = 0;
-
         
        private void EnemyController_OnBoatActivityCompleted(BoatController boatController)
        {
-          if (boatController.GetType() == typeof(EnemyController))
+           var boatType = boatController.GetType();
+          if (boatType == typeof(NormalEnemyController) || boatType == typeof(AdvanceEnemyController))
           {
               currentChangeTurn++;
 

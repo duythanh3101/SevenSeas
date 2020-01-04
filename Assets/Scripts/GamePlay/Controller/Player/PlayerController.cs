@@ -227,12 +227,15 @@ namespace SevenSeas
             MapConstantProvider.Instance.SetRespawningPosition(gameObject);
             for (int i = 0; i < 2; i++ )
             {
+                SoundManager.Instance.PlayRespawnSound();
                 isometricModel.SetActive(true);
+                
                 yield return respawnIntervalWait;
                 isometricModel.SetActive(false);
                 yield return respawnIntervalWait;
             }
 
+            SoundManager.Instance.PlayRespawnSound();
             isometricModel.SetActive(true);
             //Enable input
             TogglePlayerInput(true);

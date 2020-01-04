@@ -9,16 +9,23 @@ namespace SevenSeas
     {
 
         [SerializeField]
-        private int destroyedByBoatScore = 2;
+        protected int destroyedByBoatScore = 2;
 
         [SerializeField]
-        private int normalDestroyScore = 1;
+        protected int normalDestroyScore = 1;
 
         [Header("Debug")]
         [SerializeField]
         private bool drawRayToTarget = false;
-        private Transform targetTrans;
+
+        #region Cache values
+        protected Vector2 offset;
+        protected Vector2 direction;
+
+        protected Transform targetTrans;
         private int destroyScore;
+        #endregion
+       
 
         void OnDrawGizmos()
         {
@@ -104,38 +111,16 @@ namespace SevenSeas
             Destroy(gameObject);
         }
 
-        Vector2 GetSnapPosition()
-        {
-            return MapConstantProvider.Instance.dynamicObjectDicts[gameObject] + MapConstantProvider.Instance.TileSize * UtilMapHelpers.GetDirectionVector(currentDirection);
-        }
-
         protected override void Start()
         {
             base.Start();
             targetTrans = FindObjectOfType<PlayerController>().transform;
         }
 
-        Vector2 offset;
-        Vector2 direction;
 
-        Direction CalculateNextDirection()
+        protected virtual Direction CalculateNextDirection()
         {
-             offset = targetTrans.position - transform.position;
-
-            //Find the min angle between the offset vector and eight direction
-             float minAngle = Vector2.Angle(offset, CommonConstants.DIRECTION_VECTORS[0]);
-            int minIndex = 0;
-            for (int i = 1; i < CommonConstants.DIRECTION_VECTORS.Length; i++ )
-            {
-                float angle = Vector2.Angle(offset, CommonConstants.DIRECTION_VECTORS[i]);
-               
-                if (angle <= minAngle)
-                {
-                    minAngle = angle;
-                    minIndex = i;
-                }
-            }
-            return UtilMapHelpers.VectorToDirection(CommonConstants.DIRECTION_VECTORS[minIndex]);
+            return Direction.East;
         }
     }
 
