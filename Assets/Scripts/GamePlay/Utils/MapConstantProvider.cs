@@ -61,6 +61,8 @@ namespace SevenSeas
         private SpriteRenderer backgroundSR;
         private GameObject player;
 
+        public List<GameObject> ActiveObjects { get; set; }
+        public List<GameObject> DeActiveObjects { get; set; }
 
         private Vector2 centerPosition;
 
@@ -74,6 +76,9 @@ namespace SevenSeas
             }
             else if (Instance != this)
                 DestroyImmediate(gameObject);
+
+            ActiveObjects = new List<GameObject>();
+            DeActiveObjects = new List<GameObject>();
 
             backgroundSR = backgroundMap.GetComponent<SpriteRenderer>();
             BoatController.OnBoatMovedPosition += BoatController_OnBoatMovedPosition;
@@ -442,6 +447,7 @@ namespace SevenSeas
                         return;
                     dynamicObjectDicts.Add(obj, newPos);
                     RemovePossiblePosition(possiblePositions, newPos);
+                    ActiveObjects.Add(obj);
                 }
 
                 //Debug.Log("Remove " + newPos + "Obj name:  " + obj.name + "status: " + status);

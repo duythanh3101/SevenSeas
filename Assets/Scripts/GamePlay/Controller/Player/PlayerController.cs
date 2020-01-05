@@ -46,6 +46,7 @@ namespace SevenSeas
             base.Awake();
             ArrowController.OnArrowClicked += ArrowController_OnArrowClicked;
             playerDetecter.RegisterHandler(this);
+            Type = ObjectType.Player;
         }
       
         protected override void OnDestroy()
