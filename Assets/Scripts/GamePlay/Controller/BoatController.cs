@@ -87,9 +87,17 @@ namespace SevenSeas
             targetDirection = dir;
             targetPosition = (Vector2)transform.position + MapConstantProvider.Instance.TileSize * UtilMapHelpers.GetDirectionVector(targetDirection);
 
+            PlayMovementSound();
+
             if (moveAndRotateCR != null)
                 StopCoroutine(moveAndRotateCR);
             moveAndRotateCR = StartCoroutine(CR_MoveAndRotate(targetPosition, targetDirection, () => OnCompletedRotateAndMove()));
+        }
+
+
+        protected virtual void PlayMovementSound()
+        {
+
         }
 
         protected virtual void OnCompletedRotateAndMove()

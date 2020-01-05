@@ -81,6 +81,11 @@ namespace SevenSeas
                
         }
 
+        protected override void PlayMovementSound()
+        {
+            SoundManager.Instance.PlayEnemyMovementSound();
+        }
+
         protected override void GetDestroy()
         {
             destroyScore = normalDestroyScore;

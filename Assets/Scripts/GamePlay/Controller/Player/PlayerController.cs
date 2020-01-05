@@ -54,6 +54,12 @@ namespace SevenSeas
             ArrowController.OnArrowClicked -= ArrowController_OnArrowClicked;
         }
 
+
+        protected override void PlayMovementSound()
+        {
+            SoundManager.Instance.PlayPlayerMovementSound();
+        }
+
         protected override void Start()
         {
             base.Start();
@@ -176,6 +182,7 @@ namespace SevenSeas
             TogglePlayerInput(false);
            // arrowCollection.SetActive(false); //Disable input
             animator.SetTrigger(SINK_TRIGGER);
+            SoundManager.Instance.PlaySinkSound();
             yield return new WaitForSeconds(sinkTime);
 
             //Really teleport
@@ -189,6 +196,7 @@ namespace SevenSeas
             isometricModel.SetActive(true);
 
             //Riseup time
+            SoundManager.Instance.PlayRiseUpSound();
             animator.SetTrigger(RISEUP_TRIGGER);
             yield return new WaitForSeconds(riseUpTime);
             

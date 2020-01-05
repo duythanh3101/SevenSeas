@@ -32,8 +32,10 @@ public class SoundManager : MonoBehaviour
     [SerializeField]
     private int maxSimultaneousSounds = 7;
 
-    [Header("Sounds")]
+    [Header("Background Music")]
     public Sound background;
+
+    [Header("Gameplay Sound Effect")]
     public Sound shipExplosion;
     public Sound waterSplash;
     public Sound firingCanonball;
@@ -41,6 +43,10 @@ public class SoundManager : MonoBehaviour
     public Sound loseSound;
     public Sound respawnSound;
     public Sound bonusSound;
+    public Sound playerMoveSound;
+    public Sound enemyMoveSound;
+    public Sound sinkSound;
+    public Sound riseUpSound;
     
     public AudioSource bgmSource;
     public AudioSource sfxSource;
@@ -194,4 +200,26 @@ public class SoundManager : MonoBehaviour
     {
  	  PlaySound(bonusSound);
     }
+
+    public void PlayRiseUpSound()
+    {
+        PlaySound(riseUpSound);
+    }
+
+    public void PlaySinkSound()
+    {
+        PlaySound(sinkSound);
+    }
+
+    public void PlayPlayerMovementSound()
+    {
+        PlaySound(playerMoveSound);
+    }
+
+    public void PlayEnemyMovementSound()
+    {
+        PlaySound(enemyMoveSound);
+    }
+
+   
 }
