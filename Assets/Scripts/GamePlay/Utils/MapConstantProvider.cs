@@ -41,8 +41,6 @@ namespace SevenSeas
         [SerializeField]
         private GameObject playerPrefab;
       
-       
-
         public int currentLevel;
 
         //Properties

@@ -23,6 +23,7 @@ namespace SevenSeas
         private NextLevelUIController nextLevelUIController;
         [SerializeField]
         private MenuLeftUIController menuLeftUIController;
+        
 
         void Awake()
         {
@@ -36,6 +37,7 @@ namespace SevenSeas
 
             resultUIController.OnStartNewGameButtonClick += resultUIController_OnStartNewGameButtonClick;
             nextLevelUIController.OnNextButtonClick += nextLevelUIController_OnNextButtonClick;
+            
 
             menuLeftUIController.SetData(GameSessionInfoManager.Instance.playerInfoSession);
             

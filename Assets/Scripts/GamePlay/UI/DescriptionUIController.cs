@@ -3,30 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class OptionUIController : MonoBehaviour
+public class DescriptionUIController : MonoBehaviour
 {
-    public System.Action OnCloseButtonClick = delegate { };
-    public System.Action OnHelpButtonClick = delegate { };
-
-    [SerializeField]
-    private Slider soundFxSlider;
-    [SerializeField]
-    private Slider musicSlider;
-    [SerializeField]
-    private CanvasGroup canvasGroup;
+    public System.Action OnCloseButtonClick = delegate{};
+   
     [SerializeField]
     private Button closeButton;
     [SerializeField]
-    private Button helpButton;
+    private CanvasGroup canvasGroup;
 
-
-    void Awake()
+    void Start()
     {
         closeButton.onClick.AddListener(() => OnCloseButtonClick());
-        helpButton.onClick.AddListener(() => OnHelpButtonClick());
     }
 
-  
+
     void Display(bool isShowing)
     {
         canvasGroup.alpha = isShowing ? 1 : 0;

@@ -260,6 +260,16 @@ namespace SevenSeas
 #endif  
         }
 
+        public void ClearBattleSession()
+        {
+            battleInfoSession.ResetData();
+        }
+
+        public void LoadBattleSession()
+        {
+
+        }
+
         #endregion
     }
 }

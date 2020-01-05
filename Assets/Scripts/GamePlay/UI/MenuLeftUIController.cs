@@ -31,6 +31,8 @@ namespace SevenSeas
         private QuitUIController quitUIController;
         [SerializeField]
         private OptionUIController optionUIController;
+        [SerializeField]
+        private DescriptionUIController descriptionUIController;
 
         private bool blockElements;
 
@@ -47,9 +49,16 @@ namespace SevenSeas
             }
 
             optionUIController.OnCloseButtonClick += optionUIController_OnCloseButtonClick;
+            optionUIController.OnHelpButtonClick += optionUIController_OnHelpButtonClick;
+
+            descriptionUIController.OnCloseButtonClick += descriptionUIController_OnCloseButtonClick;
         }
 
-       
+        private void optionUIController_OnHelpButtonClick()
+        {
+            blockElements = true;
+            descriptionUIController.Show();
+        }
 
         void OnDisable()
         {
@@ -65,6 +74,10 @@ namespace SevenSeas
             exitButton.onClick.RemoveAllListeners();
 
             optionUIController.OnCloseButtonClick -= optionUIController_OnCloseButtonClick;
+
+            optionUIController.OnHelpButtonClick -= optionUIController_OnHelpButtonClick;
+
+            descriptionUIController.OnCloseButtonClick -= descriptionUIController_OnCloseButtonClick;
         }
 
         void OnUndoButtonClick()
@@ -96,6 +109,12 @@ namespace SevenSeas
             if (GameManager.Instance != null)
                 GameManager.Instance.PauseGame();
             
+        }
+
+        private void descriptionUIController_OnCloseButtonClick()
+        {
+            descriptionUIController.Hide();
+            blockElements = false;
         }
 
         private void quitUIController_OnCancelButtonClick()
