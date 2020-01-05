@@ -14,7 +14,7 @@ namespace SevenSeas
       
         private static string playerSessionFilePath;
 
-        public bool EndPlayerSession
+        public bool EndGameSession
         {
             get
             {
@@ -86,6 +86,7 @@ namespace SevenSeas
             playerInfoSession.ResetData(maxPlayerHealth);
         }
 
+        #region Player Session Info Function
         public void UpdateScore(int amount)
         {
             playerInfoSession.playerScore += amount;
@@ -130,7 +131,7 @@ namespace SevenSeas
         {
             //Debug.Log("Saving player session to: " + playerSessionFilePath);
 
-            EndPlayerSession = false;
+            EndGameSession = false;
 
             JsonFileHelper.SaveToFile(playerSessionFilePath, playerInfoSession);
 
@@ -142,7 +143,7 @@ namespace SevenSeas
         public void ClearPlayerSession()
         {
             playerInfoSession.ResetData(maxPlayerHealth);
-            EndPlayerSession = true;
+            EndGameSession = true;
         }
 
         public void LoadPlayerSession()
@@ -165,6 +166,11 @@ namespace SevenSeas
                 playerInfoSession.levelInCheckPoint = 1;
             }
         }
+        #endregion
+
+        #region Battle Session Info Function
+
+        #endregion
     }
 }
 
