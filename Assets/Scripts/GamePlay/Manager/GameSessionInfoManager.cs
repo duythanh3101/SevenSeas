@@ -4,15 +4,18 @@ using UnityEngine;
 
 namespace SevenSeas
 {
-    
+
     public class GameSessionInfoManager : MonoBehaviour
     {
         public static GameSessionInfoManager Instance = null;
 
         private static readonly string PLAYER_SESSION_FILE_NAME = "player_session.json";
+        private static readonly string BATTLE_SESSION_FILE_NAME = "battle_session.json";
+
         private static readonly string GAME_SESSION_KEY = "GAME_SESSION";
       
         private static string playerSessionFilePath;
+        private static string battleSessionFilePath;
 
         public bool EndGameSession
         {
@@ -48,7 +51,30 @@ namespace SevenSeas
                 treasureFound = 0;
                 playerHealth = pHealth;
             }
+        }
 
+       
+
+        [System.Serializable]
+        public class BattleInfoSession
+        {
+            public DataTransform playerTransform;
+
+            public List<DataTransform> normalEnemyTransform;
+            public List<DataTransform> advanceEnemyTransform;
+            public List<DataTransform> firingEnemyTransform;
+
+            public List<Vector3> islandPosition;
+            public List<Vector3> skullPosition;
+
+            public void ResetData()
+            {
+                normalEnemyTransform.Clear();
+                advanceEnemyTransform.Clear();
+                firingEnemyTransform.Clear();
+                islandPosition.Clear();
+                skullPosition.Clear();
+            }
         }
 
         [Header("Player Session Info")]
@@ -67,6 +93,8 @@ namespace SevenSeas
 
         [Header("Battle Session Info")]
         private string sceneName;
+        [HideInInspector]
+        public BattleInfoSession battleInfoSession;
 
         void Awake()
         {
@@ -79,6 +107,7 @@ namespace SevenSeas
                 DestroyImmediate(gameObject);
 
             playerSessionFilePath = System.IO.Path.Combine(Application.dataPath,"Data", PLAYER_SESSION_FILE_NAME);
+            battleSessionFilePath = System.IO.Path.Combine(Application.dataPath, "Data", BATTLE_SESSION_FILE_NAME);
         }
 
         void Start()
@@ -169,6 +198,11 @@ namespace SevenSeas
         #endregion
 
         #region Battle Session Info Function
+        public void SaveBattleSession()
+        {
+            //Save player transform
+
+        }
 
         #endregion
     }
