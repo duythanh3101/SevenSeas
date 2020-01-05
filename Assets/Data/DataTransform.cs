@@ -8,11 +8,13 @@ public class DataTransform
 
     public Vector3 position;
     public Quaternion modelRotation;
+    public Direction boatDirection;
 
-    public void SetData(Vector3 pos, Quaternion rot)
+    public void SetData(Vector3 pos, Quaternion modelRot, Direction boatDir)
     {
         position = pos;
-        modelRotation = rot;
+        modelRotation = modelRot;
+        boatDirection = boatDir;
     }
 
 }

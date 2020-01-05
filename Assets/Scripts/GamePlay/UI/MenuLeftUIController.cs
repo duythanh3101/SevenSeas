@@ -120,6 +120,9 @@ namespace SevenSeas
             //Save the current player session to JSON file if Player want to continue the game session
             GameSessionInfoManager.Instance.SavePlayerSession();
 
+            //Save the current battle session to JSON file if Player want to continue the previous game session
+            GameSessionInfoManager.Instance.SaveBattleSession();
+
             SceneLoader.Instance.LoadChooseLevelScene();
         }
 

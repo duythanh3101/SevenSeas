@@ -58,6 +58,8 @@ namespace SevenSeas
         [System.Serializable]
         public class BattleInfoSession
         {
+            public string currentSceneName;
+
             public DataTransform playerTransform;
 
             public List<DataTransform> normalEnemyTransform;
@@ -108,6 +110,8 @@ namespace SevenSeas
 
             playerSessionFilePath = System.IO.Path.Combine(Application.dataPath,"Data", PLAYER_SESSION_FILE_NAME);
             battleSessionFilePath = System.IO.Path.Combine(Application.dataPath, "Data", BATTLE_SESSION_FILE_NAME);
+
+            
         }
 
         void Start()
@@ -200,8 +204,60 @@ namespace SevenSeas
         #region Battle Session Info Function
         public void SaveBattleSession()
         {
-            //Save player transform
+            //Save current battle scene name
+            battleInfoSession.currentSceneName = SceneLoader.Instance.GetActiveSceneName();
 
+            //Save player transform
+            var player = GameObject.FindGameObjectWithTag("PlayerShip").GetComponent<PlayerController>();
+            battleInfoSession.playerTransform.SetData(player.transform.position,player.isometricModel.transform.rotation,
+                player.currentDirection);
+            
+
+            //Save enemies
+            var enemies = GameObject.FindGameObjectsWithTag("EnemyShip");
+            for (int i = 0; i < enemies.Length;i++)
+            {
+                EnemyController enemyController = enemies[i].GetComponent<EnemyController>();
+                Vector3 pos = enemyController.transform.position;
+                Direction boatDir = enemyController.currentDirection;
+                Quaternion modelRotation = enemyController.isometricModel.transform.rotation;
+
+                var dataTransform = new DataTransform();
+                dataTransform.SetData(pos, modelRotation, boatDir);
+
+                if (enemyController.GetType() == typeof(NormalEnemyController))
+                {
+                    battleInfoSession.normalEnemyTransform.Add(dataTransform);
+                }
+                else if (enemyController.GetType() == typeof(AdvanceEnemyController))
+                {
+                    battleInfoSession.advanceEnemyTransform.Add(dataTransform);
+                }
+                else if (enemyController.GetType() == typeof(FiringEnemyController))
+                {
+                    battleInfoSession.firingEnemyTransform.Add(dataTransform);
+                }
+            }
+            
+            //Save obstacles
+            var obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
+            for (int i  = 0; i < obstacles.Length;i++)
+            {
+                if (obstacles[i].name.Contains("Island"))
+                {
+                    battleInfoSession.islandPosition.Add(obstacles[i].transform.position);
+                }
+                else if (obstacles[i].name.Contains("Skull"))
+                {
+                    battleInfoSession.skullPosition.Add(obstacles[i].transform.position);
+                }
+            }
+
+            //Save to file
+            JsonFileHelper.SaveToFile(battleSessionFilePath, battleInfoSession);
+#if UNITY_EDITOR
+            UnityEditor.AssetDatabase.Refresh();
+#endif  
         }
 
         #endregion

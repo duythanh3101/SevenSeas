@@ -22,8 +22,8 @@ namespace SevenSeas
         public static System.Action<BoatController> OnBoatActivityCompleted = delegate { };
 
         [Header("Object References")]
-        [SerializeField]
-        protected GameObject isometricModel;
+        public GameObject isometricModel;
+        
         [SerializeField]
         protected GameObject skullPrefab;
 
