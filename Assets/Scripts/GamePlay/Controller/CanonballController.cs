@@ -14,7 +14,7 @@ namespace SevenSeas
         private bool launched = false;
         private bool reachoutFiredFrom;
         private Vector2 endPosition;
-        private CircleCollider2D collider2D;
+        private CircleCollider2D canonbalCollider2D;
         private Vector2 originPosition;
 
         [HideInInspector]
@@ -64,11 +64,11 @@ namespace SevenSeas
             this.firedFrom = firedFrom;
             firedFromColliderX = firedFrom.GetComponent<BoxCollider2D>().size.x / 2;
 
-            collider2D = GetComponent<CircleCollider2D>();
-            circleColliderX = collider2D.radius;
+            canonbalCollider2D = GetComponent<CircleCollider2D>();
+            circleColliderX = canonbalCollider2D.radius;
 
             //Debug.Log("Fired: " + firedFrom.GetComponent<BoxCollider2D>().size +  " collider: " + circleColliderX);
-            collider2D.enabled = false;
+            canonbalCollider2D.enabled = false;
 
             originPosition = transform.position;
         }
@@ -80,7 +80,7 @@ namespace SevenSeas
             if (Vector2.Distance(transform.position,firedFrom.transform.position) >= (MapConstantProvider.Instance.TileSize.x - 0.2f)  && !reachoutFiredFrom )
             //if (Mathf.Abs(transform.position.x - firedFrom.transform.position.x + circleColliderX) > firedFromColliderX && !reachoutFiredFrom)
             {
-                collider2D.enabled = true;
+                canonbalCollider2D.enabled = true;
                 reachoutFiredFrom = true;
             }
             

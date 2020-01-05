@@ -11,8 +11,7 @@ namespace SevenSeas
 
         private static readonly string PLAYER_SESSION_FILE_NAME = "player_session.json";
         private static readonly string END_PLAYER_SESSION_KEY = "END_PLAYER_SESSION";
-        private static readonly string CURRENT_SCORE_AMOUNT_KEY = " CURRENT_SCORE_AMOUNT";
-
+      
         private static string playerSessionFilePath;
 
         public bool EndPlayerSession
@@ -129,7 +128,10 @@ namespace SevenSeas
             EndPlayerSession = false;
 
             JsonFileHelper.SaveToFile(playerSessionFilePath, playerInfoSession);
+
+#if UNITY_EDITOR
             UnityEditor.AssetDatabase.Refresh();
+#endif  
         }
        
         public void ClearPlayerSession()
