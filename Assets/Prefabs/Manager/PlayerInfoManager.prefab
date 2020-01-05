@@ -43,7 +43,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 180dcbd5581fa854286ce18a76cf14d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentAmountScore: 0
   maxPlayerHealth: 3
+  bonusLifeScoreAmount: 10
   playerInfoSession:
     levelInCheckPoint: 0
     playerScore: 0

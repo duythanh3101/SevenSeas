@@ -118,7 +118,7 @@ namespace SevenSeas
         private void quitUIController_OnQuitButtonClick()
         {
             //Save the current player session to JSON file if Player want to continue the game session
-            PlayerInfoManager.Instance.SavePlayerSession();
+            GameSessionInfoManager.Instance.SavePlayerSession();
 
             SceneLoader.Instance.LoadChooseLevelScene();
         }
@@ -145,7 +145,7 @@ namespace SevenSeas
             scoreText.text = amount.ToString();
         }
 
-        public void SetData(PlayerInfoManager.PlayerInfoSession session)
+        public void SetData(GameSessionInfoManager.PlayerInfoSession session)
         {
             scoreText.text = session.playerScore.ToString();
         }

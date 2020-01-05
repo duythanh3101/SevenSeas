@@ -78,7 +78,7 @@ namespace SevenSeas
        
        public void GameWin()
         {
-            PlayerInfoManager.Instance.UpdateLevelInCheckPoint();
+            GameSessionInfoManager.Instance.UpdateLevelInCheckPoint();
 
             SoundManager.Instance.PauseMusic();
             
@@ -88,7 +88,7 @@ namespace SevenSeas
 
         public void GameLose()
        {
-           PlayerInfoManager.Instance.ClearPlayerSession();
+           GameSessionInfoManager.Instance.ClearPlayerSession();
 
            SoundManager.Instance.StopMusic();
            SoundManager.Instance.PlayLoseSound();
@@ -142,7 +142,7 @@ namespace SevenSeas
         
         public void GoToNextLevel()
         {
-            if (PlayerInfoManager.Instance.playerInfoSession.levelInCheckPoint >= CommonConstants.MAX_LEVEL_PER_CHECKPOINT)
+            if (GameSessionInfoManager.Instance.playerInfoSession.levelInCheckPoint >= CommonConstants.MAX_LEVEL_PER_CHECKPOINT)
             {
                 SceneLoader.Instance.LoadTreasureMapScene();
             }

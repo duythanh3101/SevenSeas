@@ -36,7 +36,7 @@ namespace SevenSeas
         canvasGroup.interactable = isShowing;
     }
 
-    public void SetData(PlayerInfoManager.PlayerInfoSession session)
+    public void SetData(GameSessionInfoManager.PlayerInfoSession session)
     {
 
         checkPointText.text = session.checkPoint.ToString();

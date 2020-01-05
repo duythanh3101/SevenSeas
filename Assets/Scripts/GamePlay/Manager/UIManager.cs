@@ -37,7 +37,7 @@ namespace SevenSeas
             resultUIController.OnStartNewGameButtonClick += resultUIController_OnStartNewGameButtonClick;
             nextLevelUIController.OnNextButtonClick += nextLevelUIController_OnNextButtonClick;
 
-            menuLeftUIController.SetData(PlayerInfoManager.Instance.playerInfoSession);
+            menuLeftUIController.SetData(GameSessionInfoManager.Instance.playerInfoSession);
             
         }
 
@@ -70,14 +70,14 @@ namespace SevenSeas
         void Start()
         {
             InitValues();
-            DecreaseHealth(PlayerInfoManager.Instance.playerInfoSession.playerHealth);
+            DecreaseHealth(GameSessionInfoManager.Instance.playerInfoSession.playerHealth);
         }
 
         int healthCount;
 
         void InitValues()
         {
-            healthCount = PlayerInfoManager.Instance.playerInfoSession.playerHealth;
+            healthCount = GameSessionInfoManager.Instance.playerInfoSession.playerHealth;
             for (int i = 0; i < healthCount; i++)
             {
                 healthImages[i].gameObject.SetActive(true);
@@ -123,7 +123,7 @@ namespace SevenSeas
        IEnumerator CR_DelayGameOverUI()
         {
            
-            SetDataForResultUI(PlayerInfoManager.Instance.playerInfoSession);
+            SetDataForResultUI(GameSessionInfoManager.Instance.playerInfoSession);
             menuLeftUIController.enabled = false; 
 
             yield return new WaitForSeconds(1);
@@ -136,7 +136,7 @@ namespace SevenSeas
         IEnumerator  CR_ShowNextLevelUI()
        {
 
-           SetDataForNextLevelUI(PlayerInfoManager.Instance.playerInfoSession);
+           SetDataForNextLevelUI(GameSessionInfoManager.Instance.playerInfoSession);
            menuLeftUIController.enabled = false;
 
            yield return new WaitForSeconds(1);
@@ -144,13 +144,13 @@ namespace SevenSeas
            nextLevelUIController.Show();
        }
 
-        public void SetDataForResultUI(PlayerInfoManager.PlayerInfoSession session)
+        public void SetDataForResultUI(GameSessionInfoManager.PlayerInfoSession session)
         {
             resultUIController.SetData(session);
         }
 
 
-        public void SetDataForNextLevelUI(PlayerInfoManager.PlayerInfoSession session)
+        public void SetDataForNextLevelUI(GameSessionInfoManager.PlayerInfoSession session)
         {
             nextLevelUIController.SetData(session);
         }

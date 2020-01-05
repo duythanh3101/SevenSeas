@@ -5,12 +5,12 @@ using UnityEngine;
 namespace SevenSeas
 {
     
-    public class PlayerInfoManager : MonoBehaviour
+    public class GameSessionInfoManager : MonoBehaviour
     {
-        public static PlayerInfoManager Instance = null;
+        public static GameSessionInfoManager Instance = null;
 
         private static readonly string PLAYER_SESSION_FILE_NAME = "player_session.json";
-        private static readonly string END_PLAYER_SESSION_KEY = "END_PLAYER_SESSION";
+        private static readonly string GAME_SESSION_KEY = "GAME_SESSION";
       
         private static string playerSessionFilePath;
 
@@ -18,16 +18,14 @@ namespace SevenSeas
         {
             get
             {
-                return PlayerPrefs.GetInt(END_PLAYER_SESSION_KEY, 1) == 1;
+                return PlayerPrefs.GetInt(GAME_SESSION_KEY, 1) == 1;
             }
             private set
             {
-                PlayerPrefs.SetInt(END_PLAYER_SESSION_KEY, value ? 1 : 0 );
+                PlayerPrefs.SetInt(GAME_SESSION_KEY, value ? 1 : 0 );
                 PlayerPrefs.Save();
             }
         }
-
-        public int currentAmountScore;
 
         [System.Serializable]
         public class PlayerInfoSession
@@ -53,6 +51,10 @@ namespace SevenSeas
 
         }
 
+        [Header("Player Session Info")]
+        [HideInInspector]
+        public int currentAmountScore;
+
         [Range(1,3)]
         [SerializeField]
         private int maxPlayerHealth = 3;
@@ -62,6 +64,9 @@ namespace SevenSeas
 
         [HideInInspector]
         public PlayerInfoSession playerInfoSession;
+
+        [Header("Battle Session Info")]
+        private string sceneName;
 
         void Awake()
         {

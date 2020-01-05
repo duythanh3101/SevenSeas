@@ -2877,7 +2877,7 @@ PrefabInstance:
     - target: {fileID: 4287635530433252849, guid: dbd90cb718bd03c469d0dfa78fc32154,
         type: 3}
       propertyPath: m_Name
-      value: PlayerInfoManager
+      value: GameSessionInfoManager
       objectReference: {fileID: 0}
     - target: {fileID: 4287635530433252854, guid: dbd90cb718bd03c469d0dfa78fc32154,
         type: 3}
@@ -2933,11 +2933,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4287635530433252855, guid: dbd90cb718bd03c469d0dfa78fc32154,
-        type: 3}
-      propertyPath: bonusLifeScoreAmount
-      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dbd90cb718bd03c469d0dfa78fc32154, type: 3}

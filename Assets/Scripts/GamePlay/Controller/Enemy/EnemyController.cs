@@ -72,8 +72,8 @@ namespace SevenSeas
             {
 
                 //Update data for result
-                PlayerInfoManager.Instance.UpdateScore(destroyScore);
-                PlayerInfoManager.Instance.UpdatePirateSunk();
+                GameSessionInfoManager.Instance.UpdateScore(destroyScore);
+                GameSessionInfoManager.Instance.UpdatePirateSunk();
 
                 EnemyManager.Instance.UpdateEnemyCount();
 

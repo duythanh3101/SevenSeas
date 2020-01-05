@@ -35,7 +35,7 @@ namespace SevenSeas
     }
 
 
-    public void SetData(PlayerInfoManager.PlayerInfoSession session)
+    public void SetData(GameSessionInfoManager.PlayerInfoSession session)
     {
         levelTitleText.text = "LEVEL " + session.levelInCheckPoint + " COMPLETED";
 

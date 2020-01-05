@@ -85,7 +85,7 @@ namespace SevenSeas
 
         void InitValues()
         {
-            currentPlayerHealth = PlayerInfoManager.Instance.playerInfoSession.playerHealth;
+            currentPlayerHealth = GameSessionInfoManager.Instance.playerInfoSession.playerHealth;
             animClips = animator.runtimeAnimatorController.animationClips;
             //Init data for animation
             foreach (var clip in animClips)
@@ -279,7 +279,7 @@ namespace SevenSeas
             MapConstantProvider.Instance.SpawnUnitOnDestroyedObject(skullPrefab, transform.position, gameObject);
 
             currentPlayerHealth--;
-            PlayerInfoManager.Instance.UpdatePlayerHealth(currentPlayerHealth);
+            GameSessionInfoManager.Instance.UpdatePlayerHealth(currentPlayerHealth);
 
             //UI
             UIManager.Instance.DecreaseHealth(currentPlayerHealth);

@@ -53,7 +53,7 @@ namespace SevenSeas
             if (blockElements)
                 return;
 
-            if (!PlayerInfoManager.Instance.EndPlayerSession)
+            if (!GameSessionInfoManager.Instance.EndPlayerSession)
             {
                 continueUIController.Show();
                 menuLeftUIController.enabled = false;
@@ -78,7 +78,7 @@ namespace SevenSeas
         {
           
             //Load from json file to player info session
-            PlayerInfoManager.Instance.LoadPlayerSession();
+            GameSessionInfoManager.Instance.LoadPlayerSession();
 
             //Load Play Scene
             SceneLoader.Instance.LoadPlayScene();
@@ -92,7 +92,7 @@ namespace SevenSeas
             menuLeftUIController.enabled = true;
 
             //End current session
-            PlayerInfoManager.Instance.ClearPlayerSession();
+            GameSessionInfoManager.Instance.ClearPlayerSession();
 
             //Load play scene
             SceneLoader.Instance.LoadPlayScene();
