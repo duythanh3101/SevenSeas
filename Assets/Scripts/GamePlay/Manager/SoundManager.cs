@@ -15,7 +15,7 @@ public class SoundManager : MonoBehaviour
 
      
 
-    enum PlayingState
+    public enum PlayingState
     {
         Playing,
         Paused,
@@ -32,21 +32,29 @@ public class SoundManager : MonoBehaviour
     [SerializeField]
     private int maxSimultaneousSounds = 7;
 
-    [Header("Sounds")]
+    [Header("Background Music")]
     public Sound background;
+
+    [Header("Gameplay Sound Effect")]
     public Sound shipExplosion;
     public Sound waterSplash;
     public Sound firingCanonball;
     public Sound winSound;
     public Sound loseSound;
+    public Sound respawnSound;
+    public Sound bonusSound;
+    public Sound playerMoveSound;
+    public Sound enemyMoveSound;
+    public Sound sinkSound;
+    public Sound riseUpSound;
+    
+    public AudioSource bgmSource;
+    public AudioSource sfxSource;
+    public AudioSource specialSfxSource;
 
+    public PlayingState MusicState { get => musicState;}
+    
     [SerializeField]
-    private AudioSource bgmSource;
-    [SerializeField]
-    private AudioSource sfxSource;
-    [SerializeField]
-    private AudioSource specialSfxSource;
-
     private PlayingState musicState = PlayingState.Stopped;
 
 
@@ -118,10 +126,7 @@ public class SoundManager : MonoBehaviour
     /// <param name="loop">If set to <c>true</c> loop.</param>
     public void PlayMusic(Sound music, bool loop = true)
     {
-        if (bgmSource.isPlaying)
-            StopMusic();
-        
-
+       
         bgmSource.clip = music.clip;
         bgmSource.loop = loop;
         bgmSource.Play();
@@ -185,4 +190,36 @@ public class SoundManager : MonoBehaviour
     {
         PlaySound(winSound);
     }
+
+    public void PlayRespawnSound()
+    {
+        PlaySound(respawnSound);
+    }
+
+    public void PlayBonusSound()
+    {
+ 	  PlaySound(bonusSound);
+    }
+
+    public void PlayRiseUpSound()
+    {
+        PlaySound(riseUpSound);
+    }
+
+    public void PlaySinkSound()
+    {
+        PlaySound(sinkSound);
+    }
+
+    public void PlayPlayerMovementSound()
+    {
+        PlaySound(playerMoveSound);
+    }
+
+    public void PlayEnemyMovementSound()
+    {
+        PlaySound(enemyMoveSound);
+    }
+
+   
 }

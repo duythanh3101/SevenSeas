@@ -1025,7 +1025,7 @@ MonoBehaviour:
   optionButton: {fileID: 686373413201567315}
   exitButton: {fileID: 686373413180343420}
   levelText: {fileID: 686373413325037059}
-  scoreTExt: {fileID: 686373414346993152}
+  scoreText: {fileID: 686373414346993152}
   quitUIController: {fileID: 0}
   optionUIController: {fileID: 0}
 --- !u!1 &7107174180316111188

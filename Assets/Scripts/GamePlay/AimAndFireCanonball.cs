@@ -16,18 +16,14 @@ namespace SevenSeas
         [Header("Object references")]
         [SerializeField]
         private GameObject canonBall;
-        [SerializeField]
-        private Transform leftCanonTrans;
-        [SerializeField]
-        private Transform rightCanonTrans;
-
+      
         [Header("Debug")]
         [SerializeField]
         private bool drawTargetLine;
 
         [Header("Shooting detection configuration")]
         [SerializeField]
-        private LayerMask playerInteraction;
+        private LayerMask shootingInteraction;
         
         [SerializeField]
         private float maxShootingTile = 3;
@@ -81,7 +77,6 @@ namespace SevenSeas
             FireCanonball(transform.position, leftTargetPosition);
             FireCanonball(transform.position,rightTargetPosition);
 
-            
         }
 
         void FireCanonball(Vector2 startPos, Vector2 endPos)
@@ -91,7 +86,7 @@ namespace SevenSeas
                 var canonballIns = Instantiate(canonBall, startPos, Quaternion.identity);
                 EffectManager.Instance.SpawnEffect(EffectManager.Instance.canonFiring, startPos, Quaternion.identity);
                 SoundManager.Instance.PlayFiringSound();
-                canonballIns.GetComponent<CanonballController>().Launch(endPos);
+                canonballIns.GetComponent<CanonballController>().Launch(gameObject,endPos);
             }
         }
 
@@ -111,8 +106,8 @@ namespace SevenSeas
 
             //Disable the box collider to prevent casting its self
            boxCollider2D.enabled = false;
-           leftHit = Physics2D.Linecast(currentPosition, endLeft, playerInteraction);
-           rightHit = Physics2D.Linecast(currentPosition, endRight, playerInteraction);
+           leftHit = Physics2D.Linecast(currentPosition, endLeft, shootingInteraction);
+           rightHit = Physics2D.Linecast(currentPosition, endRight, shootingInteraction);
 
             //enable again
            boxCollider2D.enabled = true;
@@ -147,7 +142,7 @@ namespace SevenSeas
                    target = (Vector2)hit.point - direction * MapConstantProvider.Instance.TileSize;
 
                }
-               else if (hit.collider.CompareTag("Enemy"))
+               else if (hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("Player"))
                {
                    target = hit.transform.position;
                    //Debug.Log(hit.transform.position);

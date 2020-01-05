@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ResultUIController : MonoBehaviour
+namespace SevenSeas
+{
+    public class ResultUIController : MonoBehaviour
 {
     public System.Action OnStartNewGameButtonClick = delegate { };
 
     [SerializeField]
-    private Text totalGameText;
+    private Text checkPointText;
     [SerializeField]
     private Text pirateSunkText;
     [SerializeField]
@@ -34,6 +36,15 @@ public class ResultUIController : MonoBehaviour
         canvasGroup.interactable = isShowing;
     }
 
+    public void SetData(PlayerInfoManager.PlayerInfoSession session)
+    {
+
+        checkPointText.text = session.checkPoint.ToString();
+        treasureFoundText.text = session.treasureFound.ToString();
+        finalScoreText.text = session.playerScore.ToString();
+        pirateSunkText.text = session.piratesSunk.ToString();
+    }
+
     public void Show()
     {
         Display(true);
@@ -44,3 +55,6 @@ public class ResultUIController : MonoBehaviour
         Display(false);
     }
 }
+}
+
+

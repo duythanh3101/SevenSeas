@@ -8,7 +8,6 @@ namespace SevenSeas
     public class MenuLeftUIController : MonoBehaviour
     {
        
-
         [Header("UI References")]
         [SerializeField]
         private CanvasGroup canvasGroup;
@@ -25,7 +24,7 @@ namespace SevenSeas
         [SerializeField]
         private Text levelText;
         [SerializeField]
-        private Text scoreTExt;
+        private Text scoreText;
 
         [Header("Object References")]
         [SerializeField]
@@ -33,7 +32,9 @@ namespace SevenSeas
         [SerializeField]
         private OptionUIController optionUIController;
 
-        void Awake()
+        private bool blockElements;
+
+        void OnEnable()
         {
             undoButton.onClick.AddListener(OnUndoButtonClick);
             optionButton.onClick.AddListener(() => OnOptionButtonClick());
@@ -45,14 +46,12 @@ namespace SevenSeas
                 quitUIController.OnCancelButtonClick += quitUIController_OnCancelButtonClick;
             }
 
-           
-
             optionUIController.OnCloseButtonClick += optionUIController_OnCloseButtonClick;
         }
 
        
 
-        void OnDestroy()
+        void OnDisable()
         {
 
             if (quitUIController != null)
@@ -60,7 +59,10 @@ namespace SevenSeas
                 quitUIController.OnQuitButtonClick -= quitUIController_OnQuitButtonClick;
                 quitUIController.OnCancelButtonClick -= quitUIController_OnCancelButtonClick;
             }
-           
+
+            undoButton.onClick.RemoveAllListeners();
+            optionButton.onClick.RemoveAllListeners();
+            exitButton.onClick.RemoveAllListeners();
 
             optionUIController.OnCloseButtonClick -= optionUIController_OnCloseButtonClick;
         }
@@ -72,17 +74,24 @@ namespace SevenSeas
 
         void OnExitButtonClick()
         {
+            if (blockElements)
+                return;
+
             quitUIController.Show();
 
+            blockElements = true;
             if (GameManager.Instance != null)
                 GameManager.Instance.PauseGame();
-            
+           
         }
 
         void OnOptionButtonClick()
         {
-            
+            if (blockElements)
+                return;
+
             optionUIController.Show();
+            blockElements = true;
 
             if (GameManager.Instance != null)
                 GameManager.Instance.PauseGame();
@@ -94,6 +103,7 @@ namespace SevenSeas
             quitUIController.Hide();
             if (GameManager.Instance != null)
                 GameManager.Instance.ResumeGame();
+            blockElements = false;
         }
             
 
@@ -102,11 +112,14 @@ namespace SevenSeas
             optionUIController.Hide();
             if (GameManager.Instance != null)
                 GameManager.Instance.ResumeGame();
-           
+            blockElements = false;
         }
 
         private void quitUIController_OnQuitButtonClick()
         {
+            //Save the current player session to JSON file if Player want to continue the game session
+            PlayerInfoManager.Instance.SavePlayerSession();
+
             SceneLoader.Instance.LoadChooseLevelScene();
         }
 
@@ -125,6 +138,16 @@ namespace SevenSeas
         public void Hide()
         {
             Display(false);
+        }
+
+        public void UpdateScore(int amount)
+        {
+            scoreText.text = amount.ToString();
+        }
+
+        public void SetData(PlayerInfoManager.PlayerInfoSession session)
+        {
+            scoreText.text = session.playerScore.ToString();
         }
     }
 

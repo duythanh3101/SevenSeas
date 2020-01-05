@@ -9,10 +9,6 @@ namespace SevenSeas
     public class PlayerController : BoatController, PlayerTriggerDetection.IPlayerTriggerDectecter
     {
        
-        [Header("Health")]
-        [Range(1, 3)]
-        public int playerHealth = 3;
-
         [Header("Aim and fire canonball")]
         [SerializeField]
         private GameObject arrowCollection;
@@ -58,6 +54,12 @@ namespace SevenSeas
             ArrowController.OnArrowClicked -= ArrowController_OnArrowClicked;
         }
 
+
+        protected override void PlayMovementSound()
+        {
+            SoundManager.Instance.PlayPlayerMovementSound();
+        }
+
         protected override void Start()
         {
             base.Start();
@@ -83,7 +85,7 @@ namespace SevenSeas
 
         void InitValues()
         {
-            currentPlayerHealth = playerHealth;
+            currentPlayerHealth = PlayerInfoManager.Instance.playerInfoSession.playerHealth;
             animClips = animator.runtimeAnimatorController.animationClips;
             //Init data for animation
             foreach (var clip in animClips)
@@ -133,8 +135,6 @@ namespace SevenSeas
 
         }
 
-        
-
         void CanonTargeting()
         {
             if (BoatState == BoatState.Idle && TurnBasedSystemManager.Instance.BattleState == BattleState.PlayerTurn)
@@ -182,6 +182,7 @@ namespace SevenSeas
             TogglePlayerInput(false);
            // arrowCollection.SetActive(false); //Disable input
             animator.SetTrigger(SINK_TRIGGER);
+            SoundManager.Instance.PlaySinkSound();
             yield return new WaitForSeconds(sinkTime);
 
             //Really teleport
@@ -195,6 +196,7 @@ namespace SevenSeas
             isometricModel.SetActive(true);
 
             //Riseup time
+            SoundManager.Instance.PlayRiseUpSound();
             animator.SetTrigger(RISEUP_TRIGGER);
             yield return new WaitForSeconds(riseUpTime);
             
@@ -233,12 +235,15 @@ namespace SevenSeas
             MapConstantProvider.Instance.SetRespawningPosition(gameObject);
             for (int i = 0; i < 2; i++ )
             {
+                SoundManager.Instance.PlayRespawnSound();
                 isometricModel.SetActive(true);
+                
                 yield return respawnIntervalWait;
                 isometricModel.SetActive(false);
                 yield return respawnIntervalWait;
             }
 
+            SoundManager.Instance.PlayRespawnSound();
             isometricModel.SetActive(true);
             //Enable input
             TogglePlayerInput(true);
@@ -248,13 +253,16 @@ namespace SevenSeas
 
         void TogglePlayerInput(bool isEnable)
         {
+
             arrowCollection.SetActive(isEnable);
         }
 
         private Coroutine delayDestroyCR;
         protected override void GetDestroy()
         {
-            StartCoroutine(CR_DelayDestroy());
+            if (delayDestroyCR != null)
+                StopCoroutine(delayDestroyCR);
+            delayDestroyCR = StartCoroutine(CR_DelayDestroy());
         }
 
         IEnumerator CR_DelayDestroy()
@@ -271,31 +279,35 @@ namespace SevenSeas
             MapConstantProvider.Instance.SpawnUnitOnDestroyedObject(skullPrefab, transform.position, gameObject);
 
             currentPlayerHealth--;
+            PlayerInfoManager.Instance.UpdatePlayerHealth(currentPlayerHealth);
+
             //UI
             UIManager.Instance.DecreaseHealth(currentPlayerHealth);
 
+          
             if (currentPlayerHealth > 0)
             {
-                Respawn();
+                //wait for end of frame for updating enemy count, if Game is win, then we dont have to respawn
+                yield return new WaitForSeconds(0.01f);
+                var gameState = GameManager.Instance.GameState;
+                if (gameState == GameState.Playing)
+                    Respawn();
+                else if (gameState == GameState.GameWin)
+                {
+                    TogglePlayerInput(false);
+                    gameObject.SetActive(false);
+                }
+                
             }
             else
             {
                 TogglePlayerInput(false);
-                isometricModel.SetActive(false);
-
-                yield return new WaitForSeconds(0.05f);
-
                 gameObject.SetActive(false);
                 //Debug.Log(EnemyManager.Instance.CurrentEnemyCount);
-                if (EnemyManager.Instance.CurrentEnemyCount > 0)
-                {
-                    GameManager.Instance.GameLose();
-                }
+                GameManager.Instance.GameLose();
             }
         }
-       
-
-
+        
     }
 }
 

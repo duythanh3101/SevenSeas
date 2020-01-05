@@ -317,7 +317,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Total Game Time:'
+  m_Text: 'Check point:'
 --- !u!1 &2571271994953051784
 GameObject:
   m_ObjectHideFlags: 0
@@ -2759,7 +2759,7 @@ GameObject:
   - component: {fileID: 2571271996691105812}
   - component: {fileID: 2571271996691105815}
   m_Layer: 5
-  m_Name: TotalGameTimeText
+  m_Name: CheckPointText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2825,7 +2825,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 2:21
+  m_Text: 1
 --- !u!1 &3107067655227899038
 GameObject:
   m_ObjectHideFlags: 0
@@ -2875,7 +2875,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: deaabdd1c891b834bbc146f39026148b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalGameText: {fileID: 2571271996691105815}
+  checkPointText: {fileID: 2571271996691105815}
   pirateSunkText: {fileID: 2571271995948277468}
   treasureFoundText: {fileID: 2571271995308950226}
   finalScoreText: {fileID: 2571271995541449957}
@@ -2932,7 +2932,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3549259311614026439}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0

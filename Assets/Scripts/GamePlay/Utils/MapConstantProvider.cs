@@ -22,19 +22,26 @@ namespace SevenSeas
         [SerializeField]
         private GameObject islandPrefab;
         [SerializeField]
-        private Transform islandParent;
-        [Header("Enemy")]
+        private int islandCount = 5;
         [SerializeField]
-        private GameObject enemyPrefab;
+        private Transform islandParent;
+        [Header("Enemies")]
+        [SerializeField]
+        private GameObject[] enemiesPrefab;
+        [SerializeField]
+        private int normalEnemyCount;
+        [SerializeField]
+        private int advanceEnemyCount;
+       
+        public int firingEnemyCount;
+        
         [SerializeField]
         private Transform enemyParent;
         [Header("Player")]
         [SerializeField]
         private GameObject playerPrefab;
-        [SerializeField]
-        private int islandCount = 5;
-        [SerializeField]
-        private int enemyCount = 1;
+      
+       
 
         public int currentLevel;
 
@@ -43,6 +50,7 @@ namespace SevenSeas
         public Vector2 BackgroundSize { get; private set; }
 
         public Vector2 CenterPosition { get { return centerPosition; } }
+        public Vector2 PlayerPos { get { return dynamicObjectDicts[player]; } }
 
         public Dictionary<GameObject, Vector2> staticObjectDicts = new Dictionary<GameObject, Vector2>();
         public Dictionary<GameObject, Vector2> dynamicObjectDicts = new Dictionary<GameObject, Vector2>();
@@ -51,6 +59,8 @@ namespace SevenSeas
 
         //Cache value
         private SpriteRenderer backgroundSR;
+        private GameObject player;
+
 
         private Vector2 centerPosition;
 
@@ -170,16 +180,29 @@ namespace SevenSeas
 
         void SpawnEnemies()
         {
-            for (int i = 0; i < enemyCount; i++)
+            GameObject normalEnemyPrefab = enemiesPrefab[0];
+            for (int i = 0; i < normalEnemyCount;i++ )
             {
-                LayoutUnitAtRandomPosition(enemyPrefab, false,enemyParent);
+                LayoutUnitAtRandomPosition(normalEnemyPrefab, false, enemyParent);
+            }
+
+            GameObject advanceEnemyPrefab = enemiesPrefab[1];
+            for (int i = 0; i < advanceEnemyCount;i++ )
+            {
+                LayoutUnitAtRandomPosition(advanceEnemyPrefab, false, enemyParent);
+            }
+
+            GameObject firingEnemyPrefab = enemiesPrefab[2];
+            for (int i = 0 ; i < firingEnemyCount;i++)
+            {
+                LayoutUnitAtRandomPosition(firingEnemyPrefab, false, enemyParent);
             }
         }
 
         void SpawnPlayer()
         {
             LayoutUnitAtRandomPosition(playerPrefab, false);
-            
+            player = GameObject.FindGameObjectWithTag(playerPrefab.tag);
         }
 
         void InitValues()
@@ -189,6 +212,7 @@ namespace SevenSeas
 
             centerNumber = (int)Mathf.Sqrt(CommonConstants.NUMBER_OF_CELLS) / 2;
             centerPosition = backgroundMap.transform.position;
+           
         }
 
         bool IsStaticObject(string tag)
@@ -305,6 +329,45 @@ namespace SevenSeas
             }
            
             RemovePossiblePosition(possiblePositions, pos);
+        }
+
+        public bool ContainsInPossiblePositionIncludePlayer(Vector2 valuePos)
+        {
+            foreach (var pos in possiblePositions)
+            {
+                if (valuePos == pos)
+                    return true;
+            }
+
+            if (valuePos == PlayerPos)
+                return true;
+            
+            return false;
+        }
+
+        private bool ContainsPosInDictionaryExceptPlayer(Vector2 valuePos, Dictionary<GameObject, Vector2> objectDictionary)
+        {
+            //Debug.Log("Player pos: " + dynamicObjectDicts[player]);
+            foreach (var obj in objectDictionary)
+            {
+                if (obj.Key != player)
+                {
+                    if (valuePos == obj.Value)
+                    {
+                        //Debug.Log(obj.Key.name + " Place on this: " + obj.Value);
+                        return true;
+                    }
+                }  
+            }
+            return false;
+        }
+
+       public bool ContainsPosInUnitDictionary(Vector2 valuePos)
+        {
+           
+
+            return (ContainsPosInDictionaryExceptPlayer(valuePos, staticObjectDicts) || 
+                ContainsPosInDictionaryExceptPlayer(valuePos, dynamicObjectDicts));
         }
 
         public void LayoutUnitAtRandomPosition(GameObject unit, bool recycle, Transform parent = null)

@@ -31,10 +31,14 @@ namespace SevenSeas
             else if (Instance != this)
                 DestroyImmediate(gameObject);
 
+            //Event
             GameManager.GameStateChanged += GameManager_GameStateChanged;
 
             resultUIController.OnStartNewGameButtonClick += resultUIController_OnStartNewGameButtonClick;
             nextLevelUIController.OnNextButtonClick += nextLevelUIController_OnNextButtonClick;
+
+            menuLeftUIController.SetData(PlayerInfoManager.Instance.playerInfoSession);
+            
         }
 
         void OnDestroy()
@@ -66,11 +70,14 @@ namespace SevenSeas
         void Start()
         {
             InitValues();
+            DecreaseHealth(PlayerInfoManager.Instance.playerInfoSession.playerHealth);
         }
+
+        int healthCount;
 
         void InitValues()
         {
-            int healthCount = FindObjectOfType<PlayerController>().playerHealth;
+            healthCount = PlayerInfoManager.Instance.playerInfoSession.playerHealth;
             for (int i = 0; i < healthCount; i++)
             {
                 healthImages[i].gameObject.SetActive(true);
@@ -79,12 +86,28 @@ namespace SevenSeas
 
         public void DecreaseHealth(int index)
         {
+            if (index == healthCount)
+                return;
             healthImages[index].gameObject.SetActive(false);
+        }
+
+        public void IncreaseHealth(int index)
+        {
+            if (index == healthCount)
+                return;
+
+            //Debug.Log("index: " + index);
+            healthImages[index].gameObject.SetActive(true);
         }
 
         public void ShowFindTreasureGameOver()
         {
             treasureGameOverPanel.SetActive(true);
+        }
+
+        public void UpdateScore(int amount)
+        {
+            menuLeftUIController.UpdateScore(amount);
         }
 
         private void nextLevelUIController_OnNextButtonClick()
@@ -99,6 +122,10 @@ namespace SevenSeas
 
        IEnumerator CR_DelayGameOverUI()
         {
+           
+            SetDataForResultUI(PlayerInfoManager.Instance.playerInfoSession);
+            menuLeftUIController.enabled = false; 
+
             yield return new WaitForSeconds(1);
             gameOverUIController.Show();
             yield return new WaitForSeconds(gameOverUIController.timeDisplay + 2);
@@ -108,9 +135,24 @@ namespace SevenSeas
 
         IEnumerator  CR_ShowNextLevelUI()
        {
+
+           SetDataForNextLevelUI(PlayerInfoManager.Instance.playerInfoSession);
+           menuLeftUIController.enabled = false;
+
            yield return new WaitForSeconds(1);
 
            nextLevelUIController.Show();
        }
+
+        public void SetDataForResultUI(PlayerInfoManager.PlayerInfoSession session)
+        {
+            resultUIController.SetData(session);
+        }
+
+
+        public void SetDataForNextLevelUI(PlayerInfoManager.PlayerInfoSession session)
+        {
+            nextLevelUIController.SetData(session);
+        }
     }
 }

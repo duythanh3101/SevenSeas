@@ -192,9 +192,28 @@ MonoBehaviour:
   loseSound:
     clip: {fileID: 8300000, guid: 3bdb2814d67cf354fbce93337f58a26e, type: 3}
     simultaneousPlayCount: 0
+  respawnSound:
+    clip: {fileID: 8300000, guid: ff1ff3046500fa242b3cd874b928925f, type: 3}
+    simultaneousPlayCount: 0
+  bonusSound:
+    clip: {fileID: 8300000, guid: e8d9554fcf6e140479afa60f70d4f4da, type: 3}
+    simultaneousPlayCount: 0
+  playerMoveSound:
+    clip: {fileID: 8300000, guid: 8da1472590bc6604894e887aa4cb3e0a, type: 3}
+    simultaneousPlayCount: 0
+  enemyMoveSound:
+    clip: {fileID: 8300000, guid: d448cebec29086141b26387a39d418ed, type: 3}
+    simultaneousPlayCount: 0
+  sinkSound:
+    clip: {fileID: 8300000, guid: ef89d54fc5dc1b4448b116867a90fbad, type: 3}
+    simultaneousPlayCount: 0
+  riseUpSound:
+    clip: {fileID: 8300000, guid: f0c6682452146b945a9cb6df83d6aa51, type: 3}
+    simultaneousPlayCount: 0
   bgmSource: {fileID: 7247641401471862353}
   sfxSource: {fileID: 7247641401443819713}
   specialSfxSource: {fileID: 7247641400745863129}
+  musicState: 2
 --- !u!1 &7247641401443819715
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1697429839562219426}
   - component: {fileID: 1697429839562219613}
   m_Layer: 5
-  m_Name: BonusPointText
+  m_Name: CurrentScoreText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,7 +78,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Bonus point:15
+  m_Text: Current Score:15
 --- !u!1 &1697429839763936178
 GameObject:
   m_ObjectHideFlags: 0
@@ -527,7 +527,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -568,7 +568,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 77, y: 79}
+  m_AnchoredPosition: {x: 59, y: 73}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1697429840658224267
@@ -606,7 +606,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -939,7 +939,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2461759861939648892}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
@@ -994,6 +994,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelTitleText: {fileID: 1697429840850067958}
   pirateSunkText: {fileID: 1697429841197282476}
-  bonusPointText: {fileID: 1697429839562219613}
+  currentScoreText: {fileID: 1697429839562219613}
   nextButton: {fileID: 1697429841110691592}
   canvasGroup: {fileID: 360676149641595495}

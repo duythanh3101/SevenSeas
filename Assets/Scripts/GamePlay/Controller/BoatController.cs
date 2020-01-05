@@ -33,8 +33,6 @@ namespace SevenSeas
         [SerializeField]
         private BoatState boatState = BoatState.Idle;
 
-
-
         //Public properties 
         public BoatState BoatState
         {
@@ -80,7 +78,7 @@ namespace SevenSeas
             
         }
 
-        protected void MoveAndRotate(Direction dir)
+        protected  void MoveAndRotate(Direction dir)
         {
             if (BoatState == BoatState.MoveAndRotate)
                 return;
@@ -89,9 +87,22 @@ namespace SevenSeas
             targetDirection = dir;
             targetPosition = (Vector2)transform.position + MapConstantProvider.Instance.TileSize * UtilMapHelpers.GetDirectionVector(targetDirection);
 
+            PlayMovementSound();
+
             if (moveAndRotateCR != null)
                 StopCoroutine(moveAndRotateCR);
-            moveAndRotateCR = StartCoroutine(CR_MoveAndRotate(targetPosition, targetDirection));
+            moveAndRotateCR = StartCoroutine(CR_MoveAndRotate(targetPosition, targetDirection, () => OnCompletedRotateAndMove()));
+        }
+
+
+        protected virtual void PlayMovementSound()
+        {
+
+        }
+
+        protected virtual void OnCompletedRotateAndMove()
+        {
+            OnBoatActivityCompleted(this);
         }
 
         protected virtual void Start()
@@ -106,7 +117,7 @@ namespace SevenSeas
             animator = isometricModel.transform.parent.GetComponent<Animator>();
         }
 
-        IEnumerator CR_MoveAndRotate(Vector2 targetPos, Direction toDirection)
+        IEnumerator CR_MoveAndRotate(Vector2 targetPos, Direction toDirection, System.Action completed = null)
         {
             //Start moving and rotating the model
             BoatState = BoatState.MoveAndRotate;
@@ -119,6 +130,10 @@ namespace SevenSeas
             //NOTE: must multiply by the rotation to create a local space rotation
             Quaternion endRot = Quaternion.AngleAxis(-deltaAngle, modelUp) * isometricModel.transform.localRotation;
 
+            //Fire the moved position event
+            if (OnBoatMovedPosition != null)
+                OnBoatMovedPosition(gameObject, targetPos); // This will update dictionary info when it's subscribed by the MapConstatnProvider
+
             float t = 0;
             while (t < moveAndRotateTime)
             {
@@ -129,10 +144,9 @@ namespace SevenSeas
                 yield return null;
             }
 
-            //Fire the moved position event
-            if (OnBoatMovedPosition != null)
-                OnBoatMovedPosition(gameObject, targetPos); // This will update dictionary info when it's subscribed by the MapConstatnProvider
-
+            ////Fire the moved position event
+            //if (OnBoatMovedPosition != null)
+            //    OnBoatMovedPosition(gameObject, targetPos); // This will update dictionary info when it's subscribed by the MapConstatnProvider
 
             boxCollider.enabled = true;
 
@@ -141,12 +155,13 @@ namespace SevenSeas
             //Update boat state to idle after finishing moving and rotating
             BoatState = BoatState.Idle;
 
-            //NOTE: After enable collider, we skip this frame to the box collider begin to check, check if the boat state is iddle
+            //NOTE: After enable collider, we skip this frame to the box collider begin to check,because this boat can collide when box collider is enabled, check if the boat state is idle
             yield return new WaitForSeconds(0.1f);
 
             if (BoatState == BoatState.Idle)
             {
-                OnBoatActivityCompleted(this);
+                if (completed != null)
+                    completed();
             }
         }
 
