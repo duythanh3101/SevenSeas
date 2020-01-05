@@ -3,6 +3,7 @@ using SevenSeas;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DottedLineDrawer : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class DottedLineDrawer : MonoBehaviour
     public int CHECK_POINT_LEVEL = 0;
 
     private bool isfinished = false;
+
+    [SerializeField] private Button clickToContinueButton;
 
     private static DottedLineDrawer instance;
     public static DottedLineDrawer Instance
@@ -41,22 +44,35 @@ public class DottedLineDrawer : MonoBehaviour
     private void SetDrawFinishedScene()
     {
         isfinished = true;
+        clickToContinueButton.gameObject.SetActive(true);
     }
 
     // Update is called once per frame
     void Update()
     {
         //isfinished = DottedLine.Instance.isDrawFinished;
+        //if (isfinished)
+        //{
+        //    if (Input.GetMouseButtonDown(0))
+        //    {
+        //        isfinished = false;
+        //        CHECK_POINT_LEVEL++;
+        //        PlayerPrefs.SetInt("CHECK_POINT_LEVEL", CHECK_POINT_LEVEL);
+        //        //SceneGameManager.Instance.LoadScene(CommonConstants.SceneName.PlayScene);
+        //        SceneLoader.Instance.LoadPlayScene();
+        //    }
+        //}
+    }
+
+    public void ClickToContinueButton()
+    {
         if (isfinished)
         {
-            if (Input.GetMouseButtonDown(0))
-            {
-                isfinished = false;
-                CHECK_POINT_LEVEL++;
-                PlayerPrefs.SetInt("CHECK_POINT_LEVEL", CHECK_POINT_LEVEL);
-                //SceneGameManager.Instance.LoadScene(CommonConstants.SceneName.PlayScene);
-                SceneLoader.Instance.LoadPlayScene();
-            }
+            isfinished = false;
+            CHECK_POINT_LEVEL++;
+            PlayerPrefs.SetInt("CHECK_POINT_LEVEL", CHECK_POINT_LEVEL);
+            SceneLoader.Instance.LoadPlayScene();
+            clickToContinueButton.gameObject.SetActive(false);
         }
     }
 }

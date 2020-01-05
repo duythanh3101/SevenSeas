@@ -15,11 +15,5 @@ namespace MainGame
         {
             xSign.SetText(string.Empty);
         }
-
-        // Update is called once per frame
-        protected virtual void Update()
-        {
-
-        }
     }
 }

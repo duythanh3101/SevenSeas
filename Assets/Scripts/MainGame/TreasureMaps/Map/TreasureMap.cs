@@ -57,21 +57,34 @@ namespace MainGame
 
         protected virtual void Update()
         {
-            if (Input.GetMouseButtonDown(0))
+            if (!IsGamePausing())
             {
-                if (isEndGame)
+                if (Input.GetMouseButtonDown(0))
                 {
-                    //SceneGameManager.Instance.LoadScene(CommonConstants.SceneName.CheckPointMapScene);
+                    if (isEndGame)
+                    {
+                        //SceneGameManager.Instance.LoadScene(CommonConstants.SceneName.CheckPointMapScene);
 
-                    SceneLoader.Instance.LoadCheckPointMapScene();
-                    return;
+                        SceneLoader.Instance.LoadCheckPointMapScene();
+                        return;
+                    }
+                    Interact();
                 }
-                Interact();
             }
         }
         #endregion Mono Behaviour
 
+
         #region Private Methods
+
+        /// <summary>
+        /// is game pausing
+        /// </summary>
+        /// <returns></returns>
+        private bool IsGamePausing()
+        {
+            return GameManager.Instance.GameState == GameState.Pause;
+        }
 
         /// <summary>
         /// Handle interaction
