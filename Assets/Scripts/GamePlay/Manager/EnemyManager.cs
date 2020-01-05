@@ -12,8 +12,6 @@ namespace SevenSeas
         public static event System.Action OnAllEnemyActivityCompleted;
 
         public int CurrentEnemyCount { get; private set; }
-
-        private int notEffectEnemyCount;
        void Awake()
         {
 
@@ -32,7 +30,7 @@ namespace SevenSeas
        {
         
            CurrentEnemyCount = transform.childCount;
-           notEffectEnemyCount = transform.childCount - MapConstantProvider.Instance.firingEnemyCount;
+           
        }
         void OnDestroy()
        {

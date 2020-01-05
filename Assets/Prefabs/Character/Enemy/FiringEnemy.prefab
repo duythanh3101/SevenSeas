@@ -73,8 +73,8 @@ MonoBehaviour:
   moveAndRotateTime: 0.3
   boatState: 0
   currentDirection: 1
-  destroyedByBoatScore: 2
-  normalDestroyScore: 1
+  destroyedByBoatScore: 3
+  normalDestroyScore: 2
   drawRayToTarget: 0
   firingSystem: {fileID: 9055235022687565451}
 --- !u!1 &6075846875433486122

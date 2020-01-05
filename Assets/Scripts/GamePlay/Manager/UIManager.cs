@@ -91,6 +91,15 @@ namespace SevenSeas
             healthImages[index].gameObject.SetActive(false);
         }
 
+        public void IncreaseHealth(int index)
+        {
+            if (index == healthCount)
+                return;
+
+            //Debug.Log("index: " + index);
+            healthImages[index].gameObject.SetActive(true);
+        }
+
         public void ShowFindTreasureGameOver()
         {
             treasureGameOverPanel.SetActive(true);

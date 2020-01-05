@@ -11,7 +11,7 @@ namespace SevenSeas
 
         private static readonly string PLAYER_SESSION_FILE_NAME = "player_session.json";
         private static readonly string END_PLAYER_SESSION_KEY = "END_PLAYER_SESSION";
-
+        private static readonly string CURRENT_SCORE_AMOUNT_KEY = " CURRENT_SCORE_AMOUNT";
 
         private static string playerSessionFilePath;
 
@@ -27,6 +27,8 @@ namespace SevenSeas
                 PlayerPrefs.Save();
             }
         }
+
+        public int currentAmountScore;
 
         [System.Serializable]
         public class PlayerInfoSession
@@ -56,6 +58,9 @@ namespace SevenSeas
         [SerializeField]
         private int maxPlayerHealth = 3;
 
+        [Tooltip("Player earn one life when getting the specific amount of score")]
+        public int bonusLifeScoreAmount = 15;
+
         [HideInInspector]
         public PlayerInfoSession playerInfoSession;
 
@@ -80,7 +85,30 @@ namespace SevenSeas
         public void UpdateScore(int amount)
         {
             playerInfoSession.playerScore += amount;
+            currentAmountScore += amount;
+
+            //Check for update bonus ife
+            CheckUpdateBonusLife();
+
             UIManager.Instance.UpdateScore(playerInfoSession.playerScore);
+        }
+
+        void CheckUpdateBonusLife()
+        {
+            if (currentAmountScore >= bonusLifeScoreAmount)
+            {
+                if (playerInfoSession.playerHealth < maxPlayerHealth)
+                {
+                    //Bonus one life
+                    currentAmountScore = 0;
+                    playerInfoSession.playerHealth++;
+
+                    //Update UI
+                    SoundManager.Instance.PlayBonusSound();
+                    UIManager.Instance.IncreaseHealth(playerInfoSession.playerHealth - 1);
+                }
+                
+            }
         }
 
         public void UpdatePirateSunk()

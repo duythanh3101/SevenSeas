@@ -40,6 +40,7 @@ public class SoundManager : MonoBehaviour
     public Sound winSound;
     public Sound loseSound;
     public Sound respawnSound;
+    public Sound bonusSound;
     
     public AudioSource bgmSource;
     public AudioSource sfxSource;
@@ -187,5 +188,10 @@ public class SoundManager : MonoBehaviour
     public void PlayRespawnSound()
     {
         PlaySound(respawnSound);
+    }
+
+    public void PlayBonusSound()
+    {
+ 	  PlaySound(bonusSound);
     }
 }

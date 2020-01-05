@@ -13,9 +13,13 @@ namespace SevenSeas
         protected override void OnCompletedRotateAndMove()
         {
             FiringCanonballs();
+
+
+            firingSystem.boxCollider2D.enabled = true;
+            BoatState = BoatState.Idle;
+           
             OnBoatActivityCompleted(this);
            
-
         }
 
         void FiringCanonballs()

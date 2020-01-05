@@ -29,7 +29,9 @@ namespace SevenSeas
         [SerializeField]
         private int targetFrameRate = 60;
 
+       
         public PlayerController playerController;
+        
 
         public GameState GameState
         {
@@ -149,7 +151,6 @@ namespace SevenSeas
                 RestartGame();
             }
         }
-       
     }
 }
 

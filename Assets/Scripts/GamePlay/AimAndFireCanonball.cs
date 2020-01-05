@@ -77,7 +77,6 @@ namespace SevenSeas
             FireCanonball(transform.position, leftTargetPosition);
             FireCanonball(transform.position,rightTargetPosition);
 
-            
         }
 
         void FireCanonball(Vector2 startPos, Vector2 endPos)
@@ -87,7 +86,7 @@ namespace SevenSeas
                 var canonballIns = Instantiate(canonBall, startPos, Quaternion.identity);
                 EffectManager.Instance.SpawnEffect(EffectManager.Instance.canonFiring, startPos, Quaternion.identity);
                 SoundManager.Instance.PlayFiringSound();
-                canonballIns.GetComponent<CanonballController>().Launch(endPos);
+                canonballIns.GetComponent<CanonballController>().Launch(gameObject,endPos);
             }
         }
 

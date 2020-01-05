@@ -33,8 +33,6 @@ namespace SevenSeas
         [SerializeField]
         private BoatState boatState = BoatState.Idle;
 
-
-
         //Public properties 
         public BoatState BoatState
         {

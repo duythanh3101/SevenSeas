@@ -1192,8 +1192,8 @@ MonoBehaviour:
   - {fileID: 6075846875433479232, guid: aac79f75af511a04093b395673c44cc2, type: 3}
   - {fileID: 6075846875433479232, guid: 0512dd12335e58b40bc88e46d8d9ba22, type: 3}
   normalEnemyCount: 2
-  advanceEnemyCount: 0
-  firingEnemyCount: 0
+  advanceEnemyCount: 1
+  firingEnemyCount: 1
   enemyParent: {fileID: 2099584981}
   playerPrefab: {fileID: 6075846875433479232, guid: 3688b474c477bd64783aca73341a8b7f,
     type: 3}
@@ -2933,6 +2933,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4287635530433252855, guid: dbd90cb718bd03c469d0dfa78fc32154,
+        type: 3}
+      propertyPath: bonusLifeScoreAmount
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dbd90cb718bd03c469d0dfa78fc32154, type: 3}

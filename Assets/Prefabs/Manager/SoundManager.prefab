@@ -195,6 +195,9 @@ MonoBehaviour:
   respawnSound:
     clip: {fileID: 8300000, guid: ff1ff3046500fa242b3cd874b928925f, type: 3}
     simultaneousPlayCount: 0
+  bonusSound:
+    clip: {fileID: 8300000, guid: e8d9554fcf6e140479afa60f70d4f4da, type: 3}
+    simultaneousPlayCount: 0
   bgmSource: {fileID: 7247641401471862353}
   sfxSource: {fileID: 7247641401443819713}
   specialSfxSource: {fileID: 7247641400745863129}

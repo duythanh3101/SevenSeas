@@ -55,6 +55,7 @@ namespace SevenSeas
 
             if (other.CompareTag("Projectile"))
             {
+                
                 GetDestroy();
             }
             else if (other.CompareTag("Obstacle"))
