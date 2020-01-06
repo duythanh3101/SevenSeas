@@ -161,7 +161,7 @@ namespace SevenSeas
             playerInfoSession.checkPoint++;
         }
 
-        public void SavePlayerSession()
+        void SavePlayerSession()
         {
             //Debug.Log("Saving player session to: " + playerSessionFilePath);
 
@@ -203,8 +203,10 @@ namespace SevenSeas
         #endregion
 
         #region Battle Session Info Function
-        public void SaveBattleSession()
+         void SaveBattleSession()
         {
+            battleInfoSession.ResetData();
+
             //Save current battle scene name
             battleInfoSession.currentSceneName = SceneLoader.Instance.GetActiveSceneName();
 
@@ -283,7 +285,7 @@ namespace SevenSeas
         public void SaveGameSession()
         {
             SavePlayerSession();
-            SaveGameSession();
+            SaveBattleSession();
             EndGameSession = false;
         }
 

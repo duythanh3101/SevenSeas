@@ -26,6 +26,7 @@ namespace SevenSeas
         [SerializeField]
         private Transform islandParent;
         [Header("Skull")]
+        [SerializeField]
         private GameObject skullPrefab;
         [Header("Enemies")]
         [SerializeField]
@@ -101,18 +102,19 @@ namespace SevenSeas
         {
             InitValues();
             InitPossiblePositions();
-            SetupLevel(currentLevel);
+            //Debug.Log(GameSessionInfoManager.Instance.EndGameSession);
+            //SetupLevel(currentLevel);
 
-            //if (GameSessionInfoManager.Instance.EndGameSession)
-            //{
-            //    //Create a new scene
-            //    SetupLevel(currentLevel);
-            //}
-            //else
-            //{
-            //    //Load from previous game session
-
-            //}
+            if (GameSessionInfoManager.Instance.EndGameSession)
+            {
+                //Create a new scene
+                SetupLevel(currentLevel);
+            }
+            else
+            {
+                //Load from previous game session
+                LoadLevels();
+            }
             
         }
 
@@ -279,12 +281,12 @@ namespace SevenSeas
             }
         }
 
-        public void LayoutUnitAtSpecific(GameObject unit,Vector2 pos, Transform parent = null)
+        public GameObject LayoutUnitAtSpecific(GameObject unit,Vector2 pos, Transform parent = null)
         {
             if (!IsExists(pos,possiblePositions))
             {
                 Debug.Log("Cant spawn: " + unit.name + "at: " + pos);
-                return;
+                return null;
             }
 
             bool isStatic = IsStaticObject(unit.tag);
@@ -298,6 +300,7 @@ namespace SevenSeas
                 dynamicObjectDicts.Add(ins, pos);
             }
             RemovePossiblePosition(possiblePositions, pos);
+            return ins;
         }
 
         public void SpawnUnitOnDestroyedObject(GameObject unit, Vector2 pos, GameObject destroyedObject)
@@ -479,7 +482,32 @@ namespace SevenSeas
             }
 
             //Load Enemies
+            foreach ( var dataTransform  in battleInfoSession.normalEnemyTransform)
+            {
+                var normalEnemy = LayoutUnitAtSpecific(enemiesPrefab[0],dataTransform.position,enemyParent).GetComponent<EnemyController>();
+                normalEnemy.currentDirection = dataTransform.boatDirection;
+                normalEnemy.isometricModel.transform.rotation = dataTransform.modelRotation;
+            }
 
+            foreach (var dataTransform in battleInfoSession.advanceEnemyTransform)
+            {
+                var advanceEnemy = LayoutUnitAtSpecific(enemiesPrefab[1], dataTransform.position, enemyParent).GetComponent<EnemyController>();
+                advanceEnemy.currentDirection = dataTransform.boatDirection;
+                advanceEnemy.isometricModel.transform.rotation = dataTransform.modelRotation;
+            }
+
+            foreach (var dataTransform  in battleInfoSession.firingEnemyTransform)
+            {
+                var firingEnemy = LayoutUnitAtSpecific(enemiesPrefab[2], dataTransform.position, enemyParent).GetComponent<EnemyController>();
+                firingEnemy.currentDirection = dataTransform.boatDirection;
+                firingEnemy.isometricModel.transform.localRotation = dataTransform.modelRotation;
+            }
+
+            //Load players
+            var playerController = LayoutUnitAtSpecific(playerPrefab, battleInfoSession.playerTransform.position).GetComponent<PlayerController>();
+            playerController.currentDirection = battleInfoSession.playerTransform.boatDirection;
+            playerController.isometricModel.transform.localRotation = battleInfoSession.playerTransform.modelRotation;
+            player = playerController.gameObject;
         }
 
     }

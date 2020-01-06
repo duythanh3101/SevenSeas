@@ -1187,13 +1187,15 @@ MonoBehaviour:
     type: 3}
   islandCount: 5
   islandParent: {fileID: 7294267620297969115}
+  skullPrefab: {fileID: 5620171592396521548, guid: ec8e928a322a56d43adfc5525bc839d2,
+    type: 3}
   enemiesPrefab:
   - {fileID: 6075846875433479232, guid: 16ef9f0a9cf878149865b8cd981ac8e5, type: 3}
   - {fileID: 6075846875433479232, guid: aac79f75af511a04093b395673c44cc2, type: 3}
   - {fileID: 6075846875433479232, guid: 0512dd12335e58b40bc88e46d8d9ba22, type: 3}
-  normalEnemyCount: 2
+  normalEnemyCount: 3
   advanceEnemyCount: 1
-  firingEnemyCount: 2
+  firingEnemyCount: 1
   enemyParent: {fileID: 2099584981}
   playerPrefab: {fileID: 6075846875433479232, guid: 3688b474c477bd64783aca73341a8b7f,
     type: 3}

@@ -8,15 +8,12 @@ public class JsonFileHelper
 {
     public static void SaveToFile(string filePath, object serializedObject )
     {
-        if (!File.Exists(filePath))
-            File.Create(filePath);
+        //if (!File.Exists(filePath))
+        //    File.Create(filePath);
 
         string json = JsonUtility.ToJson(serializedObject);
-
-        using (StreamWriter writer = new StreamWriter(File.OpenWrite(filePath)))
-        {
-            writer.WriteLine(json);
-        }
+        File.WriteAllText(filePath,json);
+        
     }
 
     public static object LoadFromFile<T>(string filePath) where T: class
@@ -25,11 +22,13 @@ public class JsonFileHelper
         StringBuilder jsonStrBuilder = new StringBuilder();
         using (StreamReader reader = new StreamReader(File.OpenRead(filePath)))
         {
-            while (!reader.EndOfStream)
-            {
-                var rowData =  reader.ReadLine();
-                jsonStrBuilder.AppendLine(rowData);
-            }
+            //while (!reader.EndOfStream)
+            //{
+            //    var rowData =  reader.ReadLine();
+            //    jsonStrBuilder.AppendLine(rowData);
+            //}
+            var rowData = reader.ReadToEnd();
+            jsonStrBuilder.AppendLine(rowData);
         }
 
         return JsonUtility.FromJson<T>(jsonStrBuilder.ToString());
