@@ -119,12 +119,13 @@ namespace SevenSeas
 
         private void resultUIController_OnStartNewGameButtonClick()
         {
+            GameSessionInfoManager.Instance.ClearGameSession();
             SceneLoader.Instance.LoadChooseLevelScene();
         }
 
        IEnumerator CR_DelayGameOverUI()
         {
-           
+            
             SetDataForResultUI(GameSessionInfoManager.Instance.playerInfoSession);
             menuLeftUIController.enabled = false; 
 

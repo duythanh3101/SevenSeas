@@ -25,6 +25,8 @@ namespace SevenSeas
         private int islandCount = 5;
         [SerializeField]
         private Transform islandParent;
+        [Header("Skull")]
+        private GameObject skullPrefab;
         [Header("Enemies")]
         [SerializeField]
         private GameObject[] enemiesPrefab;
@@ -58,7 +60,6 @@ namespace SevenSeas
         //Cache value
         private SpriteRenderer backgroundSR;
         private GameObject player;
-
 
         private Vector2 centerPosition;
 
@@ -101,6 +102,18 @@ namespace SevenSeas
             InitValues();
             InitPossiblePositions();
             SetupLevel(currentLevel);
+
+            //if (GameSessionInfoManager.Instance.EndGameSession)
+            //{
+            //    //Create a new scene
+            //    SetupLevel(currentLevel);
+            //}
+            //else
+            //{
+            //    //Load from previous game session
+
+            //}
+            
         }
 
         [Header("Debug")]
@@ -210,7 +223,6 @@ namespace SevenSeas
 
             centerNumber = (int)Mathf.Sqrt(CommonConstants.NUMBER_OF_CELLS) / 2;
             centerPosition = backgroundMap.transform.position;
-           
         }
 
         bool IsStaticObject(string tag)
@@ -446,6 +458,29 @@ namespace SevenSeas
             }
         }
 
+
+        void LoadLevels()
+        {
+            var battleInfoSession = GameSessionInfoManager.Instance.battleInfoSession;
+
+            //Spawn whirld pools ( will be controlled by Game Mode)
+            SpawnWhirlpools();
+
+            //Load islands
+            foreach (var pos in battleInfoSession.islandPosition)
+            {
+                LayoutUnitAtSpecific(islandPrefab,pos,islandParent);
+            }
+
+            //Load Skulls
+            foreach (var pos in battleInfoSession.skullPosition)
+            {
+                LayoutUnitAtSpecific(skullPrefab, pos);
+            }
+
+            //Load Enemies
+
+        }
 
     }
 }

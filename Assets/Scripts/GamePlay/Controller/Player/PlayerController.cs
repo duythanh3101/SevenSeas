@@ -73,6 +73,7 @@ namespace SevenSeas
                 if (BoatState != BoatState.Respawning)
                 {
                     TogglePlayerInput(true);
+                    //Debug.Log("Change to idle state");
                     BoatState = BoatState.Idle;
                     firingSystem.boxCollider2D.enabled = true;
                 }
@@ -253,61 +254,73 @@ namespace SevenSeas
 
         void TogglePlayerInput(bool isEnable)
         {
-
+            //Debug.Log("Set input: " + isEnable);
             arrowCollection.SetActive(isEnable);
         }
 
         private Coroutine delayDestroyCR;
         protected override void GetDestroy()
         {
-            if (delayDestroyCR != null)
-                StopCoroutine(delayDestroyCR);
-            delayDestroyCR = StartCoroutine(CR_DelayDestroy());
+            if  (BoatState != BoatState.Respawning && BoatState != BoatState.Destroyed)
+            {
+                if (delayDestroyCR != null)
+                    StopCoroutine(delayDestroyCR);
+                delayDestroyCR = StartCoroutine(CR_DelayDestroy());
+            }
+            
         }
 
         IEnumerator CR_DelayDestroy()
         {
-            if (BoatState == BoatState.Respawning || BoatState == BoatState.Destroyed)
-                yield return null;
-
-            //Debug.Log("player destroyed");
-            BoatState = BoatState.Destroyed;
-
-            //Effect and sound
-            EffectManager.Instance.SpawnEffect(EffectManager.Instance.explosion, transform.position, Quaternion.identity);
-            SoundManager.Instance.PlayDestroyShipSound();
-            MapConstantProvider.Instance.SpawnUnitOnDestroyedObject(skullPrefab, transform.position, gameObject);
-
-            currentPlayerHealth--;
-            GameSessionInfoManager.Instance.UpdatePlayerHealth(currentPlayerHealth);
-
-            //UI
-            UIManager.Instance.DecreaseHealth(currentPlayerHealth);
-
+            //Debug.Log("Player state: " + BoatState);
           
-            if (currentPlayerHealth > 0)
-            {
-                //wait for end of frame for updating enemy count, if Game is win, then we dont have to respawn
-                yield return new WaitForSeconds(0.01f);
-                var gameState = GameManager.Instance.GameState;
-                if (gameState == GameState.Playing)
-                    Respawn();
-                else if (gameState == GameState.GameWin)
-                {
-                    TogglePlayerInput(false);
-                    gameObject.SetActive(false);
-                }
+          
                 
-            }
-            else
-            {
-                TogglePlayerInput(false);
-                gameObject.SetActive(false);
-                //Debug.Log(EnemyManager.Instance.CurrentEnemyCount);
-                GameManager.Instance.GameLose();
-            }
+                BoatState = BoatState.Destroyed;
+
+                //Effect and sound
+                EffectManager.Instance.SpawnEffect(EffectManager.Instance.explosion, transform.position, Quaternion.identity);
+                SoundManager.Instance.PlayDestroyShipSound();
+                MapConstantProvider.Instance.SpawnUnitOnDestroyedObject(skullPrefab, transform.position, gameObject);
+
+                currentPlayerHealth--;
+                GameSessionInfoManager.Instance.UpdatePlayerHealth(currentPlayerHealth);
+
+                //Debug.Log("Current player health: " + currentPlayerHealth);
+
+                //UI
+                UIManager.Instance.DecreaseHealth(currentPlayerHealth);
+
+                if (currentPlayerHealth > 0)
+                {
+                    //wait for end of frame for updating enemy count, if Game is win, then we dont have to respawn
+                    yield return new WaitForSeconds(0.01f);
+                    var gameState = GameManager.Instance.GameState;
+                    if (gameState == GameState.Playing)
+                    {
+                        Respawn();
+                    }
+
+                    else if (gameState == GameState.GameWin)
+                    {
+                        TogglePlayerInput(false);
+                        gameObject.SetActive(false);
+                    }
+
+                }
+                else
+                {
+                    //Debug.Log("Game lose");
+                    TogglePlayerInput(false);
+                    isometricModel.SetActive(false);
+
+                    yield return new WaitForSeconds(0.01f);
+                    gameObject.SetActive(false);
+                    GameManager.Instance.GameLose();
+                }
+            
         }
-        
+       
     }
 }
 

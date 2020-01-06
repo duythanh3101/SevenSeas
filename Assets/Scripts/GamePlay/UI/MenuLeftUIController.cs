@@ -51,7 +51,9 @@ namespace SevenSeas
             optionUIController.OnCloseButtonClick += optionUIController_OnCloseButtonClick;
             optionUIController.OnHelpButtonClick += optionUIController_OnHelpButtonClick;
 
-            descriptionUIController.OnCloseButtonClick += descriptionUIController_OnCloseButtonClick;
+            if (descriptionUIController != null)
+                descriptionUIController.OnCloseButtonClick += descriptionUIController_OnCloseButtonClick;
+            
         }
 
         private void optionUIController_OnHelpButtonClick()
@@ -77,7 +79,9 @@ namespace SevenSeas
 
             optionUIController.OnHelpButtonClick -= optionUIController_OnHelpButtonClick;
 
-            descriptionUIController.OnCloseButtonClick -= descriptionUIController_OnCloseButtonClick;
+            if (descriptionUIController != null)
+                descriptionUIController.OnCloseButtonClick -= descriptionUIController_OnCloseButtonClick;
+            
         }
 
         void OnUndoButtonClick()

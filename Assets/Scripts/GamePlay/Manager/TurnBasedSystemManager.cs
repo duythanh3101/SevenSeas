@@ -66,7 +66,12 @@ namespace SevenSeas
         void EffectManager_OnAllBehaviourCompleted(BattleState oldState)
         {
            // Debug.Log("Change state from: " + BattleState);
-
+            if (EnemyManager.Instance.CurrentEnemyCount == 0)
+            {
+               
+                return;
+            }
+           
             if (BattleState == BattleState.EnemyTurn)
             {
                 BattleState = BattleState.PlayerTurn;

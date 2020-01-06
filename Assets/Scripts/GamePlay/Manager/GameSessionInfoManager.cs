@@ -44,10 +44,10 @@ namespace SevenSeas
 
             public void ResetData(int pHealth)
             {
-                levelInCheckPoint = 0;
+                levelInCheckPoint = 1;
                 playerScore = 0;
                 piratesSunk = 0;
-                checkPoint = 0;
+                checkPoint = 1;
                 treasureFound = 0;
                 playerHealth = pHealth;
             }
@@ -117,6 +117,7 @@ namespace SevenSeas
         void Start()
         {
             playerInfoSession.ResetData(maxPlayerHealth);
+
         }
 
         #region Player Session Info Function
@@ -164,7 +165,7 @@ namespace SevenSeas
         {
             //Debug.Log("Saving player session to: " + playerSessionFilePath);
 
-            EndGameSession = false;
+          
 
             JsonFileHelper.SaveToFile(playerSessionFilePath, playerInfoSession);
 
@@ -173,13 +174,13 @@ namespace SevenSeas
 #endif  
         }
        
-        public void ClearPlayerSession()
+         void ClearPlayerSession()
         {
             playerInfoSession.ResetData(maxPlayerHealth);
-            EndGameSession = true;
+            
         }
 
-        public void LoadPlayerSession()
+         void LoadPlayerSession()
         {
             playerInfoSession = JsonFileHelper.LoadFromFile<PlayerInfoSession>(playerSessionFilePath) as PlayerInfoSession;
 
@@ -260,17 +261,37 @@ namespace SevenSeas
 #endif  
         }
 
-        public void ClearBattleSession()
+         void ClearBattleSession()
         {
             battleInfoSession.ResetData();
         }
 
-        public void LoadBattleSession()
+        void LoadBattleSession()
         {
-
+            battleInfoSession = JsonFileHelper.LoadFromFile<BattleInfoSession>(battleSessionFilePath) as BattleInfoSession;
         }
 
         #endregion
+
+        public void ClearGameSession()
+        {
+            ClearPlayerSession();
+            ClearBattleSession();
+            EndGameSession = true;
+        }
+
+        public void SaveGameSession()
+        {
+            SavePlayerSession();
+            SaveGameSession();
+            EndGameSession = false;
+        }
+
+        public void LoadGameSession()
+        {
+            LoadPlayerSession();
+            LoadBattleSession();
+        }
     }
 }
 

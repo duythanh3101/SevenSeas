@@ -88,8 +88,7 @@ namespace SevenSeas
 
         public void GameLose()
        {
-           GameSessionInfoManager.Instance.ClearPlayerSession();
-
+        
            SoundManager.Instance.StopMusic();
            SoundManager.Instance.PlayLoseSound();
 

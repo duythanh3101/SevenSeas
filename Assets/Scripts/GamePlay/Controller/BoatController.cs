@@ -201,6 +201,9 @@ namespace SevenSeas
 
         protected virtual void GetDestroy()
         {
+            if (BoatState == BoatState.Destroyed)
+                return;
+
             BoatState = BoatState.Destroyed;
 
             //Effect and sound
@@ -210,7 +213,9 @@ namespace SevenSeas
             //SpawnSkull();
             MapConstantProvider.Instance.SpawnUnitOnDestroyedObject(skullPrefab, transform.position, gameObject);
 
-            Destroy(gameObject);
+
+            isometricModel.SetActive(false);
+           
         }
 
         protected void SpawnSkull()

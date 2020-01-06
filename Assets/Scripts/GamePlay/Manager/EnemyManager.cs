@@ -23,8 +23,27 @@ namespace SevenSeas
            }
 
             EnemyController.OnBoatActivityCompleted += EnemyController_OnBoatActivityCompleted;
-            
+            EnemyController.OnEnemyDestroyed += EnemyController_OnEnemyDestroyed;
         }
+
+       private void EnemyController_OnEnemyDestroyed(EnemyController enemyController)
+       {
+           CurrentEnemyCount--;
+           //Debug.Log("Current enemy count: " + CurrentEnemyCount);
+           //Debug.Log("destroy: " + enemyController.gameObject);
+           Destroy(enemyController.gameObject, 0.02f);
+           if (CurrentEnemyCount == 0)
+           {
+               Invoke("CheckForGameWin", 0.01f);
+               
+           }
+       }
+
+        void CheckForGameWin()
+       {
+           if (GameSessionInfoManager.Instance.playerInfoSession.playerHealth > 0)
+               GameManager.Instance.GameWin();
+       }
 
         void Start()
        {
@@ -35,6 +54,7 @@ namespace SevenSeas
         void OnDestroy()
        {
            EnemyController.OnBoatActivityCompleted -= EnemyController_OnBoatActivityCompleted;
+           EnemyController.OnEnemyDestroyed -= EnemyController_OnEnemyDestroyed;
            
        }
 
@@ -60,20 +80,6 @@ namespace SevenSeas
           {
               currentChangeTurn = 0;// this will be controled by the effect manager
           }
-       }
-
-       public void UpdateEnemyCount()
-       {
-           CurrentEnemyCount--;
-           if (CurrentEnemyCount <= 0 )
-           {
-
-               
-               if (GameSessionInfoManager.Instance.playerInfoSession.playerHealth > 0)
-                   GameManager.Instance.GameWin();
-              
-               CurrentEnemyCount = 0;
-           }
        }
     }
 }

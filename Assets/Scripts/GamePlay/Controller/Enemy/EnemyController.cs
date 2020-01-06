@@ -7,6 +7,7 @@ namespace SevenSeas
 {
     public class EnemyController : BoatController
     {
+        public static System.Action<EnemyController> OnEnemyDestroyed = delegate { };
 
         [SerializeField]
         protected int destroyedByBoatScore = 2;
@@ -49,10 +50,11 @@ namespace SevenSeas
             }
 
         }
+
+        bool destroyed = false;
         private void OnTriggerEnter2D(Collider2D other)
         {
-            bool isDestroy = other.CompareTag("Projectile") || other.CompareTag("Obstacle") || other.CompareTag("PlayerShip") || other.CompareTag("Enemy");
-
+           
             if (other.CompareTag("Projectile"))
             {
                 
@@ -68,19 +70,23 @@ namespace SevenSeas
             }
 
             
-            if (isDestroy)
+            if (BoatState == BoatState.Destroyed && !destroyed)
             {
-
+                //Debug.Log("Update data score, collide with: " + other.tag );
                 //Update data for result
                 GameSessionInfoManager.Instance.UpdateScore(destroyScore);
                 GameSessionInfoManager.Instance.UpdatePirateSunk();
 
-                EnemyManager.Instance.UpdateEnemyCount();
-
+                destroyed = true;
+                if (OnEnemyDestroyed != null)
+                    OnEnemyDestroyed(this);
+           
             }
                
         }
 
+       
+       
         protected override void PlayMovementSound()
         {
             SoundManager.Instance.PlayEnemyMovementSound();
@@ -90,10 +96,14 @@ namespace SevenSeas
         {
             destroyScore = normalDestroyScore;
             base.GetDestroy();
+            
         }
 
         void DestroyByObstacle()
         {
+            if (BoatState == BoatState.Destroyed)
+                return;
+
             BoatState = BoatState.Destroyed;
 
             EffectManager.Instance.SpawnEffect(EffectManager.Instance.explosion, transform.position, Quaternion.identity);
@@ -101,11 +111,16 @@ namespace SevenSeas
 
             destroyScore = normalDestroyScore;
 
-            Destroy(gameObject);
+           
+            isometricModel.SetActive(false);
+            
         }
 
         void DestroyByBoat()
         {
+            if (BoatState == BoatState.Destroyed)
+                return;
+
             BoatState = BoatState.Destroyed;
 
             EffectManager.Instance.SpawnEffect(EffectManager.Instance.explosion, transform.position, Quaternion.identity);
@@ -114,7 +129,9 @@ namespace SevenSeas
 
             destroyScore = destroyedByBoatScore;
 
-            Destroy(gameObject);
+            
+            isometricModel.SetActive(false);
+           
         }
 
         protected override void Start()

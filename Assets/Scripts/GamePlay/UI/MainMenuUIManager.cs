@@ -78,7 +78,7 @@ namespace SevenSeas
         {
           
             //Load from json file to player info session
-            GameSessionInfoManager.Instance.LoadPlayerSession();
+            GameSessionInfoManager.Instance.LoadGameSession();
 
             //Load Play Scene
             SceneLoader.Instance.LoadPlayScene();
@@ -92,7 +92,7 @@ namespace SevenSeas
             menuLeftUIController.enabled = true;
 
             //End current session
-            GameSessionInfoManager.Instance.ClearPlayerSession();
+            GameSessionInfoManager.Instance.ClearGameSession();
 
             //Load play scene
             SceneLoader.Instance.LoadPlayScene();
@@ -119,10 +119,6 @@ namespace SevenSeas
 
             SceneLoader.Instance.ExitGame();
         }
-
-        
-
-
     }
 
 }
