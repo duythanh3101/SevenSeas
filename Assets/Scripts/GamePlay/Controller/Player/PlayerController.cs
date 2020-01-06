@@ -124,7 +124,6 @@ namespace SevenSeas
         public void OnPlayerTeleporting()
         {
             Teleport();
-
         }
 
         #endregion

@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Assets.Scripts.Extensions.Utils;
-
+using System;
+using Random = UnityEngine.Random;
 
 namespace SevenSeas
 {
@@ -454,7 +455,39 @@ namespace SevenSeas
             }
         }
 
+        public void SpawnEnemyAtPosition(ObjectType type, Vector2 position, Quaternion direction)
+        {
+            GameObject go = GetPrefabByType(type);
+            if (go != null)
+            {
+                go.transform.rotation = direction;
+                if (type == ObjectType.AdvanceEnemy || type == ObjectType.NormalEnemy || type == ObjectType.FiringEnemy)
+                {
+                    LayoutUnitAtSpecific(go, position, enemyParent);
+                }
+            }
+          
+        }
 
+        private GameObject GetPrefabByType(ObjectType type)
+        {
+            switch (type)
+            {
+                case ObjectType.None:
+                    break;
+                case ObjectType.NormalEnemy:
+                    return enemiesPrefab[0];
+                case ObjectType.FiringEnemy:
+                    return enemiesPrefab[2];
+                case ObjectType.AdvanceEnemy:
+                    return enemiesPrefab[1];
+                case ObjectType.Player:
+                    return playerPrefab;
+                default:
+                    break;
+            }
+            return null;
+        }
     }
 }
 

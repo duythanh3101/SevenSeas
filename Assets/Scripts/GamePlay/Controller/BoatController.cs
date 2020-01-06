@@ -97,14 +97,13 @@ namespace SevenSeas
         {
             if (BoatState == BoatState.MoveAndRotate)
                 return;
-
+            
             //Get input: target position, target direction
             targetDirection = dir;
             targetPosition = (Vector2)transform.position + MapConstantProvider.Instance.TileSize * UtilMapHelpers.GetDirectionVector(targetDirection);
 
             DataObjectMove obj = new DataObjectMove(Type, (Vector2)transform.position, isometricModel.transform.localRotation, currentDirection);
             allPreviousMoves.Push(obj);
-            Debug.Log(currentDirection);
 
             PlayMovementSound();
 
@@ -246,11 +245,19 @@ namespace SevenSeas
                 return;
 
             if (allPreviousMoves.Count < 1)
+            {
+                Debug.Log("Can't undo");
                 return;
+            }
 
             DataObjectMove previousMove = allPreviousMoves.Pop();
 
             MoveUndo(previousMove);
+        }
+
+        public void OnResetUndoList()
+        {
+            allPreviousMoves.Clear();
         }
 
         private void MoveUndo(DataObjectMove previousMove)

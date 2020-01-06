@@ -7,8 +7,9 @@ namespace SevenSeas
 {
     public class NormalEnemyController : EnemyController
     {
-        public NormalEnemyController()
+        protected override void Awake()
         {
+            base.Awake();
             Type = ObjectType.NormalEnemy;
         }
 
