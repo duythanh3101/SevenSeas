@@ -33,7 +33,7 @@ namespace SevenSeas
         [SerializeField]
         private float moveAndRotateTime = 0.3f;
         [SerializeField]
-        private BoatState boatState = BoatState.Idle;
+        protected BoatState boatState = BoatState.Idle;
 
         [HideInInspector]
         protected ObjectType Type;
@@ -75,6 +75,7 @@ namespace SevenSeas
             Type = ObjectType.None;
             allPreviousMoves = new Stack<DataObjectMove>();
             Observer.Instance.RegisterListener(ObserverEventID.OnUndo, (param) => OnUndo());
+            Observer.Instance.RegisterListener(ObserverEventID.OnResetListUndo, (param) => OnResetUndoList());
             TurnBasedSystemManager.BattleStateChanged += TurnBasedSystemManager_BattleStateChanged;
         }
 
@@ -97,13 +98,13 @@ namespace SevenSeas
         {
             if (BoatState == BoatState.MoveAndRotate)
                 return;
-            
+
+            DataObjectMove obj = new DataObjectMove(Type, (Vector2)transform.position, transform.rotation, isometricModel.transform.localRotation, currentDirection);
+            allPreviousMoves.Push(obj);
+
             //Get input: target position, target direction
             targetDirection = dir;
             targetPosition = (Vector2)transform.position + MapConstantProvider.Instance.TileSize * UtilMapHelpers.GetDirectionVector(targetDirection);
-
-            DataObjectMove obj = new DataObjectMove(Type, (Vector2)transform.position, isometricModel.transform.localRotation, currentDirection);
-            allPreviousMoves.Push(obj);
 
             PlayMovementSound();
 
@@ -227,6 +228,7 @@ namespace SevenSeas
 
             //SpawnSkull();
             MapConstantProvider.Instance.SpawnUnitOnDestroyedObject(skullPrefab, transform.position, gameObject);
+            Observer.Instance.PostEvent(ObserverEventID.OnCantUndo);
 
             Destroy(gameObject);
         }
@@ -241,12 +243,8 @@ namespace SevenSeas
 
         private void Undo()
         {
-            if (allPreviousMoves == null)
-                return;
-
-            if (allPreviousMoves.Count < 1)
+            if (allPreviousMoves == null || allPreviousMoves.Count < 1 || boatState == BoatState.Destroyed)
             {
-                Debug.Log("Can't undo");
                 return;
             }
 
@@ -260,20 +258,15 @@ namespace SevenSeas
             allPreviousMoves.Clear();
         }
 
-        private void MoveUndo(DataObjectMove previousMove)
+        protected void MoveUndo(DataObjectMove previousMove)
         {
-            if (boatState == BoatState.Destroyed)
-            {
-                //spawn prefab by type prefabs of gameobject
-               
-                return;
-            }
-
             transform.position = previousMove.PreviousPosition;
 
             currentDirection = previousMove.PreviousDirection;
 
-            isometricModel.transform.localRotation = previousMove.PreviousQuaternion;
+            transform.rotation = previousMove.PreviousRotation;
+
+            isometricModel.transform.localRotation = previousMove.PreviousLocalRotation;
         }
     }
 }

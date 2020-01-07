@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Assets.Scripts.Extensions.Utils;
+using BaseSystems.Observer;
 
 namespace SevenSeas
 {
@@ -100,6 +101,7 @@ namespace SevenSeas
             SoundManager.Instance.PlayDestroyShipSound();
 
             destroyScore = normalDestroyScore;
+            Observer.Instance.PostEvent(ObserverEventID.OnCantUndo);
 
             Destroy(gameObject);
         }
@@ -113,6 +115,7 @@ namespace SevenSeas
             MapConstantProvider.Instance.SpawnUnitOnDestroyedObject(skullPrefab, transform.position, gameObject);
 
             destroyScore = destroyedByBoatScore;
+            Observer.Instance.PostEvent(ObserverEventID.OnCantUndo);
 
             Destroy(gameObject);
         }

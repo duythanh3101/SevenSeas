@@ -5,17 +5,18 @@ using UnityEngine;
 
 public class DataObjectMove
 {
-    public ObjectType Type { get; set; }
-    public Vector2 PreviousPosition { get; set; }
-    public Quaternion PreviousQuaternion { get; set; }
-    public Direction PreviousDirection { get; set; }
-
-    public DataObjectMove(ObjectType type, Vector2 previousPosition, Quaternion previousQuaternion, Direction previousDirection)
+    public DataObjectMove(ObjectType type, Vector2 previousPosition, Quaternion previousRotation, Quaternion previousLocalRotation, Direction previousDirection)
     {
         Type = type;
         PreviousPosition = previousPosition;
-        PreviousQuaternion = previousQuaternion;
+        PreviousRotation = previousRotation;
+        PreviousLocalRotation = previousLocalRotation;
         PreviousDirection = previousDirection;
     }
 
+    public ObjectType Type { get; set; }
+    public Vector2 PreviousPosition { get; set; }
+    public Quaternion PreviousRotation { get; set; }
+    public Quaternion PreviousLocalRotation { get; set; }
+    public Direction PreviousDirection { get; set; }
 }

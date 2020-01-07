@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using MainGame;
 using Assets.Scripts.Extensions.Utils;
+using BaseSystems.Observer;
 
 namespace SevenSeas
 {
@@ -119,11 +120,13 @@ namespace SevenSeas
         public void OnPlayerDestroyed()
         {
             GetDestroy();
+            Observer.Instance.PostEvent(ObserverEventID.OnCantUndo);
         }
 
         public void OnPlayerTeleporting()
         {
             Teleport();
+            Observer.Instance.PostEvent(ObserverEventID.OnCantUndo);
         }
 
         #endregion
