@@ -53,10 +53,12 @@ namespace SevenSeas
         public Vector2 CenterPosition { get { return centerPosition; } }
         public Vector2 PlayerPos { get { return dynamicObjectDicts[player]; } }
 
+        //Collections
         public Dictionary<GameObject, Vector2> staticObjectDicts = new Dictionary<GameObject, Vector2>();
         public Dictionary<GameObject, Vector2> dynamicObjectDicts = new Dictionary<GameObject, Vector2>();
 
         private List<Vector2> possiblePositions = new List<Vector2>(); // The available position from the first creating level
+        private List<Vector2> whirlpoolPosition = new List<Vector2>();
 
         //Cache value
         private SpriteRenderer backgroundSR;
@@ -65,6 +67,7 @@ namespace SevenSeas
         private Vector2 centerPosition;
 
         private int centerNumber;
+        private int maxWhirlpoolCount;
 
         void Awake()
         {
@@ -165,21 +168,28 @@ namespace SevenSeas
 
         void SpawnWhirlpools()
         {
-            //Top left
-            Vector2 pos = new Vector2(centerPosition.x - BackgroundSize.x /2  + TileSize.x / 2, centerPosition.y + BackgroundSize.y / 2 - TileSize.y / 2);
-            LayoutUnitAtSpecific(whirlpoolPrefab, pos,whirlpoolParent);
+            if (maxWhirlpoolCount == 4)
+            {
+                for (int i = 0; i < maxWhirlpoolCount;i++)
+                {
+                    LayoutUnitAtSpecific(whirlpoolPrefab, whirlpoolPosition[i], whirlpoolParent);
+                }
+            }
+            else
+            {
+                List<int> whirlpoolIndex = new List<int>();
+                for (int i  = 0; i < whirlpoolPosition.Count; i++)
+                {
+                    whirlpoolIndex.Add(i);
+                }
 
-            //Top right
-            pos = new Vector2(centerPosition.x + BackgroundSize.x / 2 - TileSize.x / 2, centerPosition.y + BackgroundSize.y / 2 - TileSize.y / 2);
-            LayoutUnitAtSpecific(whirlpoolPrefab, pos, whirlpoolParent);
-
-            //Bottom left
-            pos = new Vector2(centerPosition.x - BackgroundSize.x / 2 + TileSize.x / 2, centerPosition.y - BackgroundSize.y / 2 + TileSize.y / 2);
-            LayoutUnitAtSpecific(whirlpoolPrefab, pos, whirlpoolParent);
-             
-            //Bottom right
-            pos = new Vector2(centerPosition.x + BackgroundSize.x / 2 - TileSize.x / 2, centerPosition.y - BackgroundSize.y / 2 + TileSize.y / 2);
-            LayoutUnitAtSpecific(whirlpoolPrefab, pos, whirlpoolParent);
+                for (int i = 0; i < maxWhirlpoolCount;i++)
+                {
+                    int randomIndex = whirlpoolIndex[Random.Range(0, whirlpoolIndex.Count)];
+                    LayoutUnitAtSpecific(whirlpoolPrefab, whirlpoolPosition[randomIndex], whirlpoolParent);
+                    whirlpoolIndex.Remove(randomIndex);
+                }
+            }
 
         }
 
@@ -225,6 +235,28 @@ namespace SevenSeas
 
             centerNumber = (int)Mathf.Sqrt(CommonConstants.NUMBER_OF_CELLS) / 2;
             centerPosition = backgroundMap.transform.position;
+
+            maxWhirlpoolCount = GameSessionInfoManager.Instance.gameMode == GameMode.Easy ? 4 : 3;
+
+            //Whirldpools
+            if (whirlpoolPosition.Count == 0)
+            {
+                //Top left
+                Vector2 pos = new Vector2(centerPosition.x - BackgroundSize.x / 2 + TileSize.x / 2, centerPosition.y + BackgroundSize.y / 2 - TileSize.y / 2);
+                whirlpoolPosition.Add(pos);
+
+                //Top right
+                pos = new Vector2(centerPosition.x + BackgroundSize.x / 2 - TileSize.x / 2, centerPosition.y + BackgroundSize.y / 2 - TileSize.y / 2);
+                whirlpoolPosition.Add(pos);
+
+                pos = new Vector2(centerPosition.x - BackgroundSize.x / 2 + TileSize.x / 2, centerPosition.y - BackgroundSize.y / 2 + TileSize.y / 2);
+                whirlpoolPosition.Add(pos);
+
+                //Bottom right
+                pos = new Vector2(centerPosition.x + BackgroundSize.x / 2 - TileSize.x / 2, centerPosition.y - BackgroundSize.y / 2 + TileSize.y / 2);
+                whirlpoolPosition.Add(pos);
+
+            }
         }
 
         bool IsStaticObject(string tag)

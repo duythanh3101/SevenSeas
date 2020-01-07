@@ -71,6 +71,8 @@ namespace SevenSeas
             if (blockElements)
                 return;
 
+            GameSessionInfoManager.Instance.gameMode = GameMode.Easy;
+            GameSessionInfoManager.Instance.SetPlayerMaxHealth();
         }
 
         //Load last game session
@@ -104,12 +106,17 @@ namespace SevenSeas
             if (blockElements)
                 return;
 
+            GameSessionInfoManager.Instance.gameMode = GameMode.Hard;
+            GameSessionInfoManager.Instance.SetPlayerMaxHealth();
         }
 
         private void chooseLevelUIController_OnAverageButtonClick()
         {
             if (blockElements)
                 return;
+
+            GameSessionInfoManager.Instance.gameMode = GameMode.Medium;
+            GameSessionInfoManager.Instance.SetPlayerMaxHealth();
         }
 
         private void chooseLevelUIController_OnQuitToWindowButtonClick()

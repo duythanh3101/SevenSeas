@@ -4,6 +4,12 @@ using UnityEngine;
 
 namespace SevenSeas
 {
+    public enum GameMode
+    {
+        Easy,
+        Medium,
+        Hard
+    }
 
     public class GameSessionInfoManager : MonoBehaviour
     {
@@ -11,11 +17,15 @@ namespace SevenSeas
 
         private static readonly string PLAYER_SESSION_FILE_NAME = "player_session.json";
         private static readonly string BATTLE_SESSION_FILE_NAME = "battle_session.json";
+        private static readonly string LEVEL_FILE_NAME = "levels.csv";
 
         private static readonly string GAME_SESSION_KEY = "GAME_SESSION";
       
         private static string playerSessionFilePath;
         private static string battleSessionFilePath;
+        private static string levelSessionFilePath;
+
+        public GameMode gameMode;
 
         public bool EndGameSession
         {
@@ -33,17 +43,18 @@ namespace SevenSeas
         [System.Serializable]
         public class PlayerInfoSession
         {
+            public int totalLevelCount;
             public int levelInCheckPoint;
             public int playerScore;
             public int piratesSunk;
             public int checkPoint;
             public int treasureFound;
             public int playerHealth;
-
            
 
             public void ResetData(int pHealth)
             {
+                totalLevelCount = 0;
                 levelInCheckPoint = 1;
                 playerScore = 0;
                 piratesSunk = 0;
@@ -110,8 +121,8 @@ namespace SevenSeas
 
             playerSessionFilePath = System.IO.Path.Combine(Application.dataPath,"Data", PLAYER_SESSION_FILE_NAME);
             battleSessionFilePath = System.IO.Path.Combine(Application.dataPath, "Data", BATTLE_SESSION_FILE_NAME);
+            levelSessionFilePath = System.IO.Path.Combine(Application.dataPath, "Data", LEVEL_FILE_NAME);
 
-            
         }
 
         void Start()
@@ -156,17 +167,9 @@ namespace SevenSeas
             
         }
 
-        public void UpdateCheckPoint()
-        {
-            playerInfoSession.checkPoint++;
-        }
-
         void SavePlayerSession()
         {
             //Debug.Log("Saving player session to: " + playerSessionFilePath);
-
-          
-
             JsonFileHelper.SaveToFile(playerSessionFilePath, playerInfoSession);
 
 #if UNITY_EDITOR
@@ -193,12 +196,43 @@ namespace SevenSeas
         
         public void UpdateLevelInCheckPoint()
         {
+            playerInfoSession.totalLevelCount++;
             playerInfoSession.levelInCheckPoint++;
 
             if (playerInfoSession.levelInCheckPoint > CommonConstants.MAX_LEVEL_PER_CHECKPOINT)
             {
                 playerInfoSession.levelInCheckPoint = 1;
+                UpdateCheckPoint();
             }
+        }
+
+        public void UpdateCheckPoint()
+        {
+            playerInfoSession.checkPoint++;
+            if (playerInfoSession.checkPoint > CommonConstants.MAX_CHECKPOINT)
+            {
+                //Finish game action goes here
+
+            }
+
+        }
+
+        public void SetPlayerMaxHealth()
+        {
+            switch (gameMode)
+            {
+                case GameMode.Easy:
+                    maxPlayerHealth = 3;
+                    break;
+                case GameMode.Medium:
+                    maxPlayerHealth = 2;
+                    break;
+                case GameMode.Hard:
+                    maxPlayerHealth = 2;
+                    break;
+            }
+
+            playerInfoSession.playerHealth = maxPlayerHealth;
         }
         #endregion
 
@@ -262,7 +296,6 @@ namespace SevenSeas
             UnityEditor.AssetDatabase.Refresh();
 #endif  
         }
-
          void ClearBattleSession()
         {
             battleInfoSession.ResetData();
