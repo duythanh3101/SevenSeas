@@ -39,16 +39,39 @@ public class SoundManager : MonoBehaviour
     public Sound firingCanonball;
     public Sound winSound;
     public Sound loseSound;
+    public Sound buttonClick;
 
     [SerializeField]
-    private AudioSource bgmSource;
+    public AudioSource bgmSource;
     [SerializeField]
-    private AudioSource sfxSource;
+    public AudioSource sfxSource;
     [SerializeField]
     private AudioSource specialSfxSource;
 
     private PlayingState musicState = PlayingState.Stopped;
 
+    private static readonly string MUSIC_VOLUMN_KEY = "MUSIC_VOLUMN";
+    private static readonly string SFX_VOLUMN_KEY = "SFX_VOLUMN";
+
+    public float MusicVolumn
+    {
+        get => PlayerPrefs.GetFloat(MUSIC_VOLUMN_KEY, 100);
+        private set
+        {
+            PlayerPrefs.SetFloat(MUSIC_VOLUMN_KEY, value);
+            PlayerPrefs.Save();
+        }
+    }
+
+    public float SFXVolumn
+    {
+        get => PlayerPrefs.GetFloat(SFX_VOLUMN_KEY, 100);
+        private set
+        {
+            PlayerPrefs.SetFloat(SFX_VOLUMN_KEY, value);
+            PlayerPrefs.Save();
+        }
+    }
 
 
     void Awake()
@@ -183,5 +206,30 @@ public class SoundManager : MonoBehaviour
     public void PlayWinSound()
     {
         PlaySound(winSound);
+    }
+
+    public void setMusicVolume(float vol)
+    {
+        bgmSource.volume = vol;
+    }
+
+    public void setSFXVolume(float vol)
+    {
+        sfxSource.volume = vol;
+    }
+
+    public void ClickButton()
+    {
+        PlaySound(buttonClick);
+    } 
+
+    public void SaveMusicVolumn(float value)
+    {
+        MusicVolumn = value;
+    }
+
+    public void SaveSFXVolumn(float value)
+    {
+        SFXVolumn = value;
     }
 }
