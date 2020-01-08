@@ -19,27 +19,30 @@ namespace SevenSeas
         private static readonly string BATTLE_SESSION_FILE_NAME = "battle_session.json";
         private static readonly string LEVEL_FILE_NAME = "levels.csv";
 
-        private static readonly string GAME_SESSION_KEY = "GAME_SESSION";
-      
+        private static readonly string LOAD_PREVIOUS_SESSION_KEY = "LOAD_PREVIOUS_SESSION";
+       
+
+
         private static string playerSessionFilePath;
         private static string battleSessionFilePath;
         private static string levelSessionFilePath;
 
         public GameMode gameMode;
 
-        public bool EndGameSession
+        public bool LoadPreviousSession
         {
             get
             {
-                return PlayerPrefs.GetInt(GAME_SESSION_KEY, 1) == 1;
+                return PlayerPrefs.GetInt(LOAD_PREVIOUS_SESSION_KEY, 0) == 1;
             }
             private set
             {
-                PlayerPrefs.SetInt(GAME_SESSION_KEY, value ? 1 : 0 );
+                PlayerPrefs.SetInt(LOAD_PREVIOUS_SESSION_KEY, value ? 1 : 0);
                 PlayerPrefs.Save();
             }
         }
 
+       
         [System.Serializable]
         public class PlayerInfoSession
         {
@@ -322,20 +325,26 @@ namespace SevenSeas
         {
             ClearPlayerSession();
             ClearBattleSession();
-            EndGameSession = true;
+            LoadPreviousSession = false;
+        }
+
+        public  void SetLoadPrevSession(bool isTrue)
+        {
+            LoadPreviousSession = isTrue;
         }
 
         public void SaveGameSession()
         {
             SavePlayerSession();
             SaveBattleSession();
-            EndGameSession = false;
+            LoadPreviousSession = true;
         }
 
         public void LoadGameSession()
         {
             LoadPlayerSession();
             LoadBattleSession();
+            LoadPreviousSession = true;
         }
 
         public LevelInfo GetCurrentLevelInfo()

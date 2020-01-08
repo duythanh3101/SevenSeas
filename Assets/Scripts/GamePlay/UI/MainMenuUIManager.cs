@@ -53,7 +53,7 @@ namespace SevenSeas
             if (blockElements)
                 return;
 
-            if (!GameSessionInfoManager.Instance.EndGameSession)
+            if (GameSessionInfoManager.Instance.LoadPreviousSession)
             {
                 continueUIController.Show();
                 menuLeftUIController.enabled = false;

@@ -116,19 +116,19 @@ namespace SevenSeas
             //Debug.Log(GameSessionInfoManager.Instance.EndGameSession);
             //SetupLevel(currentLevel);
 
-            if (GameSessionInfoManager.Instance.EndGameSession)
+            if (GameSessionInfoManager.Instance.LoadPreviousSession)
             {
-                //Init level data getingfrom the game session info manager
+                LoadLevels();
+            }
+            else
+            {
+                //Init level data geting from the game session info manager
                 InitLevelData();
 
                 //Create a new scene
                 SetupLevel();
             }
-            else
-            {
-                //Load from previous game session
-                LoadLevels();
-            }
+
             
         }
 

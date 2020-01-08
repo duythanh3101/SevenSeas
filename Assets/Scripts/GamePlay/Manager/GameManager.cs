@@ -142,6 +142,7 @@ namespace SevenSeas
         
         public void GoToNextLevel()
         {
+            GameSessionInfoManager.Instance.SetLoadPrevSession(false);
             //This level in checkpoint has been updapte to the next level, 
             if (GameSessionInfoManager.Instance.playerInfoSession.levelInCheckPoint >= CommonConstants.MAX_LEVEL_PER_CHECKPOINT)
             {
