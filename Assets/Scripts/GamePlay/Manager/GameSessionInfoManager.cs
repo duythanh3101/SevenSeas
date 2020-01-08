@@ -222,6 +222,11 @@ namespace SevenSeas
 
         }
 
+        public void UpdateTreasureFound()
+        {
+            playerInfoSession.treasureFound++;
+        }
+
         public void SetPlayerMaxHealth()
         {
             switch (gameMode)
