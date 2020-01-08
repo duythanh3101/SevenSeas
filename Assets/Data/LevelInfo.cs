@@ -24,9 +24,9 @@ public class LevelInfo
         firingEnemyCount = firingEnemy;
     }
 
-    public static LevelInfo Parse(List<string> data, int rowIndex)
+    public static LevelInfo Parse(string data)
     {
-        string[] col = data[rowIndex].Split(';');
+        string[] col = data.Split(';');
         return new LevelInfo(int.Parse(col[0]),int.Parse(col[1]),int.Parse(col[2]),int.Parse(col[3]),int.Parse(col[4]),int.Parse(col[5]),int.Parse(col[6]));
 
     }

@@ -110,8 +110,11 @@ namespace SevenSeas
 
             if (GameSessionInfoManager.Instance.EndGameSession)
             {
+                //Init level data getingfrom the game session info manager
+                //InitLevelData();
+
                 //Create a new scene
-                SetupLevel(currentLevel);
+                SetupLevel();
             }
             else
             {
@@ -156,7 +159,18 @@ namespace SevenSeas
             }
         }
      
-        void SetupLevel(int level)
+
+        void InitLevelData()
+        {
+            var levelInfo = GameSessionInfoManager.Instance.GetCurrentLevelInfo();
+            islandCount = levelInfo.islandCount;
+            normalEnemyCount = levelInfo.normalEnemyCount;
+            advanceEnemyCount = levelInfo.advanceEnemyCount;
+            firingEnemyCount = levelInfo.firingEnemyCount;
+            
+        }
+
+        void SetupLevel()
         {
             //Precalculate the number of islands, whirlpools, enemies base on level
 

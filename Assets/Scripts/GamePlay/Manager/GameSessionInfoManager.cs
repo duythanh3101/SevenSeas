@@ -109,6 +109,9 @@ namespace SevenSeas
         [HideInInspector]
         public BattleInfoSession battleInfoSession;
 
+
+        private List<string> levelDatas = new List<string>();
+
         void Awake()
         {
             if (Instance == null)
@@ -128,6 +131,7 @@ namespace SevenSeas
         void Start()
         {
             playerInfoSession.ResetData(maxPlayerHealth);
+            levelDatas = CSVFileHelper.LoadDataFromFile(levelSessionFilePath);
 
         }
 
@@ -326,6 +330,11 @@ namespace SevenSeas
         {
             LoadPlayerSession();
             LoadBattleSession();
+        }
+
+        public LevelInfo GetCurrentLevelInfo()
+        {
+            return LevelInfo.Parse(levelDatas[playerInfoSession.totalLevelCount - 1]);
         }
     }
 }
