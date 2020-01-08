@@ -58,5 +58,7 @@
         OnSpawnerStaticObject,
 
         OnUndo,
+        OnResetListUndo,
+        OnCantUndo
     }
 }
