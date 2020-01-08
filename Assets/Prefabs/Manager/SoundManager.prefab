@@ -213,6 +213,9 @@ MonoBehaviour:
   bgmSource: {fileID: 7247641401471862353}
   sfxSource: {fileID: 7247641401443819713}
   specialSfxSource: {fileID: 7247641400745863129}
+  buttonClick:
+    clip: {fileID: 8300000, guid: e68214713fe51b54990fc053556c18d8, type: 3}
+    simultaneousPlayCount: 0
   musicState: 2
 --- !u!1 &7247641401443819715
 GameObject:
