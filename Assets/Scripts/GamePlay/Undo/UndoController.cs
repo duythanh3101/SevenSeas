@@ -7,8 +7,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UndoController : Singleton<UndoController>
+public class UndoController: MonoBehaviour
 {
+    public static UndoController Instance = null;
+
+
     public bool isAllowedUndo;
 
     public Text WhateverTextThingy;  //Add reference to UI Text here via the inspector
@@ -22,9 +25,13 @@ public class UndoController : Singleton<UndoController>
         timeWhenDisappear = Time.time + timeToAppear;
     }
 
-    protected override void Awake()
+    void Awake()
     {
         isAllowedUndo = true;
+        if (Instance == null)
+            Instance = this;
+        else if (Instance != this)
+            DestroyImmediate(gameObject);
 
         Observer.Instance.RegisterListener(ObserverEventID.OnCantUndo, (param) => OnCantUndo());
     }
@@ -48,7 +55,7 @@ public class UndoController : Singleton<UndoController>
     {
         if (IsAllowedUndo() && GameManager.Instance.GameState == GameState.Playing)
         {
-            Debug.Log("Allow");
+            //Debug.Log("Allow");
             this.PostEvent(ObserverEventID.OnUndo);
         }
         else

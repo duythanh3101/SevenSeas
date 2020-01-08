@@ -86,7 +86,7 @@ namespace SevenSeas
 
         void OnUndoButtonClick()
         {
-
+            UndoController.Instance.Undo();
         }
 
         void OnExitButtonClick()
@@ -170,7 +170,16 @@ namespace SevenSeas
         public void SetData(GameSessionInfoManager.PlayerInfoSession session)
         {
             scoreText.text = session.playerScore.ToString();
-            levelText.text = (session.levelInCheckPoint + 1).ToString();
+
+            if (session.levelInCheckPoint >= CommonConstants.MAX_LEVEL_PER_CHECKPOINT)
+            {
+                levelText.text = "1";
+            }
+            else
+            {
+                levelText.text = (session.levelInCheckPoint + 1).ToString();
+            }
+            
         }
     }
 
