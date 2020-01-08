@@ -141,11 +141,11 @@ namespace SevenSeas
         
         public void GoToNextLevel()
         {
-            if (GameSessionInfoManager.Instance.playerInfoSession.levelInCheckPoint > CommonConstants.MAX_LEVEL_PER_CHECKPOINT)
-            {
-                SceneLoader.Instance.LoadTreasureMapScene();
-            }
-            else
+            //if (GameSessionInfoManager.Instance.playerInfoSession.levelInCheckPoint > CommonConstants.MAX_LEVEL_PER_CHECKPOINT)
+            //{
+            //    SceneLoader.Instance.LoadTreasureMapScene();
+            //}
+            //else
             {
                 RestartGame();
             }

@@ -294,13 +294,13 @@ namespace SevenSeas
                 if (currentPlayerHealth > 0)
                 {
                     //wait for end of frame for updating enemy count, if Game is win, then we dont have to respawn
-                    yield return new WaitForSeconds(0.01f);
+                    yield return new WaitForSeconds(0.015f);
                     var gameState = GameManager.Instance.GameState;
+                    //Debug.Log("game state from player controller: " + gameState);
                     if (gameState == GameState.Playing)
                     {
                         Respawn();
                     }
-
                     else if (gameState == GameState.GameWin)
                     {
                         TogglePlayerInput(false);

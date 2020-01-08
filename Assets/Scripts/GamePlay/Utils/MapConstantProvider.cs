@@ -111,7 +111,7 @@ namespace SevenSeas
             if (GameSessionInfoManager.Instance.EndGameSession)
             {
                 //Init level data getingfrom the game session info manager
-                //InitLevelData();
+                InitLevelData();
 
                 //Create a new scene
                 SetupLevel();

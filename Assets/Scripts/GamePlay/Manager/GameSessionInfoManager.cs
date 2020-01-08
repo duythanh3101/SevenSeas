@@ -55,7 +55,7 @@ namespace SevenSeas
             public void ResetData(int pHealth)
             {
                 totalLevelCount = 0;
-                levelInCheckPoint = 1;
+                levelInCheckPoint = 0;
                 playerScore = 0;
                 piratesSunk = 0;
                 checkPoint = 1;
@@ -159,7 +159,8 @@ namespace SevenSeas
 
                     //Update UI
                     SoundManager.Instance.PlayBonusSound();
-                    UIManager.Instance.IncreaseHealth(playerInfoSession.playerHealth - 1);
+                    //Debug.Log( "Player Health: " + playerInfoSession.playerHealth);
+                    UIManager.Instance.IncreaseHealth(playerInfoSession.playerHealth -1);
                 }
                 
             }
@@ -334,7 +335,7 @@ namespace SevenSeas
 
         public LevelInfo GetCurrentLevelInfo()
         {
-            return LevelInfo.Parse(levelDatas[playerInfoSession.totalLevelCount - 1]);
+            return LevelInfo.Parse(levelDatas[playerInfoSession.totalLevelCount + 1]);
         }
     }
 }

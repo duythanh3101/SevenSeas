@@ -41,6 +41,7 @@ namespace SevenSeas
 
         void CheckForGameWin()
        {
+           //Debug.Log("Game state from enemy: " + GameManager.Instance.GameState);
            if (GameSessionInfoManager.Instance.playerInfoSession.playerHealth > 0)
                GameManager.Instance.GameWin();
        }

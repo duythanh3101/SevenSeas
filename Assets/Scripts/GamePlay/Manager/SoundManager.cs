@@ -59,11 +59,6 @@ public class SoundManager : MonoBehaviour
     public Sound buttonClick;
 
     [SerializeField]
-    public AudioSource bgmSource;
-    [SerializeField]
-    public AudioSource sfxSource;
-
-    [SerializeField]
     private PlayingState musicState = PlayingState.Stopped;
 
     private static readonly string MUSIC_VOLUMN_KEY = "MUSIC_VOLUMN";

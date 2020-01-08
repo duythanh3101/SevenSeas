@@ -95,7 +95,8 @@ namespace SevenSeas
 
         public void IncreaseHealth(int index)
         {
-            if (index == healthCount)
+
+            if (index == 3)
                 return;
 
             //Debug.Log("index: " + index);
