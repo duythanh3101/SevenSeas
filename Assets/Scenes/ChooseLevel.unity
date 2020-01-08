@@ -376,6 +376,37 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4469022164248487596, guid: c6b41d6c463e12c49941ad0749eb798a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4469022164329706076, guid: c6b41d6c463e12c49941ad0749eb798a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4469022165302260058, guid: c6b41d6c463e12c49941ad0749eb798a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4469022165329543899, guid: c6b41d6c463e12c49941ad0749eb798a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4469022165688142161, guid: c6b41d6c463e12c49941ad0749eb798a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4469022166242903036, guid: c6b41d6c463e12c49941ad0749eb798a,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 337a1af63bde7054c8df3e08199a16fb,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c6b41d6c463e12c49941ad0749eb798a, type: 3}
 --- !u!114 &165522299 stripped
@@ -770,6 +801,18 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 4534356863331604037, guid: 4955790ea8bf9a240bd190819aff19bf,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 337a1af63bde7054c8df3e08199a16fb,
+        type: 3}
+    - target: {fileID: 4534356865150428659, guid: 4955790ea8bf9a240bd190819aff19bf,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 337a1af63bde7054c8df3e08199a16fb,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4955790ea8bf9a240bd190819aff19bf, type: 3}
 --- !u!224 &464471824 stripped
@@ -997,6 +1040,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: MenuLeftUI
       objectReference: {fileID: 0}
+    - target: {fileID: 6125826260076633615, guid: 54075053f6b5b11499d886242b2e83bf,
+        type: 3}
+      propertyPath: optionUIController
+      value: 
+      objectReference: {fileID: 206421052}
+    - target: {fileID: 6125826260076633615, guid: 54075053f6b5b11499d886242b2e83bf,
+        type: 3}
+      propertyPath: descriptionUIController
+      value: 
+      objectReference: {fileID: 165522299}
     - target: {fileID: 5881021700558999206, guid: 54075053f6b5b11499d886242b2e83bf,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1102,16 +1155,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 6125826260076633615, guid: 54075053f6b5b11499d886242b2e83bf,
-        type: 3}
-      propertyPath: optionUIController
-      value: 
-      objectReference: {fileID: 206421052}
-    - target: {fileID: 6125826260076633615, guid: 54075053f6b5b11499d886242b2e83bf,
-        type: 3}
-      propertyPath: descriptionUIController
-      value: 
-      objectReference: {fileID: 165522299}
     - target: {fileID: 686373413201567315, guid: 54075053f6b5b11499d886242b2e83bf,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -1142,6 +1185,24 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 686373413468402525, guid: 54075053f6b5b11499d886242b2e83bf,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 337a1af63bde7054c8df3e08199a16fb,
+        type: 3}
+    - target: {fileID: 686373413619327678, guid: 54075053f6b5b11499d886242b2e83bf,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 337a1af63bde7054c8df3e08199a16fb,
+        type: 3}
+    - target: {fileID: 686373414049988706, guid: 54075053f6b5b11499d886242b2e83bf,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 337a1af63bde7054c8df3e08199a16fb,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 54075053f6b5b11499d886242b2e83bf, type: 3}
 --- !u!224 &1736105323 stripped
@@ -1161,11 +1222,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: OptionUI
-      objectReference: {fileID: 0}
-    - target: {fileID: 8595582458938537348, guid: 3bd4b210c87810046ba3467ba6609b5e,
-        type: 3}
-      propertyPath: m_Alpha
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5415145484614338131, guid: 3bd4b210c87810046ba3467ba6609b5e,
         type: 3}
@@ -1271,6 +1327,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8595582458938537348, guid: 3bd4b210c87810046ba3467ba6609b5e,
+        type: 3}
+      propertyPath: m_Alpha
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1405429185207345492, guid: 3bd4b210c87810046ba3467ba6609b5e,
         type: 3}
@@ -1487,6 +1548,30 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 1405429184709792609, guid: 3bd4b210c87810046ba3467ba6609b5e,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 337a1af63bde7054c8df3e08199a16fb,
+        type: 3}
+    - target: {fileID: 1405429184688933513, guid: 3bd4b210c87810046ba3467ba6609b5e,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 337a1af63bde7054c8df3e08199a16fb,
+        type: 3}
+    - target: {fileID: 1405429185258378667, guid: 3bd4b210c87810046ba3467ba6609b5e,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 337a1af63bde7054c8df3e08199a16fb,
+        type: 3}
+    - target: {fileID: 1405429185729349358, guid: 3bd4b210c87810046ba3467ba6609b5e,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 337a1af63bde7054c8df3e08199a16fb,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3bd4b210c87810046ba3467ba6609b5e, type: 3}
 --- !u!1 &1942285896
@@ -1583,6 +1668,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SoundManager
       objectReference: {fileID: 0}
+    - target: {fileID: 7247641401162054436, guid: 1abee3300b1f8624e8bff7b476b257e0,
+        type: 3}
+      propertyPath: buttonClick.clip
+      value: 
+      objectReference: {fileID: 8300000, guid: e68214713fe51b54990fc053556c18d8, type: 3}
     - target: {fileID: 7247641401162054437, guid: 1abee3300b1f8624e8bff7b476b257e0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1638,11 +1728,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7247641401162054436, guid: 1abee3300b1f8624e8bff7b476b257e0,
-        type: 3}
-      propertyPath: buttonClick.clip
-      value: 
-      objectReference: {fileID: 8300000, guid: e68214713fe51b54990fc053556c18d8, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1abee3300b1f8624e8bff7b476b257e0, type: 3}
 --- !u!1001 &4265373189798455326
@@ -2038,6 +2123,24 @@ PrefabInstance:
       propertyPath: m_FontData.m_Alignment
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 4265373190589566632, guid: 3e782975c249b6248a318dc62a37d19d,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 337a1af63bde7054c8df3e08199a16fb,
+        type: 3}
+    - target: {fileID: 4265373190567190161, guid: 3e782975c249b6248a318dc62a37d19d,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 337a1af63bde7054c8df3e08199a16fb,
+        type: 3}
+    - target: {fileID: 4265373189853452040, guid: 3e782975c249b6248a318dc62a37d19d,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 337a1af63bde7054c8df3e08199a16fb,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3e782975c249b6248a318dc62a37d19d, type: 3}
 --- !u!114 &4265373189798455328 stripped

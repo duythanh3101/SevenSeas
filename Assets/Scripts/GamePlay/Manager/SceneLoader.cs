@@ -27,6 +27,10 @@ namespace SevenSeas
         private static readonly string TREASURE_MAP_SCENE_NAME = "TreasureMapScene";
         private static readonly string CHECK_POINT_MAP_SCENE_NAME = "CheckPointMapScene";
 
+        public bool IsPlayScene
+        {
+            get { return GetActiveSceneName() == PLAY_SCENE_NAME; }
+        }
 
         void Awake()
         {

@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using SevenSeas;
 
 public class DottedLineDrawer : MonoBehaviour
 {
@@ -28,8 +29,8 @@ public class DottedLineDrawer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        CHECK_POINT_LEVEL = PlayerPrefs.GetInt("CHECK_POINT_LEVEL", 0);
-        Debug.Log(CHECK_POINT_LEVEL);
+        CHECK_POINT_LEVEL = GameSessionInfoManager.Instance.playerInfoSession.checkPoint - 1;
+        //Debug.Log(CHECK_POINT_LEVEL);
         isfinished = false;
         if (CHECK_POINT_LEVEL < 5)
         {
@@ -69,8 +70,8 @@ public class DottedLineDrawer : MonoBehaviour
         if (isfinished)
         {
             isfinished = false;
-            CHECK_POINT_LEVEL++;
-            PlayerPrefs.SetInt("CHECK_POINT_LEVEL", CHECK_POINT_LEVEL);
+           // CHECK_POINT_LEVEL++;
+            //PlayerPrefs.SetInt("CHECK_POINT_LEVEL", CHECK_POINT_LEVEL);
             SceneLoader.Instance.LoadPlayScene();
             clickToContinueButton.gameObject.SetActive(false);
         }

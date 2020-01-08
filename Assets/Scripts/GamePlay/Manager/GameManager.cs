@@ -121,7 +121,8 @@ namespace SevenSeas
                 SoundManager.Instance.ResumeMusic();
             else
             {
-                SoundManager.Instance.PlayMusic(SoundManager.Instance.background);
+                if (SceneLoader.Instance.IsPlayScene)
+                    SoundManager.Instance.PlayMusic(SoundManager.Instance.background);
             }
             
         }
@@ -141,11 +142,12 @@ namespace SevenSeas
         
         public void GoToNextLevel()
         {
-            //if (GameSessionInfoManager.Instance.playerInfoSession.levelInCheckPoint > CommonConstants.MAX_LEVEL_PER_CHECKPOINT)
-            //{
-            //    SceneLoader.Instance.LoadTreasureMapScene();
-            //}
-            //else
+            //This level in checkpoint has been updapte to the next level, 
+            if (GameSessionInfoManager.Instance.playerInfoSession.levelInCheckPoint >= CommonConstants.MAX_LEVEL_PER_CHECKPOINT)
+            {
+                SceneLoader.Instance.LoadTreasureMapScene();
+            }
+            else
             {
                 RestartGame();
             }

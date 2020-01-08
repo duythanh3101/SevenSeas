@@ -7,6 +7,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
+using SevenSeas;
 
 namespace MainGame
 {
@@ -108,6 +109,7 @@ namespace MainGame
             if (IsExistingTreasureAt(posClick))
             {
                 LoseTreasureGame(true);
+                GameSessionInfoManager.Instance.UpdatePirateSunk();
                 instructionText.text = CommonConstants.Instruction.CLICK_TO_CONTINUE;
                 return;
             }
