@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Assets.Scripts.Extensions.Utils;
-
+using System;
+using Random = UnityEngine.Random;
 
 namespace SevenSeas
 {
@@ -43,7 +44,6 @@ namespace SevenSeas
         [Header("Player")]
         [SerializeField]
         private GameObject playerPrefab;
-      
         public int currentLevel;
 
         //Properties
@@ -64,6 +64,11 @@ namespace SevenSeas
         private SpriteRenderer backgroundSR;
         private GameObject player;
 
+
+
+        public List<GameObject> ActiveObjects { get; set; }
+        public List<GameObject> DeActiveObjects { get; set; }
+
         private Vector2 centerPosition;
 
         private int centerNumber;
@@ -77,6 +82,9 @@ namespace SevenSeas
             }
             else if (Instance != this)
                 DestroyImmediate(gameObject);
+
+            ActiveObjects = new List<GameObject>();
+            DeActiveObjects = new List<GameObject>();
 
             backgroundSR = backgroundMap.GetComponent<SpriteRenderer>();
             BoatController.OnBoatMovedPosition += BoatController_OnBoatMovedPosition;
@@ -501,10 +509,25 @@ namespace SevenSeas
                         return;
                     dynamicObjectDicts.Add(obj, newPos);
                     RemovePossiblePosition(possiblePositions, newPos);
+                    ActiveObjects.Add(obj);
                 }
 
                 //Debug.Log("Remove " + newPos + "Obj name:  " + obj.name + "status: " + status);
             }
+        }
+
+        public void SpawnEnemyAtPosition(ObjectType type, Vector2 position, Quaternion direction)
+        {
+            GameObject go = GetPrefabByType(type);
+            if (go != null)
+            {
+                go.transform.rotation = direction;
+                if (type == ObjectType.AdvanceEnemy || type == ObjectType.NormalEnemy || type == ObjectType.FiringEnemy)
+                {
+                    LayoutUnitAtSpecific(go, position, enemyParent);
+                }
+            }
+          
         }
 
 
@@ -556,6 +579,26 @@ namespace SevenSeas
             player = playerController.gameObject;
         }
 
+
+        private GameObject GetPrefabByType(ObjectType type)
+        {
+            switch (type)
+            {
+                case ObjectType.None:
+                    break;
+                case ObjectType.NormalEnemy:
+                    return enemiesPrefab[0];
+                case ObjectType.FiringEnemy:
+                    return enemiesPrefab[2];
+                case ObjectType.AdvanceEnemy:
+                    return enemiesPrefab[1];
+                case ObjectType.Player:
+                    return playerPrefab;
+                default:
+                    break;
+            }
+            return null;
+        }
     }
 }
 

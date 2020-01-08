@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using MainGame;
 using Assets.Scripts.Extensions.Utils;
+using BaseSystems.Observer;
 
 namespace SevenSeas
 {
@@ -46,6 +47,7 @@ namespace SevenSeas
             base.Awake();
             ArrowController.OnArrowClicked += ArrowController_OnArrowClicked;
             playerDetecter.RegisterHandler(this);
+            Type = ObjectType.Player;
         }
       
         protected override void OnDestroy()
@@ -119,12 +121,13 @@ namespace SevenSeas
         public void OnPlayerDestroyed()
         {
             GetDestroy();
+            Observer.Instance.PostEvent(ObserverEventID.OnCantUndo);
         }
 
         public void OnPlayerTeleporting()
         {
             Teleport();
-
+            Observer.Instance.PostEvent(ObserverEventID.OnCantUndo);
         }
 
         #endregion

@@ -56,5 +56,7 @@
 
         OnSpawnerDynamicObject,
         OnSpawnerStaticObject,
+
+        OnUndo,
     }
 }

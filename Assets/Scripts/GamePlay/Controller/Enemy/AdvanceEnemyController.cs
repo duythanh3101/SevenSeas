@@ -7,8 +7,11 @@ namespace SevenSeas
 {
     public class AdvanceEnemyController : EnemyController
     {
-        
-      
+        protected override void Awake()
+        {
+            base.Awake();
+            Type = ObjectType.AdvanceEnemy;
+        }
 
         protected override Direction CalculateNextDirection()
         {

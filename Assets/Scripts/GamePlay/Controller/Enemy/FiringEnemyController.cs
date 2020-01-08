@@ -10,6 +10,12 @@ namespace SevenSeas
         [SerializeField]
         private AimAndFireCanonball firingSystem;
 
+        protected override void Awake()
+        {
+            base.Awake();
+            Type = ObjectType.FiringEnemy;
+        }
+
         protected override void OnCompletedRotateAndMove()
         {
             FiringCanonballs();

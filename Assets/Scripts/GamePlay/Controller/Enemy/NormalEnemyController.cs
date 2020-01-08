@@ -7,6 +7,12 @@ namespace SevenSeas
 {
     public class NormalEnemyController : EnemyController
     {
+        protected override void Awake()
+        {
+            base.Awake();
+            Type = ObjectType.NormalEnemy;
+        }
+
         protected override Direction CalculateNextDirection()
         {
             offset = targetTrans.position - transform.position;
