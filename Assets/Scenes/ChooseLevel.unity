@@ -1185,6 +1185,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 686373413325037181, guid: 54075053f6b5b11499d886242b2e83bf,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 686373413468402525, guid: 54075053f6b5b11499d886242b2e83bf,
         type: 3}
       propertyPath: m_FontData.m_Font
@@ -1195,8 +1200,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_FontData.m_Font
       value: 
-      objectReference: {fileID: 12800000, guid: 337a1af63bde7054c8df3e08199a16fb,
-        type: 3}
+      objectReference: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     - target: {fileID: 686373414049988706, guid: 54075053f6b5b11499d886242b2e83bf,
         type: 3}
       propertyPath: m_FontData.m_Font

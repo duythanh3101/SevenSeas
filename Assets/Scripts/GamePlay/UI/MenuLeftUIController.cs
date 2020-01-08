@@ -170,6 +170,7 @@ namespace SevenSeas
         public void SetData(GameSessionInfoManager.PlayerInfoSession session)
         {
             scoreText.text = session.playerScore.ToString();
+            levelText.text = (session.levelInCheckPoint + 1).ToString();
         }
     }
 
