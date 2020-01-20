@@ -318,8 +318,17 @@ namespace SevenSeas
                     isometricModel.SetActive(false);
 
                     yield return new WaitForSeconds(0.01f);
-                    gameObject.SetActive(false);
-                    GameManager.Instance.GameLose();
+
+                    if (GameSessionInfoManager.Instance.playerInfoSession.playerHealth <= 0)
+                    {
+                        gameObject.SetActive(false);
+                        GameManager.Instance.GameLose();
+                    }
+                    else
+                    {
+                        Respawn();
+                    }
+                    
                 }
             
         }

@@ -22,7 +22,7 @@ public class CommonConstants
     /// </summary>
     public const int TILE_SIZE = 1;
 
-    public static readonly int MAX_LEVEL_PER_CHECKPOINT = 3;
+    public static readonly int MAX_LEVEL_PER_CHECKPOINT = 8;
     public static readonly int MAX_CHECKPOINT = 7;
 
     public static Vector2 SOUTH_VECTOR = Vector2.down;

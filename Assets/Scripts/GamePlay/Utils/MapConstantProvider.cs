@@ -64,8 +64,6 @@ namespace SevenSeas
         private SpriteRenderer backgroundSR;
         private GameObject player;
 
-
-
         public List<GameObject> ActiveObjects { get; set; }
         public List<GameObject> DeActiveObjects { get; set; }
 
@@ -114,22 +112,27 @@ namespace SevenSeas
             InitValues();
             InitPossiblePositions();
             //Debug.Log(GameSessionInfoManager.Instance.EndGameSession);
-            //SetupLevel(currentLevel);
 
-            if (GameSessionInfoManager.Instance.LoadPreviousSession)
+            if (GameManager.Instance.enableEditorMode)
             {
-                LoadLevels();
+                SetupLevel();
             }
             else
             {
-                //Init level data geting from the game session info manager
-                InitLevelData();
+                if (GameSessionInfoManager.Instance.LoadPreviousSession)
+                {
+                    LoadLevels();
+                }
+                else
+                {
+                    //Init level data geting from the game session info manager
+                    InitLevelData();
 
-                //Create a new scene
-                SetupLevel();
-            }
+                    //Create a new scene
+                    SetupLevel();
+                }
 
-            
+            }     
         }
 
         [Header("Debug")]

@@ -104,7 +104,7 @@ namespace SevenSeas
         [Tooltip("Player earn one life when getting the specific amount of score")]
         public int bonusLifeScoreAmount = 15;
 
-        [HideInInspector]
+        //[HideInInspector]
         public PlayerInfoSession playerInfoSession;
 
         [Header("Battle Session Info")]
@@ -199,6 +199,7 @@ namespace SevenSeas
 
         public void UpdatePlayerHealth(int pHealth)
         {
+            Debug.Log("update player health");
             playerInfoSession.playerHealth = pHealth;
         }
         

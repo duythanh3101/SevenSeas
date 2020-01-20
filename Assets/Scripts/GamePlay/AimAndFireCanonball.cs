@@ -66,7 +66,7 @@ namespace SevenSeas
             }
         }
 
-        public void FireCanonballs(Direction toDirection, bool doneTarget)
+        public bool FireCanonballs(Direction toDirection, bool doneTarget)
         {
             //Check if we have not targeted 
             if (!doneTarget)
@@ -74,12 +74,13 @@ namespace SevenSeas
 
             boxCollider2D.enabled = false;
 
-            FireCanonball(transform.position, leftTargetPosition);
-            FireCanonball(transform.position,rightTargetPosition);
+            bool fireLeft =  FireCanonball(transform.position, leftTargetPosition);
+            bool fireRight = FireCanonball(transform.position,rightTargetPosition);
 
+            return fireLeft && fireRight;
         }
 
-        void FireCanonball(Vector2 startPos, Vector2 endPos)
+        bool FireCanonball(Vector2 startPos, Vector2 endPos)
         {
             if (endPos != currentPosition)
             {
@@ -87,7 +88,10 @@ namespace SevenSeas
                 EffectManager.Instance.SpawnEffect(EffectManager.Instance.canonFiring, startPos, Quaternion.identity);
                 SoundManager.Instance.PlayFiringSound();
                 canonballIns.GetComponent<CanonballController>().Launch(gameObject,endPos);
+                return true;
             }
+            return false;
+            
         }
 
         public virtual void ResetData()

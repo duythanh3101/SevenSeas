@@ -86,8 +86,7 @@ namespace SevenSeas
                
         }
 
-       
-       
+        
         protected override void PlayMovementSound()
         {
             SoundManager.Instance.PlayEnemyMovementSound();

@@ -47,7 +47,7 @@ namespace BaseSystems.Observer
             }
         }
         #endregion
-
+        
         #region Register, Post, Remove events
         /// <summary>
         /// Register to listen for eventID.

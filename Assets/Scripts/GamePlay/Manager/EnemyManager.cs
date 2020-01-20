@@ -26,6 +26,13 @@ namespace SevenSeas
             EnemyController.OnEnemyDestroyed += EnemyController_OnEnemyDestroyed;
         }
 
+       void OnDestroy()
+       {
+           EnemyController.OnBoatActivityCompleted -= EnemyController_OnBoatActivityCompleted;
+           EnemyController.OnEnemyDestroyed -= EnemyController_OnEnemyDestroyed;
+
+       }
+
        private void EnemyController_OnEnemyDestroyed(EnemyController enemyController)
        {
            CurrentEnemyCount--;
@@ -52,12 +59,7 @@ namespace SevenSeas
            CurrentEnemyCount = transform.childCount;
            
        }
-        void OnDestroy()
-       {
-           EnemyController.OnBoatActivityCompleted -= EnemyController_OnBoatActivityCompleted;
-           EnemyController.OnEnemyDestroyed -= EnemyController_OnEnemyDestroyed;
-           
-       }
+       
 
         int currentChangeTurn = 0;
         
@@ -77,9 +79,19 @@ namespace SevenSeas
                   OnAllEnemyActivityCompleted();
               }
           }
-          else if (boatType == typeof(FiringEnemyController))
+          else if (boatType == typeof(FiringEnemyController) )
           {
-              currentChangeTurn = 0;// this will be controled by the effect manager
+              if (boatController.GetComponent<FiringEnemyController>().CanFire)
+                  currentChangeTurn = 0; //this will be controled by the effect manager
+              else
+              {
+                  currentChangeTurn++;
+                  if (currentChangeTurn == transform.childCount)
+                  {
+                      currentChangeTurn = 0;
+                      OnAllEnemyActivityCompleted();
+                  }
+              }
           }
        }
     }

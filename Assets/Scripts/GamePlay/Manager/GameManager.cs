@@ -29,7 +29,7 @@ namespace SevenSeas
         [SerializeField]
         private int targetFrameRate = 60;
 
-       
+        public bool enableEditorMode = true;
         public PlayerController playerController;
         
 
@@ -61,7 +61,7 @@ namespace SevenSeas
             {
                 Instance = this;
             } 
-            else if (Instance != null)
+            else if (Instance != this)
             {
                 DestroyImmediate(gameObject);
             }
@@ -78,6 +78,9 @@ namespace SevenSeas
        
        public void GameWin()
         {
+            if (GameState == GameState.GameOver)
+                return;
+
             GameSessionInfoManager.Instance.UpdateLevelInCheckPoint();
 
             SoundManager.Instance.PauseMusic();
@@ -88,7 +91,9 @@ namespace SevenSeas
 
         public void GameLose()
        {
-        
+           if (GameState == GameState.GameWin)
+               return;
+
            SoundManager.Instance.StopMusic();
            SoundManager.Instance.PlayLoseSound();
 

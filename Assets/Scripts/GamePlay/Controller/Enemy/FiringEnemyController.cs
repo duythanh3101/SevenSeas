@@ -7,6 +7,8 @@ namespace SevenSeas
     
     public class FiringEnemyController : AdvanceEnemyController
     {
+        public bool CanFire { get; set; }
+
         [SerializeField]
         private AimAndFireCanonball firingSystem;
 
@@ -18,23 +20,18 @@ namespace SevenSeas
 
         protected override void OnCompletedRotateAndMove()
         {
-            FiringCanonballs();
+          
 
-
-            firingSystem.boxCollider2D.enabled = true;
-            BoatState = BoatState.Idle;
-           
-            OnBoatActivityCompleted(this);
-           
-        }
-
-        void FiringCanonballs()
-        {
             if (BoatState == BoatState.Firing)
                 return;
 
             BoatState = BoatState.Firing;
-            firingSystem.FireCanonballs(currentDirection, false);
+            CanFire =  firingSystem.FireCanonballs(currentDirection, false);
+            firingSystem.boxCollider2D.enabled = true;
+
+            BoatState = BoatState.Idle;
+            OnBoatActivityCompleted(this);
+           
         }
     }
 }
