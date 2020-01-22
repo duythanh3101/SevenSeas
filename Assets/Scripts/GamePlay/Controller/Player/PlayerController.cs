@@ -276,61 +276,60 @@ namespace SevenSeas
         IEnumerator CR_DelayDestroy()
         {
             //Debug.Log("Player state: " + BoatState);
-          
-          
-                
-                BoatState = BoatState.Destroyed;
 
-                //Effect and sound
-                EffectManager.Instance.SpawnEffect(EffectManager.Instance.explosion, transform.position, Quaternion.identity);
-                SoundManager.Instance.PlayDestroyShipSound();
-                MapConstantProvider.Instance.SpawnUnitOnDestroyedObject(skullPrefab, transform.position, gameObject);
 
-                currentPlayerHealth--;
-                GameSessionInfoManager.Instance.UpdatePlayerHealth(currentPlayerHealth);
 
-                //Debug.Log("Current player health: " + currentPlayerHealth);
+            BoatState = BoatState.Destroyed;
 
-                //UI
-                UIManager.Instance.DecreaseHealth(currentPlayerHealth);
+            //Effect and sound
+            EffectManager.Instance.SpawnEffect(EffectManager.Instance.explosion, transform.position, Quaternion.identity);
+            SoundManager.Instance.PlayDestroyShipSound();
+            MapConstantProvider.Instance.SpawnUnitOnDestroyedObject(skullPrefab, transform.position, gameObject);
 
-                if (currentPlayerHealth > 0)
+            currentPlayerHealth--;
+            GameSessionInfoManager.Instance.UpdatePlayerHealth(currentPlayerHealth);
+
+            //Debug.Log("Current player health: " + currentPlayerHealth);
+
+            //UI
+            UIManager.Instance.DecreaseHealth(currentPlayerHealth);
+
+            if (currentPlayerHealth > 0)
+            {
+                //wait for end of frame for updating enemy count, if Game is win, then we dont have to respawn
+                yield return new WaitForSeconds(0.015f);
+                var gameState = GameManager.Instance.GameState;
+                //Debug.Log("game state from player controller: " + gameState);
+                if (gameState == GameState.Playing)
                 {
-                    //wait for end of frame for updating enemy count, if Game is win, then we dont have to respawn
-                    yield return new WaitForSeconds(0.015f);
-                    var gameState = GameManager.Instance.GameState;
-                    //Debug.Log("game state from player controller: " + gameState);
-                    if (gameState == GameState.Playing)
-                    {
-                        Respawn();
-                    }
-                    else if (gameState == GameState.GameWin)
-                    {
-                        TogglePlayerInput(false);
-                        gameObject.SetActive(false);
-                    }
+                    Respawn();
+                }
+                else if (gameState == GameState.GameWin)
+                {
+                    TogglePlayerInput(false);
+                    gameObject.SetActive(false);
+                }
 
+            }
+            else
+            {
+                //Debug.Log("Game lose");
+                TogglePlayerInput(false);
+                isometricModel.SetActive(false);
+
+                yield return new WaitForSeconds(0.01f);
+
+                if (GameSessionInfoManager.Instance.playerInfoSession.playerHealth <= 0)
+                {
+                    gameObject.SetActive(false);
+                    GameManager.Instance.GameLose();
                 }
                 else
                 {
-                    //Debug.Log("Game lose");
-                    TogglePlayerInput(false);
-                    isometricModel.SetActive(false);
-
-                    yield return new WaitForSeconds(0.01f);
-
-                    if (GameSessionInfoManager.Instance.playerInfoSession.playerHealth <= 0)
-                    {
-                        gameObject.SetActive(false);
-                        GameManager.Instance.GameLose();
-                    }
-                    else
-                    {
-                        Respawn();
-                    }
-                    
+                    currentPlayerHealth = GameSessionInfoManager.Instance.playerInfoSession.playerHealth;
+                    Respawn();
                 }
-            
+            }
         }
        
     }

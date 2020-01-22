@@ -77,6 +77,7 @@ namespace SevenSeas
                 //Update data for result
                 GameSessionInfoManager.Instance.UpdateScore(destroyScore);
                 GameSessionInfoManager.Instance.UpdatePirateSunk();
+                UIManager.Instance.ShowFloatingScorePoint(transform.position, destroyScore);
 
                 destroyed = true;
                 if (OnEnemyDestroyed != null)

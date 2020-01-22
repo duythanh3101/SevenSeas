@@ -199,7 +199,7 @@ namespace SevenSeas
 
         public void UpdatePlayerHealth(int pHealth)
         {
-            Debug.Log("update player health");
+            
             playerInfoSession.playerHealth = pHealth;
         }
         

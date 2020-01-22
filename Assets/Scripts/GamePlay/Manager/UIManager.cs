@@ -23,7 +23,8 @@ namespace SevenSeas
         private NextLevelUIController nextLevelUIController;
         [SerializeField]
         private MenuLeftUIController menuLeftUIController;
-        
+        [SerializeField]
+        private FloatingScorePointUIController floatingScorePointUIController;
 
         void Awake()
         {
@@ -103,6 +104,8 @@ namespace SevenSeas
             healthImages[index].gameObject.SetActive(true);
         }
 
+
+
         public void ShowFindTreasureGameOver()
         {
             treasureGameOverPanel.SetActive(true);
@@ -111,6 +114,11 @@ namespace SevenSeas
         public void UpdateScore(int amount)
         {
             menuLeftUIController.UpdateScore(amount);
+        }
+
+        public void ShowFloatingScorePoint(Vector3 worldPosition, int amount)
+        {
+            floatingScorePointUIController.SpawnFloatingScorePoint(worldPosition, amount);
         }
 
         private void nextLevelUIController_OnNextButtonClick()

@@ -6,12 +6,14 @@ public class AutoStopEffect : MonoBehaviour
 {
     public  System.Action <GameObject> OnEffectStoped;
 
+    [SerializeField]
     private ParticleSystem particle;
 
     // Start is called before the first frame update
     void Start()
     {
-        particle = GetComponent<ParticleSystem>();
+        //particle = GetComponent<ParticleSystem>();
+        
         Invoke("StopEffect", particle.main.duration);
 
     }

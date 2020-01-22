@@ -168,7 +168,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 8
+      scalar: 3
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -939,7 +939,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 30
+        scalar: 24
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -6100,7 +6100,7 @@ ParticleSystem:
         atime0: 0
         atime1: 45875
         atime2: 65535
-        atime3: 0
+        atime3: 65535
         atime4: 0
         atime5: 0
         atime6: 0
@@ -9632,8 +9632,8 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 16
-      minScalar: 12
+      scalar: 6
+      minScalar: 4
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -10385,7 +10385,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 12
+        scalar: 18
         minScalar: 12
         maxCurve:
           serializedVersion: 2
@@ -14061,6 +14061,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00d3aaf60388e4042bf145fdfc80cf4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  particle: {fileID: 19869068}
 --- !u!1 &119344
 GameObject:
   m_ObjectHideFlags: 0
@@ -14211,8 +14212,8 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 20
-      minScalar: 10
+      scalar: 4
+      minScalar: 2
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -23619,7 +23620,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 16
+      scalar: 2
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -24372,7 +24373,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 10
+        scalar: 5
         minScalar: 10
         maxCurve:
           serializedVersion: 2
