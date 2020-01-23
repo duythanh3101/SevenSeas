@@ -1,18 +1,27 @@
-﻿Shader "Sprites/OceanSprite"
+﻿Shader "Sprites/OceanSinking"
 {
     Properties
     {
-        _MainTex ("Main texture", 2D) = "white" {}
-        _NoiseTex("Noise texture",2D) = "white" {}
-
-        _Mitigation ("Distorion mitigation",Range(1,30)) = 1
+        _MainTex ("Texture", 2D) = "white" {}
+       	_Mitigation ("Distorion mitigation",Range(1,60)) = 1
         _SpeedX("Speed along X",Range(0,5)) = 1
         _SpeedY("Speed along Y",Range(0,5)) = 1
+
     }
     SubShader
     {
-        Tags { "RenderType"="Opaque" }
+         Tags
+        {
+            "Queue"="Transparent"
+            "IgnoreProjector"="True"
+            "RenderType"="Transparent"
+            
+        }
+        
         LOD 100
+        ZWrite Off
+        Blend SrcAlpha OneMinusSrcAlpha
+
 
         Pass
         {
@@ -21,6 +30,7 @@
             #pragma fragment frag
             // make fog work
             #pragma multi_compile_fog
+            
 
             #include "UnityCG.cginc"
 
@@ -38,39 +48,38 @@
             };
 
             sampler2D _MainTex;
+           
             sampler2D _NoiseTex;
 
             float _Mitigation;
             float _SpeedX;
            	float _SpeedY;
-
-
-            float4 _MainTex_ST;
-
+           	float4 _MainTex_ST;
 
             v2f vert (appdata v)
             {
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+                o.uv.x += sin((o.uv.x+o.uv.y)*8 + _Time.y*_SpeedX) / _Mitigation;
+            	o.uv.y += cos((o.uv.x-o.uv.y)*8 + _Time.y*_SpeedY) / _Mitigation;
+
                 UNITY_TRANSFER_FOG(o,o.vertex);
                 return o;
             }
 
-            fixed4 frag (v2f i) : SV_TARGET
+            fixed4 frag (v2f i) : SV_Target
             {
-            	half2 uv = i.uv;
-            	half noiseVal = tex2D(_NoiseTex,uv).r;
-            	uv.x = uv.x + noiseVal * sin(_Time.y * _SpeedX) / _Mitigation;
-            	uv.y = uv.y + noiseVal * sin(_Time.y * _SpeedY) / _Mitigation;
-
+ 				
                 // sample the texture
-                fixed4 col = tex2D(_MainTex, uv);
+                fixed4 col = tex2D(_MainTex, i.uv);
+
 
                 // apply fog
                 UNITY_APPLY_FOG(i.fogCoord, col);
                 return col;
             }
+
             ENDCG
         }
     }

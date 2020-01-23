@@ -1,4 +1,4 @@
-﻿Shader "Sprite/AlwaysFront"
+﻿Shader "Sprites/AlwaysFront"
 {
      Properties
     {
