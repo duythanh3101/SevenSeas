@@ -7,10 +7,17 @@ namespace SevenSeas
     public class Teleporter : MonoBehaviour
     {
         
-
         public void Teleport(GameObject teleUnit, bool isRecycle)
         {
-            MapConstantProvider.Instance.LayoutUnitAtRandomPosition(teleUnit, isRecycle);
+            if (teleUnit.CompareTag("PlayerShip"))
+            {
+                MapConstantProvider.Instance.SetPlayerSafetyPosition();
+            }
+          
+            else
+            {
+                MapConstantProvider.Instance.LayoutUnitAtRandomPosition(teleUnit, isRecycle);
+            }
         }
     }
 }

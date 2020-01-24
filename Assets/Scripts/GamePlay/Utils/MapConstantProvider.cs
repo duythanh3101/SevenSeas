@@ -44,6 +44,8 @@ namespace SevenSeas
         [Header("Player")]
         [SerializeField]
         private GameObject playerPrefab;
+        [SerializeField]
+        private int safetyRadius;
         public int currentLevel;
 
         //Properties
@@ -249,11 +251,7 @@ namespace SevenSeas
             }
         }
 
-        void SpawnPlayer()
-        {
-            LayoutUnitAtRandomPosition(playerPrefab, false);
-            player = GameObject.FindGameObjectWithTag(playerPrefab.tag);
-        }
+       
 
         void InitValues()
         {
@@ -436,8 +434,6 @@ namespace SevenSeas
 
        public bool ContainsPosInUnitDictionary(Vector2 valuePos)
         {
-           
-
             return (ContainsPosInDictionaryExceptPlayer(valuePos, staticObjectDicts) || 
                 ContainsPosInDictionaryExceptPlayer(valuePos, dynamicObjectDicts));
         }
@@ -463,18 +459,60 @@ namespace SevenSeas
             }
         }
 
-        public void SetRespawningPosition(GameObject player)
+        #region Player Reposition
+        public void SetPlayerRespawningPosition()
         {
-            Vector2 randomPos = possiblePositions[Random.Range(0, possiblePositions.Count)];
+            Vector2 randomPos = GetPlayerRandomSafetyPosition();
             player.transform.position = randomPos;
             player.SetActive(true);
             dynamicObjectDicts[player] = randomPos;
+            RemovePossiblePosition(possiblePositions, randomPos);
         }
 
-        public void SetSafetyPosition(GameObject player)
+        Vector2 GetPlayerRandomSafetyPosition()
         {
+            return possiblePositions[Random.Range(0, possiblePositions.Count)];
+        }
+
+        public void TeleportPlayer()
+        {
+            Vector2 randomPos = GetPlayerRandomSafetyPosition();
+            player.transform.position = randomPos;
+            player.SetActive(true);
+            dynamicObjectDicts[player] = randomPos;
+            RemovePossiblePosition(possiblePositions, randomPos);
 
         }
+
+        public void SetPlayerSafetyPosition()
+        {
+            Vector2 randomPos = GetPlayerRandomSafetyPosition();
+            player.transform.position = randomPos;
+            player.SetActive(true);
+            if (!dynamicObjectDicts.ContainsKey(player))
+            {
+                dynamicObjectDicts.Add(player, randomPos);
+            }
+            else
+            {
+                dynamicObjectDicts[player] = randomPos;
+            }
+            RemovePossiblePosition(possiblePositions, randomPos);
+        }
+
+        void SpawnPlayer()
+        {
+            //LayoutUnitAtRandomPosition(playerPrefab, false);
+            //player = GameObject.FindGameObjectWithTag(playerPrefab.tag);
+            player = Instantiate(playerPrefab);
+            SetPlayerSafetyPosition();
+
+            //Vector2 randomPos = GetPlayerRandomSafetyPosition();
+            //player.transform.position = randomPos;
+            //dynamicObjectDicts.Add(player, randomPos);
+            //RemovePossiblePosition(possiblePositions, randomPos);
+        }
+        #endregion
 
         void UpdatePossiblePosition(GameObject obj, Vector2 newPos, bool recycle)
         {

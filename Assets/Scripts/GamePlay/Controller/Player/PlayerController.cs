@@ -236,7 +236,7 @@ namespace SevenSeas
                 yield return null;
             }
 
-            MapConstantProvider.Instance.SetRespawningPosition(gameObject);
+            MapConstantProvider.Instance.SetPlayerSafetyPosition();
             for (int i = 0; i < 2; i++ )
             {
                 SoundManager.Instance.PlayRespawnSound();
