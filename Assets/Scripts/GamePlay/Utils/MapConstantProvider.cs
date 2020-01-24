@@ -53,6 +53,8 @@ namespace SevenSeas
         public Vector2 CenterPosition { get { return centerPosition; } }
         public Vector2 PlayerPos { get { return dynamicObjectDicts[player]; } }
 
+        public GameObject Player { get { return player; } }
+
         //Collections
         public Dictionary<GameObject, Vector2> staticObjectDicts = new Dictionary<GameObject, Vector2>();
         public Dictionary<GameObject, Vector2> dynamicObjectDicts = new Dictionary<GameObject, Vector2>();
@@ -467,6 +469,11 @@ namespace SevenSeas
             player.transform.position = randomPos;
             player.SetActive(true);
             dynamicObjectDicts[player] = randomPos;
+        }
+
+        public void SetSafetyPosition(GameObject player)
+        {
+
         }
 
         void UpdatePossiblePosition(GameObject obj, Vector2 newPos, bool recycle)

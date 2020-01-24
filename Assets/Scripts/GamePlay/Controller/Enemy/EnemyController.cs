@@ -140,7 +140,7 @@ namespace SevenSeas
         protected override void Start()
         {
             base.Start();
-            targetTrans = FindObjectOfType<PlayerController>().transform;
+            targetTrans = MapConstantProvider.Instance.Player.transform;
         }
 
 
