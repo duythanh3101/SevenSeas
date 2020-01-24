@@ -460,29 +460,13 @@ namespace SevenSeas
         }
 
         #region Player Reposition
-        public void SetPlayerRespawningPosition()
-        {
-            Vector2 randomPos = GetPlayerRandomSafetyPosition();
-            player.transform.position = randomPos;
-            player.SetActive(true);
-            dynamicObjectDicts[player] = randomPos;
-            RemovePossiblePosition(possiblePositions, randomPos);
-        }
+        
 
         Vector2 GetPlayerRandomSafetyPosition()
         {
             return possiblePositions[Random.Range(0, possiblePositions.Count)];
         }
 
-        public void TeleportPlayer()
-        {
-            Vector2 randomPos = GetPlayerRandomSafetyPosition();
-            player.transform.position = randomPos;
-            player.SetActive(true);
-            dynamicObjectDicts[player] = randomPos;
-            RemovePossiblePosition(possiblePositions, randomPos);
-
-        }
 
         public void SetPlayerSafetyPosition()
         {
@@ -502,15 +486,8 @@ namespace SevenSeas
 
         void SpawnPlayer()
         {
-            //LayoutUnitAtRandomPosition(playerPrefab, false);
-            //player = GameObject.FindGameObjectWithTag(playerPrefab.tag);
             player = Instantiate(playerPrefab);
             SetPlayerSafetyPosition();
-
-            //Vector2 randomPos = GetPlayerRandomSafetyPosition();
-            //player.transform.position = randomPos;
-            //dynamicObjectDicts.Add(player, randomPos);
-            //RemovePossiblePosition(possiblePositions, randomPos);
         }
         #endregion
 
