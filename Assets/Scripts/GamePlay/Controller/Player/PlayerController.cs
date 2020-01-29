@@ -36,7 +36,6 @@ namespace SevenSeas
         private float riseUpTime;
 
         //Int
-        public int currentPlayerHealth;
         private static readonly int SINK_TRIGGER = Animator.StringToHash("isSink");
         private static readonly int RISEUP_TRIGGER = Animator.StringToHash("isRiseUp");
 
@@ -55,7 +54,6 @@ namespace SevenSeas
             base.OnDestroy();
             ArrowController.OnArrowClicked -= ArrowController_OnArrowClicked;
         }
-
 
         protected override void PlayMovementSound()
         {
@@ -88,7 +86,6 @@ namespace SevenSeas
 
         void InitValues()
         {
-            currentPlayerHealth = GameSessionInfoManager.Instance.playerInfoSession.playerHealth;
             animClips = animator.runtimeAnimatorController.animationClips;
             //Init data for animation
             foreach (var clip in animClips)
@@ -276,9 +273,6 @@ namespace SevenSeas
         IEnumerator CR_DelayDestroy()
         {
             //Debug.Log("Player state: " + BoatState);
-
-
-
             BoatState = BoatState.Destroyed;
 
             //Effect and sound
@@ -286,15 +280,13 @@ namespace SevenSeas
             SoundManager.Instance.PlayDestroyShipSound();
             MapConstantProvider.Instance.SpawnUnitOnDestroyedObject(skullPrefab, transform.position, gameObject);
 
-            currentPlayerHealth--;
-            GameSessionInfoManager.Instance.UpdatePlayerHealth(currentPlayerHealth);
-
-            //Debug.Log("Current player health: " + currentPlayerHealth);
+            //Debug.Log("Current player health: " + currentPlayerHealth);   
+            GameSessionInfoManager.Instance.DecreseHealth();
 
             //UI
-            UIManager.Instance.DecreaseHealth(currentPlayerHealth);
+            UIManager.Instance.DecreaseHealth(GameSessionInfoManager.Instance.playerInfoSession.playerHealth);
 
-            if (currentPlayerHealth > 0)
+            if (GameSessionInfoManager.Instance.playerInfoSession.playerHealth > 0)
             {
                 //wait for end of frame for updating enemy count, if Game is win, then we dont have to respawn
                 yield return new WaitForSeconds(0.015f);
@@ -317,21 +309,19 @@ namespace SevenSeas
                 TogglePlayerInput(false);
                 isometricModel.SetActive(false);
 
+                //Wait for the next frame if player had been rewarded a bonus life
                 yield return new WaitForSeconds(0.01f);
-
-                if (GameSessionInfoManager.Instance.playerInfoSession.playerHealth <= 0)
+                if (GameSessionInfoManager.Instance.playerInfoSession.playerHealth <= 0)//If there was not any bonus life
                 {
                     gameObject.SetActive(false);
                     GameManager.Instance.GameLose();
                 }
-                else
+                else //else then
                 {
-                    currentPlayerHealth = GameSessionInfoManager.Instance.playerInfoSession.playerHealth;
                     Respawn();
                 }
             }
         }
-       
     }
 }
 

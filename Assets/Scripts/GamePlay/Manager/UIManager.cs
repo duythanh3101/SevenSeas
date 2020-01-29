@@ -36,7 +36,7 @@ namespace SevenSeas
             //Event
             GameManager.GameStateChanged += GameManager_GameStateChanged;
 
-            resultUIController.OnStartNewGameButtonClick += resultUIController_OnStartNewGameButtonClick;
+            
             nextLevelUIController.OnNextButtonClick += nextLevelUIController_OnNextButtonClick;
             
 
@@ -48,7 +48,7 @@ namespace SevenSeas
         {
             GameManager.GameStateChanged -= GameManager_GameStateChanged;
 
-            resultUIController.OnStartNewGameButtonClick -= resultUIController_OnStartNewGameButtonClick;
+           
             nextLevelUIController.OnNextButtonClick -= nextLevelUIController_OnNextButtonClick;
         }
         void gameOverUIController_OnRestartButtonClick()
@@ -104,8 +104,6 @@ namespace SevenSeas
             healthImages[index].gameObject.SetActive(true);
         }
 
-
-
         public void ShowFindTreasureGameOver()
         {
             treasureGameOverPanel.SetActive(true);
@@ -126,11 +124,7 @@ namespace SevenSeas
             GameManager.Instance.GoToNextLevel();
         }
 
-        private void resultUIController_OnStartNewGameButtonClick()
-        {
-            GameSessionInfoManager.Instance.ClearGameSession();
-            SceneLoader.Instance.LoadChooseLevelScene();
-        }
+       
 
        IEnumerator CR_DelayGameOverUI()
         {

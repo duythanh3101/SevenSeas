@@ -13,6 +13,8 @@ namespace SevenSeas
 
     public class GameSessionInfoManager : MonoBehaviour
     {
+        public static event System.Action OnLeaderboardDataLoaded = delegate { };
+
         public static GameSessionInfoManager Instance = null;
 
         private static readonly string PLAYER_SESSION_FILE_NAME = "player_session.json";
@@ -20,9 +22,7 @@ namespace SevenSeas
         private static readonly string LEVEL_FILE_NAME = "levels.csv";
 
         private static readonly string LOAD_PREVIOUS_SESSION_KEY = "LOAD_PREVIOUS_SESSION";
-       
-
-
+     
         private static string playerSessionFilePath;
         private static string battleSessionFilePath;
         private static string levelSessionFilePath;
@@ -92,7 +92,7 @@ namespace SevenSeas
                 skullPosition.Clear();
             }
         }
-
+       
         [Header("Player Session Info")]
         [HideInInspector]
         public int currentAmountScore;
@@ -104,8 +104,9 @@ namespace SevenSeas
         [Tooltip("Player earn one life when getting the specific amount of score")]
         public int bonusLifeScoreAmount = 15;
 
-        //[HideInInspector]
+       // [HideInInspector]
         public PlayerInfoSession playerInfoSession;
+        public List<HighScoreModel> highscores = new List<HighScoreModel>();
 
         [Header("Battle Session Info")]
         private string sceneName;
@@ -135,7 +136,7 @@ namespace SevenSeas
         {
             playerInfoSession.ResetData(maxPlayerHealth);
             levelDatas = CSVFileHelper.LoadDataFromFile(levelSessionFilePath);
-
+            LoadLeaderboard();
         }
 
         #region Player Session Info Function
@@ -197,10 +198,10 @@ namespace SevenSeas
 
         }
 
-        public void UpdatePlayerHealth(int pHealth)
+        public void DecreseHealth()
         {
-            
-            playerInfoSession.playerHealth = pHealth;
+
+            playerInfoSession.playerHealth--;
         }
         
         public void UpdateLevelInCheckPoint()
@@ -352,6 +353,32 @@ namespace SevenSeas
         {
             return LevelInfo.Parse(levelDatas[playerInfoSession.totalLevelCount + 1]);
         }
+
+        #region Leaderboard fucntion
+        public void LoadLeaderboard()
+        {
+            LeaderboardManager.Instance.DownloadHighScores((strData) =>
+            {
+                UpdateLeaderboard(strData);
+                OnLeaderboardDataLoaded();
+            });
+        }
+
+        public void UpdateLeaderboard(string strData)
+        {
+            
+            highscores.Clear();
+            string[] rows = strData.Split('\n');
+            for (int i = 0; i < rows.Length; i++)
+            {
+                if (!string.IsNullOrEmpty(rows[i]))
+                {
+                    highscores.Add(HighScoreModel.FromPipeDreamlo(rows[i]));
+                }
+               
+            }
+        }
+        #endregion
     }
 }
 

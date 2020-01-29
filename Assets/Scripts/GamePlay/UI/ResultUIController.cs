@@ -6,55 +6,135 @@ using UnityEngine.UI;
 namespace SevenSeas
 {
     public class ResultUIController : MonoBehaviour
-{
-    public System.Action OnStartNewGameButtonClick = delegate { };
-
-    [SerializeField]
-    private Text checkPointText;
-    [SerializeField]
-    private Text pirateSunkText;
-    [SerializeField]
-    private Text treasureFoundText;
-    [SerializeField]
-    private Text finalScoreText;
-
-    [SerializeField]
-    private Button startNewGameButton;
-
-    [SerializeField]
-    private CanvasGroup canvasGroup;
-
-    void Awake()
     {
-        startNewGameButton.onClick.AddListener(() => OnStartNewGameButtonClick());
-    }
+        
+        [SerializeField]
+        private Text checkPointText;
+        [SerializeField]
+        private Text pirateSunkText;
+        [SerializeField]
+        private Text treasureFoundText;
+        [SerializeField]
+        private Text finalScoreText;
 
-    void Display(bool isShowing)
-    {
-        canvasGroup.alpha = isShowing ? 1 : 0;
-        canvasGroup.blocksRaycasts = isShowing;
-        canvasGroup.interactable = isShowing;
-    }
+        [SerializeField]
+        private Button startNewGameButton;
+        [SerializeField]
+        private Button submitButton;
 
-    public void SetData(GameSessionInfoManager.PlayerInfoSession session)
-    {
+        [SerializeField]
+        private CanvasGroup canvasGroup;
+        [SerializeField]
+        private SubmitHighscoreUIController submitController;
 
-        checkPointText.text = session.checkPoint.ToString();
-        treasureFoundText.text = session.treasureFound.ToString();
-        finalScoreText.text = session.playerScore.ToString();
-        pirateSunkText.text = session.piratesSunk.ToString();
-    }
+        #region Cache values
+        private bool firstShowSubmitUI;
+        private bool lockElements;
 
-    public void Show()
-    {
-        Display(true);
-    }
+        #endregion
 
-    public void Hide()
-    {
-        Display(false);
+        void Awake()
+        {
+            startNewGameButton.onClick.AddListener(OnStartNewGameButtonClick);
+            submitButton.onClick.AddListener(OnSubmitButtonClick);
+
+            submitController.OnCancelButtonClick += submitController_OnCancelButtonClick;
+            submitController.OnYesButtonClick += submitController_OnYesButtonClick;
+
+            GameSessionInfoManager.OnLeaderboardDataLoaded += GameSessionInfoManager_OnLeaderboardDataLoaded;
+        }
+
+        void OnDestroy()
+        {
+            submitController.OnCancelButtonClick -= submitController_OnCancelButtonClick;
+            submitController.OnYesButtonClick -= submitController_OnYesButtonClick;
+
+            GameSessionInfoManager.OnLeaderboardDataLoaded -= GameSessionInfoManager_OnLeaderboardDataLoaded;
+        }
+
+        private void GameSessionInfoManager_OnLeaderboardDataLoaded()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private void OnStartNewGameButtonClick()
+        {
+            if (lockElements)
+                return;
+
+            GameSessionInfoManager.Instance.ClearGameSession();
+            SceneLoader.Instance.LoadChooseLevelScene();
+        }
+
+        private void OnSubmitButtonClick()
+        {
+            submitController.Show();
+        }
+
+        private void submitController_OnCancelButtonClick()
+        {
+            if (lockElements)
+                return;
+
+            lockElements = false;
+            submitController.Hide();
+        }
+
+        private void submitController_OnYesButtonClick()
+        {
+            if (lockElements)
+                return;
+
+            lockElements = true;
+            string username = submitController.nameField.text;
+            submitController.ShowResultText("Uploading highscore to leaderboard...");
+            if (!string.IsNullOrEmpty(username))
+            {
+                LeaderboardManager.Instance.UploadScore(new HighScoreModel(username, GameSessionInfoManager.Instance.playerInfoSession.playerScore),
+                () =>
+                {
+                    lockElements = false;
+                    submitController.ShowResultText("Your highscore was uploaded successfully!");
+                },
+                () =>
+                {
+                    lockElements = false;
+                    submitController.ShowResultText("Upload failed! Please try again later!");
+                });
+            }
+        }
+
+        void Display(bool isShowing)
+        {
+            canvasGroup.alpha = isShowing ? 1 : 0;
+            canvasGroup.blocksRaycasts = isShowing;
+            canvasGroup.interactable = isShowing;
+        }
+
+        public void SetData(GameSessionInfoManager.PlayerInfoSession session)
+        {
+
+            checkPointText.text = session.checkPoint.ToString();
+            treasureFoundText.text = session.treasureFound.ToString();
+            finalScoreText.text = session.playerScore.ToString();
+            pirateSunkText.text = session.piratesSunk.ToString();
+        }
+
+        public void Show()
+        {
+            Display(true);
+            if (!firstShowSubmitUI)
+            {
+                submitController.Show();
+                firstShowSubmitUI = true;
+            }
+        }
+
+        public void Hide()
+        {
+            Display(false);
+        }
     }
-}
 }
 
 

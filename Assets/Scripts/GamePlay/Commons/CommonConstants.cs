@@ -22,6 +22,8 @@ public class CommonConstants
     /// </summary>
     public const int TILE_SIZE = 1;
 
+    public const int MAX_CHECK_COLLIDER_SIZE = 15;
+
     public static readonly int MAX_LEVEL_PER_CHECKPOINT = 8;
     public static readonly int MAX_CHECKPOINT = 7;
 

@@ -47,6 +47,8 @@ namespace SevenSeas
         [SerializeField]
         private int safetyRadius;
         public int currentLevel;
+        [SerializeField]
+        private LayerMask interactionLayer;
 
         //Properties
         public Vector2 TileSize { get; private set; }
@@ -67,6 +69,8 @@ namespace SevenSeas
         //Cache value
         private SpriteRenderer backgroundSR;
         private GameObject player;
+        private Collider2D[] overlappedColliders = new Collider2D[CommonConstants.MAX_CHECK_COLLIDER_SIZE];
+
 
         public List<GameObject> ActiveObjects { get; set; }
         public List<GameObject> DeActiveObjects { get; set; }
@@ -464,9 +468,35 @@ namespace SevenSeas
 
         Vector2 GetPlayerRandomSafetyPosition()
         {
-            return possiblePositions[Random.Range(0, possiblePositions.Count)];
+
+            Vector2 safetyRandomPos = possiblePositions[Random.Range(0, possiblePositions.Count)];
+            while (EnemyDetected(safetyRandomPos))
+            {
+                safetyRandomPos = possiblePositions[Random.Range(0, possiblePositions.Count)];
+            }
+            return safetyRandomPos;
         }
 
+        bool EnemyDetected(Vector2 originPosition)
+        {
+            //Check if the area around this (calculate by multiply by safety area pos) this random pos has any enemies
+            Vector2 topLeft = new Vector2(originPosition.x - TileSize.x * safetyRadius, originPosition.y + TileSize.y * safetyRadius);
+            Vector2 bottomRight = new Vector2(originPosition.x + TileSize.x * safetyRadius, originPosition.y - TileSize.y * safetyRadius);
+
+            int n = Physics2D.OverlapAreaNonAlloc(topLeft, bottomRight, overlappedColliders, interactionLayer);
+            if (n > 0)
+            {
+
+                for (int i = 0; i < n; i++)
+                {
+                    if (overlappedColliders[i].CompareTag("Enemy"))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
 
         public void SetPlayerSafetyPosition()
         {
