@@ -7,7 +7,7 @@ namespace SevenSeas
 {
     public class ResultUIController : MonoBehaviour
     {
-        
+        [Header("UI References")]
         [SerializeField]
         private Text checkPointText;
         [SerializeField]
@@ -24,8 +24,12 @@ namespace SevenSeas
 
         [SerializeField]
         private CanvasGroup canvasGroup;
+
+        [Header("Script References")]
         [SerializeField]
         private SubmitHighscoreUIController submitController;
+        [SerializeField]
+        private List<HighscoreTextController> highscoreTextControllers;
 
         #region Cache values
         private bool firstShowSubmitUI;
@@ -54,7 +58,12 @@ namespace SevenSeas
 
         private void GameSessionInfoManager_OnLeaderboardDataLoaded()
         {
-            throw new System.NotImplementedException();
+            List<HighScoreModel> highscores = GameSessionInfoManager.Instance.highscores;
+
+            for (int i = 0; i < highscores.Count;i++)
+            {
+                highscoreTextControllers[i].SetData(i+ 1,highscores[i]);
+            }
         }
 
         private void OnStartNewGameButtonClick()
@@ -95,6 +104,7 @@ namespace SevenSeas
                 {
                     lockElements = false;
                     submitController.ShowResultText("Your highscore was uploaded successfully!");
+                    GameSessionInfoManager.Instance.LoadLeaderboard();
                 },
                 () =>
                 {
